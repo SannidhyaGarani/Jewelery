@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+/* Custom Swiper Pagination Styling */
+.swiper-pagination-bullet {
+  width: 30px !important;
+  height: 2px !important;
+  border-radius: 0 !important;
+  background: #2B2B2B !important;
+  opacity: 0.1 !important;
+  transition: all 0.4s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #C6A769 !important;
+  opacity: 1 !important;
+  width: 50px !important;
+}
+
+/* Specific Page Accents */
+.custom-pagination-why .swiper-pagination-bullet,
+.custom-pagination-featured .swiper-pagination-bullet,
+.custom-pagination-bestsellers .swiper-pagination-bullet,
+.custom-pagination-testimonials .swiper-pagination-bullet {
+  margin: 0 4px !important;
+}
+
+/* Smooth Swiper Transitions */
+.swiper-wrapper {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+}

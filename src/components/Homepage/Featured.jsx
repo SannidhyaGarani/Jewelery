@@ -1,6 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const collections = [
   {
@@ -66,55 +73,85 @@ const FeaturedCollections = () => {
           ></motion.div>
         </div>
 
-        {/* Collections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
-          {collections.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="group cursor-pointer"
-            >
-              {/* Image Container with Zoom and Gold Overlay */}
-              <div className="relative aspect-[4/5] overflow-hidden bg-[#EAE8E3] shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-shadow duration-500 group-hover:shadow-[0_20px_50px_rgba(198,167,105,0.1)]">
-                
-                {/* Background Image */}
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                />
+        {/* Collections Swiper */}
+        <div className="relative">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={20}
+            slidesPerView={1.2}
+            centeredSlides={false}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+              el: '.custom-pagination-featured',
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2.2,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+            }}
+            className="pb-16"
+          >
+            {collections.map((item, index) => (
+              <SwiperSlide key={index}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  className="group cursor-pointer"
+                >
+                  {/* Image Container with Zoom and Gold Overlay */}
+                  <div className="relative aspect-[4/5] overflow-hidden bg-[#EAE8E3] shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-shadow duration-500 group-hover:shadow-[0_20px_50px_rgba(198,167,105,0.1)]">
+                    
+                    {/* Background Image */}
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                    />
 
-                {/* Gold Shimmer Overlay */}
-                <div className="absolute inset-0 bg-[#C6A769] opacity-0 mix-blend-color transition-opacity duration-500 group-hover:opacity-20" />
-                
-                {/* Dark Contrast Overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                
-                {/* Subtle outer border on hover */}
-                <div className="absolute inset-4 border border-white/0 transition-all duration-500 group-hover:border-white/20" />
-              </div>
+                    {/* Gold Shimmer Overlay */}
+                    <div className="absolute inset-0 bg-[#C6A769] opacity-0 mix-blend-color transition-opacity duration-500 group-hover:opacity-20" />
+                    
+                    {/* Dark Contrast Overlay for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    
+                    {/* Subtle outer border on hover */}
+                    <div className="absolute inset-4 border border-white/0 transition-all duration-500 group-hover:border-white/20" />
+                  </div>
 
-              {/* Text Content (Placed below for heavy white-space editorial feel) */}
-              <div className="mt-6 text-center px-2">
-                <h3 className="font-serif text-lg text-[#2B2B2B] group-hover:text-[#C6A769] transition-colors duration-300">
-                  {item.title}
-                </h3>
-                
-                <p className="text-[#2B2B2B]/60 text-xs md:text-sm font-light mt-2 tracking-wide leading-relaxed">
-                  {item.description}
-                </p>
-                
-                {/* Animated Call to Action */}
-                <div className="mt-4 flex justify-center items-center gap-2 text-[#C6A769] text-xs tracking-wider uppercase font-normal opacity-0 -translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                  Explore
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                  {/* Text Content */}
+                  <div className="mt-6 text-center px-2">
+                    <h3 className="font-serif text-lg text-[#2B2B2B] group-hover:text-[#C6A769] transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-[#2B2B2B]/60 text-xs md:text-sm font-light mt-2 tracking-wide leading-relaxed">
+                      {item.description}
+                    </p>
+                    
+                    {/* Animated Call to Action */}
+                    <div className="mt-4 flex justify-center items-center gap-2 text-[#C6A769] text-xs tracking-wider uppercase font-normal opacity-0 -translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                      Explore
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          
+          {/* Custom Luxury Pagination */}
+          <div className="custom-pagination-featured flex justify-center mt-4 gap-2"></div>
         </div>
 
         {/* Bottom CTA to view all */}
