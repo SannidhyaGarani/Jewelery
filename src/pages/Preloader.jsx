@@ -58,7 +58,7 @@ const PremiumPreloader = () => {
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="font-serif text-3xl md:text-5xl text-[#2B2B2B] relative"
             >
-              AURELIA
+              Jewelery
               {/* Subtle Gold Glint Sweep */}
               <motion.div 
                 initial={{ x: "-100%" }}

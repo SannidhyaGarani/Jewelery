@@ -17,7 +17,7 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               className="inline-block px-4 py-1.5 border border-[#C6A769]/30 text-[#C6A769] text-[10px] tracking-[0.5em] uppercase font-medium bg-[#C6A769]/5"
             >
-              The Aurelia Atelier
+              The Jewelery Atelier
             </motion.span>
             
             <div className="overflow-hidden">
@@ -38,7 +38,7 @@ const About = () => {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-sm md:text-base text-[#2B2B2B]/70 font-light tracking-wide leading-relaxed max-w-xl"
             >
-              Founded with a passion for exquisite craftsmanship, Aurelia represents the pinnacle of fine jewelry. We believe that true luxury lies in the flawless integration of ethically sourced gems and masterful artistry.
+              Founded with a passion for exquisite craftsmanship, Jewelery represents the pinnacle of fine jewelry. We believe that true luxury lies in the flawless integration of ethically sourced gems and masterful artistry.
             </motion.p>
           </div>
           <motion.div 
@@ -125,7 +125,7 @@ const About = () => {
                 <Award className="text-[#C6A769]" strokeWidth={1} />
               </div>
               <div className="text-center md:text-left">
-                <p className="font-serif text-lg text-white mb-1">Aurelia Heritage</p>
+                <p className="font-serif text-lg text-white mb-1">Jewelery Heritage</p>
                 <p className="text-[9px] text-white/50 uppercase tracking-[0.3em]">Excellence Defined</p>
               </div>
             </div>

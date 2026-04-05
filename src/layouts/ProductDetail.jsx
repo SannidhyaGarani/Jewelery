@@ -320,7 +320,7 @@ const ProductDetail = () => {
                   >
                     {activeTab === 'heritage' && (
                       <p className="leading-8">
-                        {product.description || "Forged in the heart of our artisan atelier, each piece tells a story of timeless elegance. Aurelia jewelry is more than an accessory; it is a fragment of eternity, designed for those who find beauty in the extraordinary."}
+                        {product.description || "Forged in the heart of our artisan atelier, each piece tells a story of timeless elegance. Jewelery jewelry is more than an accessory; it is a fragment of eternity, designed for those who find beauty in the extraordinary."}
                       </p>
                     )}
                     {activeTab === 'materials' && (

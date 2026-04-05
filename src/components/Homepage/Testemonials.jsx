@@ -21,7 +21,7 @@ const reviews = [
     name: "Isabelle Moreau",
     location: "Paris, France",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop",
-    quote: "I was hesitant about artificial jewelry, but Aurelia redefined my expectations. The plating is exquisite and doesn't irritate my sensitive skin. Magnifique!",
+    quote: "I was hesitant about artificial jewelry, but Jewelery redefined my expectations. The plating is exquisite and doesn't irritate my sensitive skin. Magnifique!",
     delay: 0.2
   },
   {

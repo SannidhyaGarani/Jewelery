@@ -55,7 +55,7 @@ const LuxuryHeader = () => {
             className="flex-shrink-0"
           >
             <Link to="/" className="font-serif text-2xl md:text-3xl tracking-[0.2em] text-[#2B2B2B] hover:text-[#C6A769] transition-colors duration-500">
-              AURELIA
+              JEWELERY
             </Link>
           </motion.div>
 
@@ -143,7 +143,7 @@ const LuxuryHeader = () => {
           >
             <div>
               <div className="flex justify-between items-center mb-16">
-                <span className="font-serif text-2xl tracking-[0.2em]">AURELIA</span>
+                <span className="font-serif text-2xl tracking-[0.2em]">Jewelery</span>
                 <button onClick={() => setMobileMenuOpen(false)}>
                   <X strokeWidth={1.2} />
                 </button>
