@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../components/Firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useAuth } from "../components/useAuth";
-import { Star, Shield, Truck, RotateCcw, Heart, ShoppingBag, ArrowLeft, Share2, Info } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Star, Shield, Truck, RotateCcw, Heart, ShoppingBag, 
+  ArrowLeft, Share2, Info, Gem, Sparkles, Ruler
+} from 'lucide-react';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -11,15 +15,63 @@ const ProductDetail = () => {
   const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('description');
+  const [activeTab, setActiveTab] = useState('heritage');
   const [quantity, setQuantity] = useState(1);
+
+  // Reference for curated products to ensure detail page works for them too
+  const curatedProducts = [
+    {
+      id: "1",
+      name: "Solitaire Droplet Necklace",
+      price: 120,
+      image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800",
+      category: "Luxury",
+      description: "A breathtaking solitaire diamond-cut crystal suspended on a delicate 18k gold-toned chain, designed to capture and reflect every fragment of light."
+    },
+    {
+      id: "2",
+      name: "Champagne Gold Ring",
+      price: 85,
+      image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
+      category: "Everyday",
+      description: "The Champagne Gold Ring features a subtle, warm-toned finish that elegantly complements any outfit, making it a timeless staple for daily wear."
+    },
+    { id: "3", name: "Rose Quartz Eternity Ring", price: 150, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Bridal", description: "Embodying eternal love, this ring features delicately set rose quartz crystals that radiate a soft, romantic glow." },
+    { id: "4", name: "Pearl Infused Bracelet", price: 95, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "New Arrivals", description: "A sophisticated blend of baroque pearls and polished gold links, this bracelet is a testament to classical beauty reimagined." },
+    { id: 'bs-1', name: "Solitaire Droplet Necklace", price: 120, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Luxury" },
+    { id: 'bs-2', name: "Champagne Gold Ring", price: 85, image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D", category: "Everyday" },
+    { id: 'bs-3', name: "Rose Quartz Eternity Ring", price: 150, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Bridal" },
+    { id: 'bs-4', name: "Pearl Infused Bracelet", price: 95, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "New Arrivals" },
+    { id: 'shop-5', name: "Diamond Halo Studs", price: 210, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "Luxury" },
+    { id: 'shop-6', name: "Vintage Gold Locket", price: 175, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzJ8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D", category: "New Arrivals" },
+    { id: 'shop-7', name: "Sapphire Night Pendant", price: 320, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800", category: "Luxury" },
+    { id: 'shop-8', name: "Minimalist Silver Band", price: 65, image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=800", category: "Everyday" },
+    { id: 'shop-9', name: "Art Deco Emerald Ring", price: 280, image: "https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D", category: "Bridal" },
+    { id: 'shop-10', name: "Celestial Moon Necklace", price: 140, image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=800", category: "New Arrivals" },
+    { id: 'shop-11', name: "Ornate Bridal Choker", price: 450, image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjR8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D", category: "Bridal" },
+    { id: 'shop-12', name: "Infinity Knot Bangle", price: 110, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Everyday" }
+  ];
 
   useEffect(() => {
     const load = async () => {
-      const ref = doc(db, "products", id);
-      const snap = await getDoc(ref);
-      if (snap.exists()) {
-        setProduct({ id: snap.id, ...snap.data() });
+      setLoading(true);
+      // Check curated list first
+      const curated = curatedProducts.find(p => String(p.id) === String(id));
+      if (curated) {
+        setProduct(curated);
+        setLoading(false);
+        return;
+      }
+
+      // Check Firebase
+      try {
+        const ref = doc(db, "products", id);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          setProduct({ id: snap.id, ...snap.data() });
+        }
+      } catch (e) {
+        console.error("Firebase error:", e);
       }
       setLoading(false);
     };
@@ -34,7 +86,7 @@ const ProductDetail = () => {
     if (!product) return;
 
     try {
-      const itemRef = doc(db, "users", user.uid, collectionName, product.id);
+      const itemRef = doc(db, "users", user.uid, collectionName, id);
       await setDoc(itemRef, {
         name: product.name,
         price: product.price,
@@ -50,130 +102,171 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 border-4 border-[#C6A664]/20 border-t-[#C6A664] rounded-full animate-spin" />
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#4A4A4A]/40">Gathering ingredients...</p>
+      <div className="min-h-screen bg-[#FAF9F6] flex flex-col items-center justify-center gap-8">
+        <div className="relative w-20 h-20">
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 border-[1px] border-[#C6A769]/20 border-t-[#C6A769] rounded-full" 
+          />
+          <Gem className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#C6A769]" size={24} strokeWidth={1} />
+        </div>
+        <p className="text-[10px] uppercase tracking-[0.6em] text-[#2B2B2B]/40 animate-pulse">Refining the Detail...</p>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] flex flex-col items-center justify-center gap-6">
-        <p className="text-xl font-black text-[#4A4A4A]">Product disappeared into thin air.</p>
-        <button onClick={() => navigate('/')} className="px-8 py-3 rounded-2xl bg-[#4A4A4A] text-white font-black text-xs uppercase tracking-widest hover:bg-[#C6A664] transition-colors">
-          Return to Shop
+      <div className="min-h-screen bg-[#FAF9F6] flex flex-col items-center justify-center gap-6">
+        <p className="font-serif text-2xl text-[#2B2B2B]/40 italic">This masterpiece is hidden from view.</p>
+        <button onClick={() => navigate('/shop')} className="text-[10px] uppercase tracking-[0.4em] text-[#C6A769] border-b border-[#C6A769]/30 pb-2">
+          Return to Collection
         </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        {/* Breadcrumbs & Navigation */}
-        <div className="flex items-center justify-between mb-12">
-          <button 
+    <div className="min-h-screen bg-[#FAF9F6] pt-32 pb-24 font-sans relative overflow-hidden">
+      {/* Background Cinematic Grain */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] z-0" />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        
+        {/* Navigation & Header */}
+        <div className="flex items-center justify-between mb-16">
+          <motion.button 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
             onClick={() => navigate(-1)}
-            className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-[#4A4A4A]/40 hover:text-[#C6A664] transition-colors"
+            className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 hover:text-[#C6A769] transition-all"
           >
-            <div className="w-8 h-8 rounded-full border border-[#E6CCB2]/20 flex items-center justify-center group-hover:border-[#C6A664]/20 transition-all">
-              <ArrowLeft size={14} />
+            <div className="w-10 h-10 rounded-full border border-[#2B2B2B]/5 flex items-center justify-center group-hover:border-[#C6A769]/30 transition-all">
+              <ArrowLeft size={16} strokeWidth={1} />
             </div>
-            Back to Catalog
-          </button>
+            Back
+          </motion.button>
+          
           <div className="flex items-center gap-4">
-            <button className="w-10 h-10 rounded-full border border-[#E6CCB2]/20 flex items-center justify-center text-[#4A4A4A]/40 hover:text-[#C6A664] hover:border-[#C6A664]/20 transition-all">
-              <Share2 size={16} />
+            <button className="w-10 h-10 rounded-full border border-[#2B2B2B]/5 flex items-center justify-center text-[#2B2B2B]/40 hover:text-[#C6A769] transition-all">
+              <Share2 size={16} strokeWidth={1} />
             </button>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 xl:gap-24 items-start">
-          {/* Left: Visuals */}
-          <div className="space-y-6">
-            <div className="relative aspect-[4/5] bg-[#FDFBF7] rounded-[48px] overflow-hidden border border-[#E6CCB2]/20 group">
+        <div className="grid lg:grid-cols-2 gap-20 xl:gap-32 items-start">
+          
+          {/* Left: Cinematic Visuals */}
+          <div className="space-y-8">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
+              className="relative aspect-[3/4] bg-[#F3F2EE] overflow-hidden group shadow-2xl"
+            >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-contain p-12 transform transition-transform duration-1000 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
               />
               <div className="absolute top-8 left-8">
-                <span className="px-4 py-2 rounded-2xl bg-[#FDFBF7]/90 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.2em] text-[#4A4A4A] shadow-sm border border-[#E6CCB2]/20">
-                  {product.category || 'Luxury Care'}
+                <span className="px-4 py-1.5 border border-[#C6A769]/30 text-[#C6A769] text-[9px] tracking-[0.4em] uppercase font-medium bg-white/80 backdrop-blur-md">
+                  {product.category || 'Atelier Piece'}
                 </span>
               </div>
-            </div>
+              
+              {/* Subtle light sweep */}
+              <motion.div 
+                animate={{ x: ["-100%", "200%"] }}
+                transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
+              />
+            </motion.div>
             
             {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-6">
               {[
-                { icon: <Shield size={20} />, text: 'Dermatologically Tested' },
-                { icon: <Truck size={20} />, text: 'Express Delivery' },
-                { icon: <RotateCcw size={20} />, text: '30-Day Returns' }
+                { icon: <Gem size={18} strokeWidth={1} />, text: 'Certified Authentic' },
+                { icon: <Truck size={18} strokeWidth={1} />, text: 'Global Logistics' },
+                { icon: <RotateCcw size={18} strokeWidth={1} />, text: 'Luxury Exchange' }
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center text-center p-6 rounded-[32px] bg-[#FDFBF7] border border-[#E6CCB2]/20 space-y-3 shadow-sm hover:border-[#C6A664]/20 transition-all">
-                  <div className="text-[#C6A664]">{item.icon}</div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-[#4A4A4A]/60 leading-tight">{item.text}</p>
+                <div key={i} className="flex flex-col items-center text-center p-6 border border-[#2B2B2B]/5 space-y-4 hover:border-[#C6A769]/20 transition-all duration-700">
+                  <div className="text-[#C6A769]">{item.icon}</div>
+                  <p className="text-[8px] uppercase tracking-[0.3em] text-[#2B2B2B]/50 leading-relaxed font-medium">{item.text}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: Content */}
-          <div className="space-y-10">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-0.5">
+          {/* Right: Detailed Content */}
+          <div className="space-y-12">
+            <div className="space-y-6">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex items-center gap-3"
+              >
+                <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} fill={i < 4 ? "#C6A664" : "none"} className={i < 4 ? "text-[#C6A664]" : "text-[#4A4A4A]/10"} />
+                    <Star key={i} size={10} fill={i < 4 ? "#C6A769" : "none"} className={i < 4 ? "text-[#C6A769]" : "text-[#2B2B2B]/10"} />
                   ))}
                 </div>
-                <span className="text-[10px] font-black text-[#4A4A4A]/40 uppercase tracking-widest">(124 Reviews)</span>
+                <span className="text-[9px] tracking-[0.4em] uppercase text-[#2B2B2B]/30">(82 Private Reviews)</span>
+              </motion.div>
+              
+              <div className="overflow-hidden">
+                <motion.h1 
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  className="text-4xl md:text-6xl font-serif text-[#2B2B2B] leading-[1.1] tracking-tight"
+                >
+                  {product.name}
+                </motion.h1>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-black text-[#4A4A4A] leading-[0.9] tracking-tighter">
-                {product.name}
-              </h1>
-              
-              <div className="flex items-center gap-6">
-                <span className="text-4xl font-black text-[#C6A664]">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="flex items-center gap-8"
+              >
+                <span className="text-3xl font-serif text-[#C6A769]">
                   ₹{product.price}.00
                 </span>
-                {product.original_price && product.original_price > product.price && (
-                  <span className="text-xl font-bold text-[#4A4A4A]/20 line-through">
-                    ₹{product.original_price}.00
-                  </span>
-                )}
-                <div className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-500 text-[10px] font-black uppercase tracking-widest">
-                  In Stock
+                <div className="h-[1px] w-12 bg-[#2B2B2B]/10" />
+                <div className="text-[10px] tracking-[0.3em] uppercase text-emerald-600 font-medium flex items-center gap-2">
+                  <Sparkles size={12} strokeWidth={1} /> Ready to Ship
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            {/* Selection Controls */}
-            <div className="space-y-6 pt-6 border-t border-[#E6CCB2]/20">
-              <div className="flex items-center gap-8">
-                <div className="space-y-3">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#4A4A4A]/40">Quantity</p>
-                  <div className="flex items-center bg-[#FDFBF7] rounded-2xl p-1 border border-[#E6CCB2]/20">
+            {/* Selection & Actions */}
+            <div className="space-y-10 pt-10 border-t border-[#2B2B2B]/5">
+              <div className="flex items-center gap-12">
+                <div className="space-y-4">
+                  <p className="text-[9px] uppercase tracking-[0.4em] text-[#2B2B2B]/40">Quantity</p>
+                  <div className="flex items-center border border-[#2B2B2B]/10 p-1">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-10 flex items-center justify-center font-black text-[#4A4A4A] hover:text-[#C6A664] transition-colors"
+                      className="w-10 h-10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] transition-colors font-light"
                     >-</button>
-                    <span className="w-12 text-center font-black text-[#4A4A4A]">{quantity}</span>
+                    <span className="w-10 text-center text-xs text-[#2B2B2B] font-medium">{quantity}</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-10 h-10 flex items-center justify-center font-black text-[#4A4A4A] hover:text-[#C6A664] transition-colors"
+                      className="w-10 h-10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] transition-colors font-light"
                     >+</button>
                   </div>
                 </div>
                 
-                <div className="flex-1 space-y-3">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#4A4A4A]/40">Size / Volume</p>
-                  <div className="flex gap-2">
-                    {['50ml', '100ml'].map((size) => (
-                      <button key={size} className={`px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${size === '50ml' ? 'bg-[#4A4A4A] text-white' : 'bg-[#FDFBF7] text-[#4A4A4A] border border-[#E6CCB2]/20 hover:bg-[#4A4A4A]/5'}`}>
+                <div className="flex-1 space-y-4">
+                  <p className="text-[9px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 flex items-center gap-2">
+                    Size Selection <Ruler size={10} className="opacity-50" />
+                  </p>
+                  <div className="flex gap-4">
+                    {['Standard', 'Bespoke'].map((size) => (
+                      <button key={size} className={`px-6 py-3 border text-[9px] uppercase tracking-[0.3em] transition-all duration-500 font-medium ${size === 'Standard' ? 'bg-[#2B2B2B] text-white border-[#2B2B2B]' : 'bg-transparent text-[#2B2B2B] border-[#2B2B2B]/10 hover:border-[#C6A769]/50'}`}>
                         {size}
                       </button>
                     ))}
@@ -181,71 +274,77 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-5 pt-4">
                 <button
                   onClick={() => addToCollection("cart")}
-                  className="flex-1 h-16 rounded-[24px] bg-[#C6A664] text-white font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-[#C6A664]/20 hover:bg-[#4A4A4A] transition-all transform active:scale-95 flex items-center justify-center gap-3"
+                  className="flex-1 h-16 bg-[#2B2B2B] text-white text-[10px] uppercase tracking-[0.5em] font-medium hover:bg-[#C6A769] transition-colors duration-700 shadow-2xl flex items-center justify-center gap-4 group"
                 >
-                  <ShoppingBag size={18} />
+                  <ShoppingBag size={16} strokeWidth={1} className="group-hover:-translate-y-1 transition-transform" />
                   Add to Shopping Bag
                 </button>
                 <button
                   onClick={() => addToCollection("wishlist")}
-                  className="w-16 h-16 rounded-[24px] bg-[#FDFBF7] border-2 border-[#E6CCB2]/20 flex items-center justify-center text-[#4A4A4A] hover:text-[#C6A664] hover:border-[#C6A664]/20 transition-all"
+                  className="w-16 h-16 border border-[#2B2B2B]/10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] hover:border-[#C6A769]/30 transition-all duration-500 group"
                 >
-                  <Heart size={20} />
+                  <Heart size={20} strokeWidth={1} className="group-hover:scale-110 transition-transform" />
                 </button>
               </div>
             </div>
 
-            {/* Info Tabs */}
-            <div className="space-y-6 pt-10 border-t border-[#E6CCB2]/20">
-              <div className="flex gap-8 border-b border-[#E6CCB2]/20 pb-4">
-                {['description', 'ingredients', 'usage'].map((tab) => (
+            {/* Premium Info Tabs */}
+            <div className="space-y-8 pt-12 border-t border-[#2B2B2B]/5">
+              <div className="flex gap-10 border-b border-[#2B2B2B]/5 pb-4">
+                {['heritage', 'materials', 'care'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`text-[10px] font-black uppercase tracking-[0.25em] transition-all relative ${activeTab === tab ? 'text-[#4A4A4A]' : 'text-[#4A4A4A]/30 hover:text-[#4A4A4A]/60'}`}
+                    className={`text-[9px] uppercase tracking-[0.4em] font-medium transition-all relative ${activeTab === tab ? 'text-[#2B2B2B]' : 'text-[#2B2B2B]/30 hover:text-[#2B2B2B]/60'}`}
                   >
                     {tab}
-                    {activeTab === tab && <div className="absolute -bottom-[17px] left-0 right-0 h-1 bg-[#C6A664] rounded-full" />}
+                    {activeTab === tab && (
+                      <motion.div layoutId="tabLine" className="absolute -bottom-[17px] left-0 right-0 h-[1.5px] bg-[#C6A769]" />
+                    )}
                   </button>
                 ))}
               </div>
               
-              <div className="min-h-[120px] animate-fadeIn">
-                {activeTab === 'description' && (
-                  <p className="text-sm leading-relaxed text-[#4A4A4A]/70 font-medium">
-                    {product.description || "Indulge in our premium formulation designed to rejuvenate and protect. This luxury elixir combines traditional wisdom with modern science to deliver visible results within weeks."}
-                  </p>
-                )}
-                {activeTab === 'ingredients' && (
-                  <div className="space-y-4">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#C6A664]">Key Actives</p>
-                    <p className="text-sm leading-relaxed text-[#4A4A4A]/70 font-medium">
-                      Purified Water, Botanical Squalane, Niacinamide (Vitamin B3), Hyaluronic Acid, Organic Rosehip Oil, Vitamin E, Essential Mineral Complex.
-                    </p>
-                  </div>
-                )}
-                {activeTab === 'usage' && (
-                  <div className="space-y-4">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#C6A664]">Application Ritual</p>
-                    <p className="text-sm leading-relaxed text-[#4A4A4A]/70 font-medium">
-                      Gently massage 2-3 pumps onto cleansed face and neck using upward circular motions. For optimal results, use morning and night after your favorite serum.
-                    </p>
-                  </div>
-                )}
+              <div className="min-h-[140px] leading-relaxed text-[#2B2B2B]/60 font-light text-xs tracking-wide">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {activeTab === 'heritage' && (
+                      <p className="leading-8">
+                        {product.description || "Forged in the heart of our artisan atelier, each piece tells a story of timeless elegance. Aurelia jewelry is more than an accessory; it is a fragment of eternity, designed for those who find beauty in the extraordinary."}
+                      </p>
+                    )}
+                    {activeTab === 'materials' && (
+                      <p className="leading-8 italic">
+                        Hand-selected crystals, conflict-free 18k gold plating, and high-purity sustainable alloys. Every material reflects our commitment to ethical luxury and uncompromising brilliance.
+                      </p>
+                    )}
+                    {activeTab === 'care' && (
+                      <p className="leading-8">
+                        Preserve brilliance by avoiding direct contact with perfumes and moisture. Store in the provided velvet atelier pouch. Professional polishing is recommended annually to maintain the original luster.
+                      </p>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
 
-            {/* Quick Tips */}
-            <div className="p-6 rounded-[32px] bg-[#FDFBF7] border border-[#E6CCB2]/20 flex gap-4 shadow-sm">
-              <div className="w-10 h-10 rounded-xl bg-[#FDFBF7] border border-[#E6CCB2]/20 flex items-center justify-center text-[#C6A664] flex-shrink-0 shadow-sm">
-                <Info size={20} />
+            {/* Boutique Note */}
+            <div className="p-8 bg-white/40 border border-white/60 flex gap-6 items-center shadow-sm backdrop-blur-sm">
+              <div className="w-12 h-12 rounded-full border border-[#C6A769]/20 flex items-center justify-center text-[#C6A769] flex-shrink-0">
+                <Info size={18} strokeWidth={1} />
               </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#4A4A4A]">Beauty Secret</p>
-                <p className="text-xs text-[#4A4A4A]/60 font-medium leading-relaxed">Combine with our Nocturnal Elixir for a complete 24-hour hydration cycle.</p>
+              <div className="space-y-1">
+                <p className="text-[9px] uppercase tracking-[0.4em] text-[#2B2B2B] font-medium">Bespoke Inquiries</p>
+                <p className="text-[10px] text-[#2B2B2B]/50 leading-relaxed font-light italic">Need a customized fit? Our artisans can tailor this piece to your specific requirements.</p>
               </div>
             </div>
           </div>
@@ -256,5 +355,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-

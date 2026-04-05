@@ -40,9 +40,9 @@ const Shop = () => {
     },
     {
       id: 'bs-2',
-      name: "Champagne Gold Hoops",
+      name: "Champagne Gold Ring",
       price: 85,
-      image: "https://images.unsplash.com/photo-1635767791024-343777ee196d?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
       category: "Everyday"
     },
     {
@@ -70,7 +70,7 @@ const Shop = () => {
       id: 'shop-6',
       name: "Vintage Gold Locket",
       price: 175,
-      image: "https://images.unsplash.com/photo-1596944214946-17e07bfcf00b?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzJ8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
       category: "New Arrivals"
     },
     {
@@ -91,7 +91,7 @@ const Shop = () => {
       id: 'shop-9',
       name: "Art Deco Emerald Ring",
       price: 280,
-      image: "https://images.unsplash.com/photo-1603561591411-071c4f723935?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
       category: "Bridal"
     },
     {
@@ -105,7 +105,7 @@ const Shop = () => {
       id: 'shop-11',
       name: "Ornate Bridal Choker",
       price: 450,
-      image: "https://images.unsplash.com/photo-1588444839799-eb00f490a6c0?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjR8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
       category: "Bridal"
     },
     {

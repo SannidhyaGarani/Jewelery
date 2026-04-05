@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const products = [
   {
@@ -12,9 +13,9 @@ const products = [
   },
   {
     id: 2,
-    name: "Champagne Gold Hoops",
+    name: "Champagne Gold Ring",
     price: "$85.00",
-    image: "https://images.unsplash.com/photo-1635767791024-343777ee196d?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGpld2Vscnl8ZW58MHx8MHx8fDA%3D",
     tag: "Limited Edition"
   },
   {
@@ -34,6 +35,8 @@ const products = [
 ];
 
 const BestSellers = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="bg-[#FAF9F6] py-16 px-6 lg:px-12 font-sans relative overflow-hidden">
       {/* Subtle Background Accent */}
@@ -66,6 +69,7 @@ const BestSellers = () => {
           </div>
           <motion.button 
             whileHover={{ x: 5 }}
+            onClick={() => navigate('/shop')}
             className="text-[#2B2B2B] text-[10px] tracking-[0.3em] uppercase border-b border-[#2B2B2B]/10 pb-2 hover:border-[#C6A769] transition-all duration-500 font-medium"
           >
             View All Pieces
@@ -81,7 +85,8 @@ const BestSellers = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative"
+              className="group relative cursor-pointer"
+              onClick={() => navigate(`/product/${product.id}`)}
             >
               {/* Image Container with Refined Reveal */}
               <div className="relative aspect-[3/4] overflow-hidden bg-[#F3F2EE] shadow-sm transition-shadow duration-700 group-hover:shadow-[0_15px_35px_rgba(0,0,0,0.05)]">
