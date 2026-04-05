@@ -128,14 +128,14 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pt-32 pb-24 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-[#FAF9F6] pt-20 md:pt-32 pb-12 md:pb-24 font-sans relative overflow-hidden">
       {/* Background Cinematic Grain */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] z-0" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         
         {/* Navigation & Header */}
-        <div className="flex items-center justify-between mb-16">
+        <div className="flex items-center justify-between mb-8 md:mb-16">
           <motion.button 
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -155,7 +155,7 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-20 xl:gap-32 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 xl:gap-32 items-start">
           
           {/* Left: Cinematic Visuals */}
           <div className="space-y-8">
@@ -185,14 +185,14 @@ const ProductDetail = () => {
             </motion.div>
             
             {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
               {[
                 { icon: <Gem size={18} strokeWidth={1} />, text: 'Certified Authentic' },
                 { icon: <Truck size={18} strokeWidth={1} />, text: 'Global Logistics' },
                 { icon: <RotateCcw size={18} strokeWidth={1} />, text: 'Luxury Exchange' }
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center text-center p-6 border border-[#2B2B2B]/5 space-y-4 hover:border-[#C6A769]/20 transition-all duration-700">
-                  <div className="text-[#C6A769]">{item.icon}</div>
+                <div key={i} className="flex flex-row sm:flex-col items-center sm:text-center p-4 sm:p-6 border border-[#2B2B2B]/5 space-x-4 sm:space-x-0 sm:space-y-4 hover:border-[#C6A769]/20 transition-all duration-700">
+                  <div className="text-[#C6A769] flex-shrink-0">{item.icon}</div>
                   <p className="text-[8px] uppercase tracking-[0.3em] text-[#2B2B2B]/50 leading-relaxed font-medium">{item.text}</p>
                 </div>
               ))}
@@ -220,7 +220,7 @@ const ProductDetail = () => {
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-4xl md:text-6xl font-serif text-[#2B2B2B] leading-[1.1] tracking-tight"
+                  className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#2B2B2B] leading-[1.2] lg:leading-[1.1] tracking-tight"
                 >
                   {product.name}
                 </motion.h1>
@@ -244,29 +244,29 @@ const ProductDetail = () => {
 
             {/* Selection & Actions */}
             <div className="space-y-10 pt-10 border-t border-[#2B2B2B]/5">
-              <div className="flex items-center gap-12">
-                <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 sm:gap-12">
+                <div className="space-y-4 w-full sm:w-auto">
                   <p className="text-[9px] uppercase tracking-[0.4em] text-[#2B2B2B]/40">Quantity</p>
-                  <div className="flex items-center border border-[#2B2B2B]/10 p-1">
+                  <div className="flex items-center border border-[#2B2B2B]/10 p-1 w-full sm:w-auto justify-between sm:justify-start">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] transition-colors font-light"
+                      className="w-12 h-12 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] transition-colors font-light"
                     >-</button>
-                    <span className="w-10 text-center text-xs text-[#2B2B2B] font-medium">{quantity}</span>
+                    <span className="w-12 text-center text-xs text-[#2B2B2B] font-medium">{quantity}</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-10 h-10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] transition-colors font-light"
+                      className="w-12 h-12 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] transition-colors font-light"
                     >+</button>
                   </div>
                 </div>
                 
-                <div className="flex-1 space-y-4">
+                <div className="flex-1 space-y-4 w-full">
                   <p className="text-[9px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 flex items-center gap-2">
                     Size Selection <Ruler size={10} className="opacity-50" />
                   </p>
-                  <div className="flex gap-4">
+                  <div className="flex gap-3 sm:gap-4">
                     {['Standard', 'Bespoke'].map((size) => (
-                      <button key={size} className={`px-6 py-3 border text-[9px] uppercase tracking-[0.3em] transition-all duration-500 font-medium ${size === 'Standard' ? 'bg-[#2B2B2B] text-white border-[#2B2B2B]' : 'bg-transparent text-[#2B2B2B] border-[#2B2B2B]/10 hover:border-[#C6A769]/50'}`}>
+                      <button key={size} className={`flex-1 sm:flex-none px-4 sm:px-8 py-4 border text-[9px] uppercase tracking-[0.3em] transition-all duration-500 font-medium ${size === 'Standard' ? 'bg-[#2B2B2B] text-white border-[#2B2B2B]' : 'bg-transparent text-[#2B2B2B] border-[#2B2B2B]/10 hover:border-[#C6A769]/50'}`}>
                         {size}
                       </button>
                     ))}
@@ -274,26 +274,27 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="flex gap-5 pt-4">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 pt-4">
                 <button
                   onClick={() => addToCollection("cart")}
-                  className="flex-1 h-16 bg-[#2B2B2B] text-white text-[10px] uppercase tracking-[0.5em] font-medium hover:bg-[#C6A769] transition-colors duration-700 shadow-2xl flex items-center justify-center gap-4 group"
+                  className="flex-1 h-16 bg-[#2B2B2B] text-white text-[10px] uppercase tracking-[0.5em] font-medium hover:bg-[#C6A769] transition-colors duration-700 shadow-2xl flex items-center justify-center gap-4 group order-2 sm:order-1"
                 >
                   <ShoppingBag size={16} strokeWidth={1} className="group-hover:-translate-y-1 transition-transform" />
                   Add to Shopping Bag
                 </button>
                 <button
                   onClick={() => addToCollection("wishlist")}
-                  className="w-16 h-16 border border-[#2B2B2B]/10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] hover:border-[#C6A769]/30 transition-all duration-500 group"
+                  className="w-full sm:w-16 h-16 border border-[#2B2B2B]/10 flex items-center justify-center text-[#2B2B2B] hover:text-[#C6A769] hover:border-[#C6A769]/30 transition-all duration-500 group order-1 sm:order-2"
                 >
-                  <Heart size={20} strokeWidth={1} className="group-hover:scale-110 transition-transform" />
+                  <Heart size={20} strokeWidth={1} className="group-hover:scale-110 transition-transform sm:mr-0 mr-4" />
+                  <span className="sm:hidden text-[10px] uppercase tracking-[0.4em]">Save Piece</span>
                 </button>
               </div>
             </div>
 
             {/* Premium Info Tabs */}
             <div className="space-y-8 pt-12 border-t border-[#2B2B2B]/5">
-              <div className="flex gap-10 border-b border-[#2B2B2B]/5 pb-4">
+              <div className="flex gap-6 sm:gap-10 border-b border-[#2B2B2B]/5 pb-4 overflow-x-auto no-scrollbar whitespace-nowrap">
                 {['heritage', 'materials', 'care'].map((tab) => (
                   <button
                     key={tab}
@@ -338,7 +339,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Boutique Note */}
-            <div className="p-8 bg-white/40 border border-white/60 flex gap-6 items-center shadow-sm backdrop-blur-sm">
+            <div className="p-6 md:p-8 bg-white/40 border border-white/60 flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center shadow-sm backdrop-blur-sm">
               <div className="w-12 h-12 rounded-full border border-[#C6A769]/20 flex items-center justify-center text-[#C6A769] flex-shrink-0">
                 <Info size={18} strokeWidth={1} />
               </div>
