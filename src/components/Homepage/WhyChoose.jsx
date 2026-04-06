@@ -50,7 +50,7 @@ const WhyChooseUs = () => {
             transition={{ duration: 0.6 }}
             className="text-[#C6A769] text-[10px] md:text-xs tracking-[0.5em] uppercase font-medium mb-4 block"
           >
-            The Jewelery Standard
+            The Velouraz Standard
           </motion.span>
           
           <div className="overflow-hidden">

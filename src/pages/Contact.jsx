@@ -46,8 +46,8 @@ const Contact = () => {
 
             <div className="space-y-8">
               {[
-                { icon: <Mail size={20} strokeWidth={1.5} />, label: "Email Us", val: "concierge@Jewelery.com" },
-                { icon: <Phone size={20} strokeWidth={1.5} />, label: "Call Us", val: "+91 800-Jewelery" },
+                { icon: <Mail size={20} strokeWidth={1.5} />, label: "Email Us", val: "concierge@velouraz.com" },
+                { icon: <Phone size={20} strokeWidth={1.5} />, label: "Call Us", val: "+91 800-VELOURAZ" },
                 { icon: <MapPin size={20} strokeWidth={1.5} />, label: "Visit Atelier", val: "A-172 Kanak Avenue Colony, lasudiya Mori Indore" }
               ].map((item, i) => (
                 <motion.div 

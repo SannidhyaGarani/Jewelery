@@ -44,7 +44,7 @@ const Footer = () => {
           {/* Brand Identity Column (Spans 4 columns on large screens) */}
           <div className="lg:col-span-4 flex flex-col items-start">
             <Link to="/" className="font-serif text-3xl tracking-[0.2em] text-[#2B2B2B] mb-6 block">
-              Jewelery
+              Velouraz
             </Link>
             <p className="text-[#2B2B2B]/60 text-sm font-light leading-relaxed max-w-sm mb-8">
               Timeless elegance crafted for the modern visionary. Experience fine jewelry that redefines luxury, one masterpiece at a time.
@@ -120,7 +120,7 @@ const Footer = () => {
           
           {/* Copyright */}
           <div className="text-[#2B2B2B]/50 text-xs font-light tracking-wider">
-            &copy; {currentYear} Jewelery. All rights reserved.
+            &copy; {currentYear} Velouraz. All rights reserved.
           </div>
 
           {/* Luxury Payment Typography (Replacing bulky colored icons) */}
