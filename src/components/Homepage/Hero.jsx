@@ -87,7 +87,7 @@ const Hero = () => {
       <div className="max-w-[1600px] mx-auto px-4 lg:px-12">
         
         {/* Header Pills - Refined Styling */}
-        <div className="flex justify-center mb-16">
+        <div className="flex justify-start lg:justify-center mb-16 px-2 lg:px-0">
           <div className="inline-flex items-center bg-white border border-neutral-100 shadow-sm rounded-full p-1.5">
             <button className="bg-neutral-900 text-white text-[10px] tracking-[0.2em] uppercase rounded-full px-8 py-2.5 font-semibold transition-all">
               New Stories

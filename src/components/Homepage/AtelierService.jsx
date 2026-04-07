@@ -25,9 +25,9 @@ const AtelierService = () => {
   ];
 
   return (
-    <section className="bg-white py-16 lg:py-24 px-4 lg:px-12 overflow-hidden">
-      <div className="max-w-[1700px] mx-auto">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-32 items-center">
+    <section className="bg-white py-12 lg:py-24 px-4 sm:px-8 lg:px-12 overflow-hidden">
+      <div className="max-w-[1700px] mx-auto px-2">
+        <div className="flex flex-col lg:flex-row gap-12 md:gap-16 lg:gap-32 items-center">
           
           {/* Left: Cinematic Visual Spread */}
           <div className="w-full lg:w-[50%] relative group">
@@ -36,7 +36,7 @@ const AtelierService = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-[3/4] lg:aspect-auto lg:h-[800px] rounded-[40px] overflow-hidden shadow-2xl"
+              className="relative aspect-[3/4] md:aspect-[4/3] lg:aspect-auto lg:h-[800px] rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl"
             >
               <img 
                 src="https://images.unsplash.com/photo-1573408302315-9c487365bfc6?q=80&w=2070&auto=format&fit=crop" 
@@ -44,28 +44,23 @@ const AtelierService = () => {
                 className="w-full h-full object-cover transition-transform duration-[8s] group-hover:scale-110"
               />
               {/* Floating Mini-Card Design */}
-              <div className="absolute bottom-10 left-10 right-10 bg-white/10 backdrop-blur-2xl border border-white/20 p-8 rounded-3xl text-white">
-                <p className="text-[10px] tracking-[0.4em] uppercase font-bold opacity-60 mb-2">Heritage Promise</p>
-                <h4 className="font-serif text-2xl lg:text-3xl leading-tight italic">
+              <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 bg-white/10 backdrop-blur-2xl border border-white/20 p-6 md:p-8 rounded-[20px] md:rounded-3xl text-white">
+                <p className="text-[8px] md:text-[10px] tracking-[0.4em] uppercase font-bold opacity-60 mb-2">Heritage Promise</p>
+                <h4 className="font-serif text-lg md:text-2xl lg:text-3xl leading-tight italic">
                   "We don't just set stones; we preserve the echoes of your most profound moments."
                 </h4>
               </div>
             </motion.div>
-            
-            {/* Background Decorative Serif */}
-            <div className="absolute -top-12 -left-12 lg:block hidden opacity-[0.03] pointer-events-none">
-              <span className="text-[300px] font-serif italic italic font-light">A</span>
-            </div>
           </div>
 
           {/* Right: Service Offerings */}
-          <div className="w-full lg:w-[50%] space-y-16">
-            <div className="space-y-6">
+          <div className="w-full lg:w-[50%] space-y-12 md:space-y-16">
+            <div className="space-y-6 text-left">
               <motion.span 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="text-[10px] tracking-[0.5em] uppercase font-bold text-neutral-400"
+                className="text-[9px] md:text-[10px] tracking-[0.5em] uppercase font-bold text-neutral-400"
               >
                 Atelier Privé
               </motion.span>
@@ -75,9 +70,9 @@ const AtelierService = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-serif text-neutral-900 leading-tight tracking-tight max-w-xl"
+                className="text-3xl md:text-6xl lg:text-7xl font-serif text-neutral-900 leading-tight tracking-tight max-w-xl mx-0"
               >
-                <span style={{ fontFamily: 'var(--font-script)', fontWeight: 100 }} className="text-6xl md:text-7xl lg:text-8xl block -mb-4">
+                <span style={{ fontFamily: 'var(--font-script)', fontWeight: 100 }} className="text-5xl md:text-7xl lg:text-8xl block md:mb-0 -mb-2">
                   Crafting
                 </span>
                 The Extraordinary

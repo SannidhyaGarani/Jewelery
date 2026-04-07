@@ -13,7 +13,7 @@ const galleryItems = [
 
 const SocialGallery = () => {
   return (
-    <section className="bg-bg-cream py-16 lg:py-24 px-6 lg:px-16 font-sans relative overflow-hidden">
+    <section className="bg-bg-cream py-12 lg:py-24 px-4 sm:px-8 lg:px-16 font-sans relative overflow-hidden">
       {/* Decorative vertical lines */}
       <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
       <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
@@ -21,13 +21,13 @@ const SocialGallery = () => {
       <div className="max-w-[1800px] mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-text-dark/5 pb-16">
+        <div className="flex flex-col lg:flex-row justify-between lg:items-end mb-16 md:mb-24 border-b border-text-dark/5 pb-12 md:pb-16 lg:text-center text-left">
           <div className="space-y-6">
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-text-dark/40 text-[10px] tracking-[0.6em] uppercase block"
+              className="text-text-dark/40 text-[9px] md:text-[10px] tracking-[0.6em] uppercase block"
             >
               Velouraz Moments
             </motion.span>
@@ -37,9 +37,9 @@ const SocialGallery = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight"
+              className="font-serif text-3xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight"
             >
-              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">The</span> Gallery
+              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0">The</span> Gallery
             </motion.h2>
           </div>
           
@@ -47,10 +47,10 @@ const SocialGallery = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-12 lg:mt-0 max-w-sm"
+            className="mt-8 lg:mt-0 max-w-sm mx-auto lg:mx-0"
           >
-             <p className="text-[11px] tracking-[0.2em] uppercase text-text-dark/40 leading-relaxed">
-                Witness the timeless elegance and sophisticated style of the Velouraz community worldwide.
+             <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-dark/40 leading-relaxed font-bold">
+                Witness the timeless elegance and sophisticated style of the Velouraz community.
              </p>
           </motion.div>
         </div>

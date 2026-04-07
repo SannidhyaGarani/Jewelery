@@ -35,7 +35,7 @@ const WhyChooseUs = () => {
       <div className="max-w-[1800px] mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-text-dark/5 pb-16">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 border-b border-text-dark/5 pb-16">
           <div className="space-y-6">
             <motion.span
               initial={{ opacity: 0, x: -20 }}

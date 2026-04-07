@@ -36,11 +36,13 @@ const FeaturedArticles = () => {
       <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight mb-4">
-            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">Latest</span> Stories
+        <div className="lg:text-center text-left mb-16">
+          <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight mb-4 lg:px-2">
+            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0">
+              Latest
+            </span> Stories
           </h2>
-          <p className="text-[11px] font-sans text-neutral-500 tracking-wide">
+          <p className="text-[9px] md:text-[11px] font-sans text-neutral-500 tracking-[0.2em] uppercase font-bold px-4">
              Select and read: from public articles to club exclusives.
           </p>
         </div>

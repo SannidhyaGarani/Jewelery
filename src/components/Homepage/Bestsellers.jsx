@@ -41,25 +41,25 @@ const BestSellers = () => {
       {/* Custom Floating Cursor */}
       
 
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-16">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-8 lg:px-16">
         
         {/* Header - Editorial Style */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 lg:mb-20 gap-8">
           <div className="max-w-2xl">
             <motion.span 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-[10px] tracking-[0.4em] text-neutral-400 uppercase font-bold mb-4 block"
+              className="text-[9px] md:text-[10px] tracking-[0.4em] text-neutral-400 uppercase font-bold mb-4 block"
             >
               Curated Selection
             </motion.span>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-neutral-900 leading-tight tracking-tight">
-              <span style={{fontFamily: "var(--font-script)", fontWeight: 100 }} className="text-5xl md:text-6xl lg:text-7xl">Jewels</span> Velouraz Loves
+            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-neutral-900 leading-tight tracking-tight">
+              <span style={{fontFamily: "var(--font-script)", fontWeight: 100 }} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0">Jewels</span> Velouraz Loves
             </h2>
           </div>
           <div className="flex items-center gap-8">
-            <p className="text-xs text-neutral-500 max-w-[200px] leading-relaxed">
-              Discover a collection of masterpieces hand-picked by our lead artisans.
+            <p className="text-[10px] md:text-xs text-neutral-500 max-w-[200px] leading-relaxed uppercase font-bold tracking-widest">
+              Discover masterpieces hand-picked by our lead artisans.
             </p>
           </div>
         </div>
@@ -109,7 +109,7 @@ const BestSellers = () => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="mt-8 text-center px-4">
+                  <div className="mt-8 lg:text-center text-left px-4">
                     <h3 className="text-[11px] tracking-[0.3em] font-bold uppercase text-neutral-400 mb-2">
                       {product.brand}
                     </h3>

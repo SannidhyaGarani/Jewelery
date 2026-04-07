@@ -13,30 +13,30 @@ const Newsletter = () => {
   };
 
   return (
-    <section className="relative bg-bg-cream py-20 px-6 overflow-hidden">
+    <section className="relative bg-bg-cream py-16 lg:py-20 px-4 sm:px-8 overflow-hidden">
       {/* Decorative vertical lines */}
       <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
       <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
 
-      <div className="max-w-4xl mx-auto relative z-10 text-center">
+      <div className="max-w-4xl mx-auto relative z-10 lg:text-center text-left px-4">
         <motion.span
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-text-dark/40 text-[10px] tracking-[0.6em] uppercase block mb-10"
+          className="text-text-dark/40 text-[9px] md:text-[10px] tracking-[0.6em] uppercase block mb-8 md:mb-10 font-bold"
         >
           Join The Inner Circle
         </motion.span>
 
-        <div className="overflow-hidden mb-12">
+        <div className="overflow-hidden mb-10 md:mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight"
+            className="font-serif text-3xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight px-2"
           >
-            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">The</span> Newsletter
+            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0">The</span> Newsletter
           </motion.h2>
         </div>
 
@@ -45,7 +45,7 @@ const Newsletter = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-text-dark/50 text-[11px] tracking-[0.2em] uppercase font-light leading-relaxed mb-20 max-w-xl mx-auto"
+          className="text-text-dark/50 text-[11px] tracking-[0.2em] uppercase font-light leading-relaxed mb-20 max-w-xl lg:mx-auto mx-0"
         >
           Subscribe to receive exclusive access to new collections, <br className="hidden md:block" /> private events, and editorial jewellery insights.
         </motion.p>
