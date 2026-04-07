@@ -102,7 +102,7 @@ const Hero = () => {
           <div className="flex flex-col lg:flex-row items-center bg-white rounded-[32px] overflow-hidden border border-neutral-100 shadow-[0_20px_50px_rgba(0,0,0,0.02)]">
             
             {/* Left: Content Area (45%) */}
-            <div className="w-full lg:w-[45%] p-10 lg:p-20 flex flex-col justify-between min-h-[500px] lg:min-h-[700px] z-20 bg-white">
+            <div className="w-full lg:w-[45%] p-1 lg:p-20 flex flex-col justify-between min-h-[500px] lg:min-h-[700px] z-20 bg-white">
               
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div

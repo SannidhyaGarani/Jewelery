@@ -35,13 +35,13 @@ const WhyChooseUs = () => {
       <div className="max-w-[1800px] mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 border-b border-text-dark/5 pb-16">
-          <div className="space-y-6">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 md:mb-24 border-b border-text-dark/5 pb-12 md:pb-16 gap-8">
+          <div className="space-y-4 md:space-y-6">
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-text-dark/40 text-[10px] tracking-[0.6em] uppercase block"
+              className="text-text-dark/40 text-[9px] md:text-[10px] tracking-[0.5em] md:tracking-[0.6em] uppercase block font-bold"
             >
               The Velouraz Ethos
             </motion.span>
@@ -51,9 +51,9 @@ const WhyChooseUs = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight"
+              className="font-serif text-4xl md:text-5xl lg:text-7xl text-text-dark tracking-tight leading-[1.1]"
             >
-              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">Our</span> Heritage
+              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-8xl">Our</span> Heritage
             </motion.h2>
           </div>
           
@@ -61,9 +61,9 @@ const WhyChooseUs = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-12 lg:mt-0 max-w-sm"
+            className="md:mt-0 max-w-sm"
           >
-             <p className="text-[11px] tracking-[0.2em] uppercase text-text-dark/40 leading-relaxed">
+             <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-dark/40 leading-relaxed font-bold">
                 Discover the pillars of excellence that define our house and our unwavering commitment to the art of fine jewellery.
              </p>
           </motion.div>
@@ -80,7 +80,7 @@ const WhyChooseUs = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.2, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className={`group relative p-10 lg:p-16 border-b border-neutral-100 lg:border-b-0 
+                className={`group relative p-0 py-10 lg:p-16 border-b border-neutral-100 lg:border-b-0 
                   ${index !== features.length - 1 ? 'lg:border-r lg:border-neutral-100' : ''} 
                   hover:bg-neutral-50/50 transition-colors duration-1000`}
               >
@@ -99,18 +99,18 @@ const WhyChooseUs = () => {
                 </div>
 
                 <div className="relative z-10">
-                  <h3 className="font-serif text-2xl text-neutral-900 mb-6 tracking-wide group-hover:translate-x-2 transition-transform duration-700">
+                  <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 mb-6 tracking-wide group-hover:translate-x-2 transition-transform duration-700">
                     {item.title}
                   </h3>
 
-                  <p className="text-neutral-500 text-[11px] tracking-[0.2em] uppercase font-medium leading-loose max-w-[240px]">
+                  <p className="text-neutral-500 text-[11px] tracking-[0.2em] uppercase font-medium leading-loose max-w-none md:max-w-[240px]">
                     {item.description}
                   </p>
                 </div>
 
                 {/* Subtle Bottom Accent Line */}
                 <motion.div 
-                  className="absolute bottom-0 left-0 h-[2px] bg-neutral-900 w-0 group-hover:w-full transition-all duration-1000 ease-in-out"
+                  className="absolute bottom-0 left-0 h-[3px] bg-neutral-900 w-0 group-hover:w-full transition-all duration-1000 ease-in-out"
                 />
               </motion.div>
             );
