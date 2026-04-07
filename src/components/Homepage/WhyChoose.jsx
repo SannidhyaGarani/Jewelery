@@ -1,148 +1,120 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Gem, Feather, Globe, Award } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
 
 const features = [
   {
     icon: Gem,
-    title: "Premium Quality",
-    description: "Exquisite craftsmanship using premium base metals and high-grade gold plating to ensure lasting brilliance."
+    title: "Artisanal Excellence",
+    description: "Every masterpiece is meticulously handcrafted by our master artisans, merging centuries-old techniques with contemporary vision."
   },
   {
     icon: Feather,
-    title: "Hypoallergenic",
-    description: "Zero nickel or lead. Skin-friendly materials meticulously tested for the most sensitive skin types."
+    title: "Pure Integrity",
+    description: "We use only the finest ethically sourced materials, ensuring a lifetime of brilliance and absolute comfort for the most sensitive skin."
   },
   {
     icon: Globe,
-    title: "Worldwide Shipping",
-    description: "Fast, fully insured, and tracked global delivery encased in our signature luxury packaging."
+    title: "Global Stewardship",
+    description: "Experience white-glove delivery worldwide, encased in our signature sustainable packaging that reflects our commitment to the planet."
   },
   {
     icon: Award,
-    title: "Lifetime Guarantee",
-    description: "We stand by our artistry. Enjoy a lifetime design guarantee on the integrity of our original pieces."
+    title: "Legacy Promise",
+    description: "Our commitment transcends the purchase. We offer a lifetime guarantee of authenticity and design integrity for every Velouraz creation."
   }
 ];
 
 const WhyChooseUs = () => {
   return (
-    <section className="bg-[#FAF9F6] py-16 md:py-24 px-6 lg:px-12 font-sans relative overflow-hidden">
-      
-      {/* Background Decorative Accents */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C6A769]/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#E6B7A9]/5 rounded-full blur-[120px] translate-y-1/2 -translateX-1/2 pointer-events-none" />
+    <section className="bg-bg-cream py-10 lg:py-14 px-6 lg:px-16 font-sans relative overflow-hidden">
+      {/* Decorative vertical lines */}
+      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
+      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[1800px] mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-[#C6A769] text-[10px] md:text-xs tracking-[0.5em] uppercase font-medium mb-4 block"
-          >
-            The Velouraz Standard
-          </motion.span>
-          
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: "100%" }}
-              whileInView={{ y: 0 }}
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-text-dark/5 pb-16">
+          <div className="space-y-6">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-              className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#2B2B2B] font-normal"
+              className="text-text-dark/40 text-[10px] tracking-[0.6em] uppercase block"
             >
-              Why Discerning <span className="italic">Clients</span> Choose Us
+              The Velouraz Ethos
+            </motion.span>
+            
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight"
+            >
+              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">Our</span> Heritage
             </motion.h2>
           </div>
           
           <motion.div 
-            initial={{ width: 0 }}
-            whileInView={{ width: "3rem" }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-6 h-[1px] bg-[#C6A769]/50 mx-auto"
-          ></motion.div>
+            className="mt-12 lg:mt-0 max-w-sm"
+          >
+             <p className="text-[11px] tracking-[0.2em] uppercase text-text-dark/40 leading-relaxed">
+                Discover the pillars of excellence that define our house and our unwavering commitment to the art of fine jewellery.
+             </p>
+          </motion.div>
         </div>
 
-        {/* Swiper Carousel */}
-        <div className="relative">
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            spaceBetween={24}
-            slidesPerView={1}
-            autoplay={{
-              delay: 3500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-              el: '.custom-pagination-why',
-            }}
-            breakpoints={{
-              640: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 4,
-              },
-            }}
-            className="pb-16"
-          >
-            {features.map((item, index) => {
-              const IconComponent = item.icon;
-              return (
-                <SwiperSlide key={index} className="h-auto">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    className="group relative h-full"
-                  >
-                    {/* Refined Glassmorphism Card */}
-                    <div className="h-full bg-white/40 backdrop-blur-md border border-white/60 p-8 lg:p-10 flex flex-col items-center text-center transition-all duration-700 hover:bg-white hover:shadow-[0_30px_60px_rgba(198,167,105,0.08)] hover:-translate-y-2">
-                      
-                      {/* Icon Container with multi-layered glow */}
-                      <div className="mb-8 relative w-16 h-16 flex items-center justify-center border border-[#C6A769]/20 rounded-full transition-all duration-700 group-hover:bg-[#C6A769]/5 group-hover:border-[#C6A769]/40">
-                        <div className="absolute inset-0 bg-[#C6A769]/0 rounded-full transition-all duration-700 group-hover:bg-[#C6A769]/5 blur-xl" />
-                        <IconComponent 
-                          strokeWidth={1} 
-                          className="w-6 h-6 text-[#C6A769] transition-transform duration-700 group-hover:scale-110" 
-                        />
-                      </div>
+        {/* Features Grid */}
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+          {features.map((item, index) => {
+            const IconComponent = item.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className={`group relative p-10 lg:p-16 border-b border-neutral-100 lg:border-b-0 
+                  ${index !== features.length - 1 ? 'lg:border-r lg:border-neutral-100' : ''} 
+                  hover:bg-neutral-50/50 transition-colors duration-1000`}
+              >
+                {/* Background "Ghost" Numbering */}
+                <span className="absolute top-10 right-10 font-serif text-8xl text-neutral-900/[0.03] select-none pointer-events-none group-hover:text-neutral-900/[0.06] transition-colors duration-1000">
+                  0{index + 1}
+                </span>
 
-                      {/* Title */}
-                      <h3 className="font-serif text-lg lg:text-xl text-[#2B2B2B] mb-4 transition-colors duration-500 group-hover:text-[#C6A769]">
-                        {item.title}
-                      </h3>
+                {/* Icon with Decorative Halo */}
+                <div className="relative mb-12 inline-block">
+                  <div className="text-neutral-900 relative z-10 group-hover:scale-110 transition-transform duration-1000 ease-out">
+                    <IconComponent strokeWidth={0.75} size={48} />
+                  </div>
+                  {/* The Halo Effect */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border border-neutral-100 rounded-full scale-0 group-hover:scale-150 group-hover:opacity-0 transition-all duration-1000 ease-out" />
+                </div>
 
-                      {/* Description */}
-                      <p className="text-[#2B2B2B]/60 text-xs md:text-sm font-light leading-relaxed tracking-wide">
-                        {item.description}
-                      </p>
+                <div className="relative z-10">
+                  <h3 className="font-serif text-2xl text-neutral-900 mb-6 tracking-wide group-hover:translate-x-2 transition-transform duration-700">
+                    {item.title}
+                  </h3>
 
-                      {/* Corner Accent */}
-                      <span className="absolute top-0 right-0 w-0 h-[1px] bg-[#C6A769]/40 transition-all duration-700 group-hover:w-1/3"></span>
-                      <span className="absolute top-0 right-0 w-[1px] h-0 bg-[#C6A769]/40 transition-all duration-700 group-hover:h-1/3"></span>
-                    </div>
-                  </motion.div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-          
-          {/* Custom Luxury Pagination */}
-          <div className="custom-pagination-why flex justify-center mt-4 gap-2"></div>
+                  <p className="text-neutral-500 text-[11px] tracking-[0.2em] uppercase font-medium leading-loose max-w-[240px]">
+                    {item.description}
+                  </p>
+                </div>
+
+                {/* Subtle Bottom Accent Line */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 h-[2px] bg-neutral-900 w-0 group-hover:w-full transition-all duration-1000 ease-in-out"
+                />
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>

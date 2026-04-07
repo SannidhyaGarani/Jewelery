@@ -1,166 +1,98 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
-const collections = [
+const articles = [
   {
-    title: "Bridal Collection",
-    description: "Timeless diamond and gold sets designed for your unforgettable day.",
-    image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    title: "Everyday Elegance",
-    description: "Effortless, delicate pieces crafted to elevate your daily style.",
+    id: 1,
+    tags: ['JEWELLERY', 'EVENTS'],
+    title: "Jewellery Geneva 2026: Inside Geneva's Boutique Jewellery Show",
+    author: "BY KATERINA PEREZ",
     image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800",
+    isClub: false,
   },
   {
-    title: "Royal Heritage",
-    description: "Grand statement jewelry inspired by classic regal masterpieces.",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800",
+    id: 2,
+    tags: ['KP BLOG', 'PERSONAL BLOG'],
+    title: "Heart or Head: The Ultimate Test for Gem Lovers",
+    author: "BY VELOURAZ",
+    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop",
+    isClub: true,
   },
   {
-    title: "Modern Minimalist",
-    description: "Clean lines and abstract forms for the contemporary aesthetic.",
-    image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=800",
+    id: 3,
+    tags: ['GEMSTONES', 'COLOURED GEMS'],
+    title: "Paraiba Tourmaline: The Making of a Modern Blue-Chip Gemstone",
+    author: "BY KATERINA PEREZ",
+    image: "https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&auto=format&fit=crop&q=60",
+    isClub: true,
   },
 ];
 
-const FeaturedCollections = () => {
+const FeaturedArticles = () => {
   return (
-    <section className="bg-[#FAF9F6] py-16 md:py-24 px-6 lg:px-12 font-sans relative overflow-hidden">
-      {/* Subtle Cinematic Grain */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] z-0" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="bg-white py-12 lg:py-20 font-sans">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-[#C6A769] text-[10px] md:text-xs tracking-[0.5em] uppercase font-medium mb-4 block"
-          >
-            Curated For You
-          </motion.span>
-          
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: "100%" }}
-              whileInView={{ y: 0 }}
+        <div className="text-center mb-12">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight mb-4">
+            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">Latest</span> Stories
+          </h2>
+          <p className="text-[11px] font-sans text-neutral-500 tracking-wide">
+             Select and read: from public articles to club exclusives.
+          </p>
+        </div>
+
+        {/* Article Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {articles.map((article, index) => (
+            <motion.div
+              key={article.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-              className="font-serif text-3xl md:text-5xl text-[#2B2B2B] font-normal"
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              className="group cursor-pointer flex flex-col"
             >
-              Our Signature <span className="italic">Collections</span>
-            </motion.h2>
-          </div>
-          
-          <motion.div 
-            initial={{ width: 0 }}
-            whileInView={{ width: "3rem" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-6 h-[1px] bg-[#C6A769]/50 mx-auto"
-          ></motion.div>
-        </div>
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-6">
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                
+                {article.isClub && (
+                   <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md border border-white/30 text-white text-[8px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">
+                      CLUB
+                   </div>
+                )}
 
-        {/* Collections Swiper */}
-        <div className="relative">
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={20}
-            slidesPerView={1.2}
-            centeredSlides={false}
-            autoplay={{
-              delay: 4000,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-              el: '.custom-pagination-featured',
-            }}
-            breakpoints={{
-              640: {
-                slidesPerView: 2.2,
-                spaceBetween: 30,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              },
-            }}
-            className="pb-16"
-          >
-            {collections.map((item, index) => (
-              <SwiperSlide key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  className="group cursor-pointer"
-                >
-                  {/* Image Container with Zoom and Gold Overlay */}
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[#EAE8E3] shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-shadow duration-500 group-hover:shadow-[0_20px_50px_rgba(198,167,105,0.1)]">
-                    
-                    {/* Background Image */}
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                    />
+                <button className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/60 transition-colors">
+                   <Heart size={14} strokeWidth={1.5} />
+                </button>
+              </div>
 
-                    {/* Gold Shimmer Overlay */}
-                    <div className="absolute inset-0 bg-[#C6A769] opacity-0 mix-blend-color transition-opacity duration-500 group-hover:opacity-20" />
-                    
-                    {/* Dark Contrast Overlay for depth */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#2B2B2B]/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    
-                    {/* Subtle outer border on hover */}
-                    <div className="absolute inset-4 border border-white/0 transition-all duration-500 group-hover:border-white/20" />
-                  </div>
+              <div className="space-y-3 px-2">
+                <div className="flex gap-4">
+                  {article.tags.map(tag => (
+                     <span key={tag} className="text-[8px] tracking-[0.2em] font-bold uppercase text-text-dark/60">
+                       {tag}
+                     </span>
+                  ))}
+                </div>
 
-                  {/* Text Content */}
-                  <div className="mt-6 text-center px-2">
-                    <h3 className="font-serif text-lg text-[#2B2B2B] group-hover:text-[#C6A769] transition-colors duration-300">
-                      {item.title}
-                    </h3>
-                    
-                    <p className="text-[#2B2B2B]/60 text-xs md:text-sm font-light mt-2 tracking-wide leading-relaxed">
-                      {item.description}
-                    </p>
-                    
-                    {/* Animated Call to Action */}
-                    <div className="mt-4 flex justify-center items-center gap-2 text-[#C6A769] text-xs tracking-wider uppercase font-normal opacity-0 -translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-                      Explore
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                  </div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          
-          {/* Custom Luxury Pagination */}
-          <div className="custom-pagination-featured flex justify-center mt-4 gap-2"></div>
-        </div>
-
-        {/* Bottom CTA to view all */}
-        <div className="text-center mt-12 md:mt-16">
-          <button className="group text-[#2B2B2B] text-xs md:text-sm tracking-[0.3em] uppercase font-normal relative pb-2 overflow-hidden">
-            View All Collections
-            <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#2B2B2B]/20"></span>
-            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#C6A769] transition-all duration-500 group-hover:w-full"></span>
-          </button>
+                <h3 className="font-serif text-2xl lg:text-3xl text-text-dark leading-tight group-hover:text-neutral-600 transition-colors duration-300">
+                  {article.title}
+                </h3>
+                
+                <p className="text-[8px] tracking-[0.2em] uppercase font-bold text-neutral-500 pt-2">
+                  {article.author}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
       </div>
@@ -168,4 +100,5 @@ const FeaturedCollections = () => {
   );
 };
 
-export default FeaturedCollections;
+export default FeaturedArticles;
+

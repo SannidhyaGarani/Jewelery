@@ -1,140 +1,139 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Twitter, Youtube } from 'lucide-react';
+import { Instagram, Facebook, Twitter, Youtube, ArrowRight } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const links = {
-    shop: [
-      { name: 'All Pieces', href: '/shop' },
-      { name: 'Bridal Collection', href: '/shop?category=Bridal' },
-      { name: 'Everyday Elegance', href: '/shop?category=Everyday' },
-      { name: 'New Arrivals', href: '/shop?category=New Arrivals' }
+    collections: [
+      { name: 'High Jewellery', href: '/shop' },
+      { name: 'Bridal Selection', href: '/shop' },
+      { name: 'Everyday Icons', href: '/shop' },
+      { name: 'New Arrivals', href: '/shop' }
     ],
-    about: [
+    house: [
       { name: 'Our Heritage', href: '/about' },
-      { name: 'Craftsmanship', href: '/about' },
-      { name: 'Sustainability', href: '/about' },
-      { name: 'Contact Us', href: '/contact' }
+      { name: 'The Artisans', href: '/about' },
+      { name: 'Responsibility', href: '/about' },
+      { name: 'Press & Media', href: '/about' }
     ],
-    support: [
-      { name: 'Shipping & Returns', href: '#' },
-      { name: 'Jewelry Care', href: '#' },
-      { name: 'FAQ', href: '#' },
-      { name: 'Privacy Policy', href: '#' }
+    client_care: [
+      { name: 'Private Concierge', href: '/contact' },
+      { name: 'Shipping & Logistics', href: '#' },
+      { name: 'Jewellery Care', href: '#' },
+      { name: 'Bespoke Services', href: '#' }
     ]
   };
 
   const socialLinks = [
-    { icon: Instagram, href: '#' },
-    { icon: Facebook, href: '#' },
-    { icon: Twitter, href: '#' },
-    { icon: Youtube, href: '#' }
+    { icon: Instagram, name: 'INSTAGRAM', href: '#' },
+    { icon: Facebook, name: 'FACEBOOK', href: '#' },
+    { icon: Twitter, name: 'TWITTER', href: '#' },
   ];
 
-  const paymentMethods = ['VISA', 'MASTERCARD', 'AMEX', 'APPLE PAY'];
-
   return (
-    <footer className="bg-[#FAF9F6] border-t border-[#2B2B2B]/5 font-sans pt-20 pb-8 px-6 lg:px-12 text-[#2B2B2B]">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-bg-cream border-t border-text-dark/5 font-sans pt-40 pb-16 px-6 lg:px-16 text-text-dark relative overflow-hidden">
+      {/* Decorative vertical lines */}
+      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
+      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
+
+      <div className="max-w-[1800px] mx-auto relative z-10">
         
         {/* Top Grid Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-32 pb-40">
           
-          {/* Brand Identity Column (Spans 4 columns on large screens) */}
-          <div className="lg:col-span-4 flex flex-col items-start">
-            <Link to="/" className="font-serif text-3xl tracking-[0.2em] text-[#2B2B2B] mb-6 block">
-              Velouraz
-            </Link>
-            <p className="text-[#2B2B2B]/60 text-sm font-light leading-relaxed max-w-sm mb-8">
-              Timeless elegance crafted for the modern visionary. Experience fine jewelry that redefines luxury, one masterpiece at a time.
-            </p>
+          {/* Brand Column */}
+          <div className="lg:col-span-4 space-y-12">
+            <div>
+               <Link to="/" className="font-serif text-5xl tracking-tight text-text-dark block mb-8">
+                 Velouraz
+               </Link>
+               <p className="text-text-dark/40 text-[11px] tracking-[0.2em] uppercase leading-[2] max-w-sm">
+                 Architecting timeless elegance for the modern visionary. A legacy of artisanal excellence and uncompromising brilliance.
+               </p>
+            </div>
             
-            {/* Social Icons */}
-            <div className="flex space-x-5">
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-                return (
-                  <a 
-                    key={index} 
-                    href={social.href}
-                    className="text-[#2B2B2B]/60 hover:text-[#C6A769] transition-colors duration-300"
-                  >
-                    <Icon strokeWidth={1.2} className="w-5 h-5" />
-                  </a>
-                );
-              })}
+            <div className="space-y-6">
+               <p className="text-[10px] tracking-[0.4em] uppercase text-text-dark font-medium">Join Our Outer Circle</p>
+               <form className="flex border-b border-text-dark/10 pb-4 group">
+                  <input 
+                    type="email" 
+                    placeholder="YOUR EMAIL" 
+                    className="bg-transparent text-[10px] tracking-[0.3em] uppercase w-full focus:outline-none placeholder:text-text-dark/20"
+                  />
+                  <button type="submit" className="text-text-dark/40 group-hover:text-accent transition-colors">
+                     <ArrowRight size={18} strokeWidth={1.5} />
+                  </button>
+               </form>
             </div>
           </div>
 
-          {/* Links Columns (Span 2 to 3 columns each) */}
-          <div className="lg:col-span-3">
-            <h4 className="text-xs tracking-[0.2em] uppercase font-medium mb-6">Shop</h4>
-            <ul className="space-y-4">
-              {links.shop.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.href} className="text-[#2B2B2B]/70 text-sm font-light hover:text-[#C6A769] transition-colors duration-300 relative group">
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#C6A769] transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links Grid */}
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-16 lg:gap-24">
+            <div>
+              <h4 className="text-[10px] tracking-[0.5em] uppercase text-text-dark/30 mb-10">Collections</h4>
+              <ul className="space-y-6">
+                {links.collections.map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.href} className="text-[11px] tracking-[0.2em] uppercase font-light text-text-dark/60 hover:text-accent transition-all duration-300">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="lg:col-span-3">
-            <h4 className="text-xs tracking-[0.2em] uppercase font-medium mb-6">Company</h4>
-            <ul className="space-y-4">
-              {links.about.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.href} className="text-[#2B2B2B]/70 text-sm font-light hover:text-[#C6A769] transition-colors duration-300 relative group">
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#C6A769] transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div>
+              <h4 className="text-[10px] tracking-[0.5em] uppercase text-text-dark/30 mb-10">House</h4>
+              <ul className="space-y-6">
+                {links.house.map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.href} className="text-[11px] tracking-[0.2em] uppercase font-light text-text-dark/60 hover:text-accent transition-all duration-300">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="lg:col-span-2">
-            <h4 className="text-xs tracking-[0.2em] uppercase font-medium mb-6">Support</h4>
-            <ul className="space-y-4">
-              {links.support.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.href} className="text-[#2B2B2B]/70 text-sm font-light hover:text-[#C6A769] transition-colors duration-300 relative group">
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#C6A769] transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <h4 className="text-[10px] tracking-[0.5em] uppercase text-text-dark/30 mb-10">Client Care</h4>
+              <ul className="space-y-6">
+                {links.client_care.map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.href} className="text-[11px] tracking-[0.2em] uppercase font-light text-text-dark/60 hover:text-accent transition-all duration-300">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-
         </div>
 
-        {/* Bottom Section: Separator */}
-        <div className="w-full h-[1px] bg-[#2B2B2B]/10 mb-8" />
+        {/* Bottom Section */}
+        <div className="flex flex-col lg:flex-row justify-between items-end border-t border-text-dark/5 pt-16 gap-12">
+            <div className="flex flex-col sm:flex-row gap-12 lg:gap-24 items-start sm:items-end">
+               <div className="space-y-4">
+                  <p className="text-[9px] tracking-[0.3em] uppercase text-text-dark/20">Follow Us</p>
+                  <div className="flex gap-10">
+                     {socialLinks.map((social) => (
+                       <Link key={social.name} to={social.href} className="text-[10px] tracking-[0.3em] uppercase text-text-dark/40 hover:text-accent transition-colors">
+                          {social.name}
+                       </Link>
+                     ))}
+                  </div>
+               </div>
+               <p className="text-[9px] tracking-[0.3em] uppercase text-text-dark/20">
+                  © {currentYear} Velouraz Atelier. All Rights Reserved.
+               </p>
+            </div>
 
-        {/* Bottom Section: Copyright & Payments */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          
-          {/* Copyright */}
-          <div className="text-[#2B2B2B]/50 text-xs font-light tracking-wider">
-            &copy; {currentYear} Velouraz. All rights reserved.
-          </div>
-
-          {/* Luxury Payment Typography (Replacing bulky colored icons) */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-            {paymentMethods.map((method) => (
-              <span 
-                key={method} 
-                className="text-[#2B2B2B]/40 text-[10px] tracking-[0.2em] font-medium uppercase border border-[#2B2B2B]/10 px-3 py-1 rounded-sm"
-              >
-                {method}
-              </span>
-            ))}
-          </div>
-
+            <div className="flex gap-8 items-center border-b border-text-dark/10 pb-4">
+               {['VISA', 'AMEX', 'MASTER', 'UPI'].map(pay => (
+                 <span key={pay} className="text-[9px] tracking-[0.3em] text-text-dark/20 font-medium">{pay}</span>
+               ))}
+            </div>
         </div>
       </div>
     </footer>

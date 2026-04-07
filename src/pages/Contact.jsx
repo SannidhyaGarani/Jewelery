@@ -1,132 +1,132 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Send, Instagram, Twitter, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, Instagram, Linkedin, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pt-32 pb-24 font-sans relative overflow-hidden">
-      {/* Background Cinematic Grain */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] z-0" />
-      
-      {/* Decorative Blur Accent */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C6A769]/5 rounded-full blur-[150px] pointer-events-none" />
+    <div className="min-h-screen bg-bg-cream pt-48 pb-32 font-sans relative overflow-hidden">
+      {/* Decorative vertical lines */}
+      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
+      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-24">
-          {/* Left: Info */}
-          <div className="space-y-12">
-            <div className="space-y-6">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16 relative z-10">
+        <div className="editorial-grid gap-24">
+          {/* Left: Info & Story */}
+          <div className="col-span-12 lg:col-span-5 space-y-16">
+            <div className="space-y-10">
               <motion.span 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-block px-4 py-1.5 border border-[#C6A769]/30 text-[#C6A769] text-[10px] tracking-[0.5em] uppercase font-medium bg-[#C6A769]/5"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="block text-[10px] tracking-[0.6em] uppercase text-text-dark/40"
               >
-                Get in Touch
+                At Your Service
               </motion.span>
-              <div className="overflow-hidden">
-                <motion.h1 
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#2B2B2B] leading-[1.1]"
-                >
-                  Start a <br />
-                  <span className="italic font-light text-[#C6A769]">Conversation</span>
-                </motion.h1>
-              </div>
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
+              <motion.h1 
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-sm md:text-base text-[#2B2B2B]/70 font-light tracking-wide leading-relaxed max-w-md"
+                transition={{ duration: 1.2 }}
+                className="text-4xl md:text-5xl lg:text-6xl font-serif text-text-dark leading-tight tracking-tight"
               >
-                Inquire about bespoke creations, private viewing appointments, or detailed information regarding our exclusive collections.
+                <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">Inquire</span> <br />
+                Privately
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="text-sm text-text-dark/60 font-light tracking-wide leading-relaxed max-w-md"
+              >
+                Whether you wish to discuss a bespoke creation or reserve a private viewing at our London atelier, our concierge team is at your disposal.
               </motion.p>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-12 border-t border-text-dark/5 pt-12">
               {[
-                { icon: <Mail size={20} strokeWidth={1.5} />, label: "Email Us", val: "concierge@velouraz.com" },
-                { icon: <Phone size={20} strokeWidth={1.5} />, label: "Call Us", val: "+91 800-VELOURAZ" },
-                { icon: <MapPin size={20} strokeWidth={1.5} />, label: "Visit Atelier", val: "A-172 Kanak Avenue Colony, lasudiya Mori Indore" }
+                { icon: <MessageCircle size={20} strokeWidth={0.5} />, label: "Concierge", val: "concierge@velouraz.com" },
+                { icon: <Phone size={20} strokeWidth={0.5} />, label: "Enquiries", val: "+44 (0) 20 7123 4567" },
+                { icon: <MapPin size={20} strokeWidth={0.5} />, label: "The Atelier", val: "Mayfair, London, UK" }
               ].map((item, i) => (
                 <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 + (i * 0.1), duration: 0.8 }}
-                  key={i} 
-                  className="flex gap-6 group items-center"
+                   key={i}
+                   initial={{ opacity: 0, x: -10 }}
+                   animate={{ opacity: 1, x: 0 }}
+                   transition={{ delay: 0.6 + i * 0.1 }}
+                   className="flex items-start gap-8 group"
                 >
-                  <div className="w-14 h-14 rounded-full border border-[#C6A769]/30 flex items-center justify-center text-[#C6A769] group-hover:bg-[#C6A769] group-hover:text-white transition-all duration-500 shadow-sm relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[#C6A769] transform scale-0 group-hover:scale-100 transition-transform duration-500 rounded-full" />
-                    <span className="relative z-10">{item.icon}</span>
-                  </div>
+                  <div className="text-accent mt-1">{item.icon}</div>
                   <div>
-                    <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#2B2B2B]/50 mb-1">{item.label}</p>
-                    <p className="text-lg font-serif text-[#2B2B2B]">{item.val}</p>
+                    <p className="text-[9px] tracking-[0.4em] uppercase text-text-dark/40 mb-2">{item.label}</p>
+                    <p className="text-xl font-serif text-text-dark/90 transition-colors group-hover:text-accent cursor-default">{item.val}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="pt-12 border-t border-[#2B2B2B]/10"
-            >
-              <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#2B2B2B]/50 mb-6">Follow Our Journey</p>
-              <div className="flex gap-4">
-                {[<Instagram size={18} strokeWidth={1.5} />, <Twitter size={18} strokeWidth={1.5} />, <Facebook size={18} strokeWidth={1.5} />].map((icon, i) => (
-                  <button key={i} className="w-12 h-12 rounded-full border border-[#2B2B2B]/10 flex items-center justify-center text-[#2B2B2B] hover:bg-[#C6A769] hover:text-white hover:border-[#C6A769] transition-all duration-300">
-                    {icon}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
+            <div className="flex gap-10 pt-8">
+               {['Instagram', 'LinkedIn', 'Pinterest'].map((social, i) => (
+                 <a key={i} href="#" className="text-[10px] tracking-[0.3em] uppercase text-text-dark/40 hover:text-accent transition-colors">
+                   {social}
+                 </a>
+               ))}
+            </div>
           </div>
 
-          {/* Right: Form */}
+          {/* Right: Modern Form */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="relative"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            className="col-span-12 lg:col-span-7"
           >
-            <div className="bg-white/40 backdrop-blur-md rounded-sm p-8 md:p-12 border border-white/60 shadow-[0_30px_60px_rgba(198,167,105,0.05)] relative z-10">
-              <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-3">
-                    <label className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#2B2B2B]/60">Your Name</label>
-                    <input type="text" className="w-full bg-transparent border-b border-[#2B2B2B]/20 py-3 text-sm text-[#2B2B2B] placeholder:text-[#2B2B2B]/30 outline-none focus:border-[#C6A769] transition-colors" placeholder="Jane Doe" />
+            <div className="bg-white/30 backdrop-blur-sm p-10 md:p-20 border border-text-dark/5 luxury-card">
+              <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid md:grid-cols-2 gap-12">
+                  <div className="space-y-4">
+                    <label className="text-[9px] tracking-[0.4em] uppercase text-text-dark/40">Full Name</label>
+                    <input type="text" className="w-full bg-transparent border-b border-text-dark/10 py-4 text-serif text-lg outline-none focus:border-accent transition-colors" placeholder="your name" />
                   </div>
-                  <div className="space-y-3">
-                    <label className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#2B2B2B]/60">Email Address</label>
-                    <input type="email" className="w-full bg-transparent border-b border-[#2B2B2B]/20 py-3 text-sm text-[#2B2B2B] placeholder:text-[#2B2B2B]/30 outline-none focus:border-[#C6A769] transition-colors" placeholder="jane@example.com" />
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <label className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#2B2B2B]/60">Inquiry Type</label>
-                  <div className="relative">
-                    <select className="w-full bg-transparent border-b border-[#2B2B2B]/20 py-3 text-sm text-[#2B2B2B] outline-none focus:border-[#C6A769] transition-colors appearance-none cursor-pointer">
-                      <option>Bespoke Consultation</option>
-                      <option>Product Information</option>
-                      <option>Private Viewing</option>
-                      <option>Other Services</option>
-                    </select>
+                  <div className="space-y-4">
+                    <label className="text-[9px] tracking-[0.4em] uppercase text-text-dark/40">Email</label>
+                    <input type="email" className="w-full bg-transparent border-b border-text-dark/10 py-4 text-serif text-lg outline-none focus:border-accent transition-colors" placeholder="email address" />
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <label className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#2B2B2B]/60">Your Message</label>
-                  <textarea rows="5" className="w-full bg-transparent border-b border-[#2B2B2B]/20 py-3 text-sm text-[#2B2B2B] placeholder:text-[#2B2B2B]/30 outline-none focus:border-[#C6A769] transition-colors resize-none" placeholder="How may we assist you?"></textarea>
+                
+                <div className="space-y-4 text-serif">
+                   <label className="text-[9px] tracking-[0.4em] uppercase text-text-dark/40">Inquiry Nature</label>
+                   <select className="w-full bg-transparent border-b border-text-dark/10 py-4 text-lg outline-none focus:border-accent transition-colors appearance-none cursor-pointer font-serif">
+                      <option>Bespoke Commission</option>
+                      <option>Private Showroom Appointment</option>
+                      <option>Collection Enquiries</option>
+                      <option>Press & Media</option>
+                   </select>
                 </div>
-                <button className="w-full bg-[#2B2B2B] text-white py-5 text-[10px] uppercase tracking-[0.4em] font-medium hover:bg-[#C6A769] transition-colors duration-500 flex items-center justify-center gap-3">
-                  Send Inquiry <Send size={14} />
+
+                <div className="space-y-4">
+                  <label className="text-[9px] tracking-[0.4em] uppercase text-text-dark/40">Your Vision</label>
+                  <textarea rows="4" className="w-full bg-transparent border-b border-text-dark/10 py-4 text-serif text-lg outline-none focus:border-accent transition-colors resize-none" placeholder="how may we assist you?"></textarea>
+                </div>
+                
+                <button className="group relative pr-12 text-text-dark hover:text-accent transition-colors duration-500">
+                  <span className="font-sans text-[11px] tracking-[0.4em] uppercase border-b border-text-dark/20 pb-2 group-hover:border-accent">
+                    Submit Inquiry
+                  </span>
+                  <ArrowRight size={18} className="absolute right-0 bottom-3 group-hover:translate-x-2 transition-transform duration-500" />
                 </button>
               </form>
             </div>
-            {/* Background Glow behind form */}
-            <div className="absolute -z-10 -bottom-10 -right-10 w-64 h-64 bg-[#E6B7A9]/20 rounded-full blur-3xl" />
+            
+            <div className="mt-16 flex items-center gap-12 px-2">
+               <div className="flex -space-x-3">
+                  {[1,2,3].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-bg-cream bg-neutral-200 overflow-hidden">
+                       <img src={`https://i.pravatar.cc/100?u=${i}`} alt="Specialist" className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+               </div>
+               <p className="text-[10px] tracking-[0.2em] uppercase text-text-dark/40">
+                  Our specialists are currently online <br /> to assist you in real-time.
+               </p>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
@@ -9,114 +9,109 @@ const Newsletter = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('loading');
-    // Simulate API call
     setTimeout(() => setStatus('success'), 1500);
   };
 
   return (
-    <section className="relative bg-[#FAF9F6] py-16 md:py-24 px-6 overflow-hidden">
-      {/* 1. Sophisticated Background Accents */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl opacity-50 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#C6A769_0%,transparent_70%)] blur-[120px] opacity-20" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#E6B7A9]/10 rounded-full blur-[100px]" />
-      </div>
+    <section className="relative bg-bg-cream py-20 px-6 overflow-hidden">
+      {/* Decorative vertical lines */}
+      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
+      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
 
-      <div className="max-w-3xl mx-auto relative z-10 text-center">
-        {/* 2. Header Content */}
+      <div className="max-w-4xl mx-auto relative z-10 text-center">
         <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-[#C6A769] text-[10px] md:text-xs tracking-[0.6em] uppercase font-medium mb-6 block"
+          className="text-text-dark/40 text-[10px] tracking-[0.6em] uppercase block mb-10"
         >
-          The Inner Circle
+          Join The Inner Circle
         </motion.span>
 
-        <div className="overflow-hidden mb-6">
+        <div className="overflow-hidden mb-12">
           <motion.h2
-            initial={{ y: "100%" }}
-            whileInView={{ y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#2B2B2B] font-normal"
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif text-4xl md:text-5xl lg:text-6xl text-text-dark tracking-tight leading-tight"
           >
-            Join Our <span className="italic">Exclusive</span> Circle
+            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">The</span> Newsletter
           </motion.h2>
         </div>
 
         <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-[#2B2B2B]/60 text-sm md:text-base font-light tracking-wide leading-[1.8] mb-12 max-w-xl mx-auto"
+          className="text-text-dark/50 text-[11px] tracking-[0.2em] uppercase font-light leading-relaxed mb-20 max-w-xl mx-auto"
         >
-          Be the first to discover new collections, private exhibitions, and receive 
-          bespoke styling invitations directly to your inbox.
+          Subscribe to receive exclusive access to new collections, <br className="hidden md:block" /> private events, and editorial jewellery insights.
         </motion.p>
 
-        {/* 3. Subscription Form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="relative max-w-lg mx-auto"
+          className="relative max-w-2xl mx-auto"
         >
           {status !== 'success' ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 group">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-end gap-8 border-b border-text-dark/10 pb-6 group">
               <div className="relative flex-grow">
                 <input
                   type="email"
                   required
-                  placeholder="Enter your email address"
+                  placeholder="YOUR EMAIL ADDRESS"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/40 backdrop-blur-md border border-[#2B2B2B]/10 px-6 py-4 text-[#2B2B2B] placeholder:text-[#2B2B2B]/30 focus:outline-none focus:border-[#C6A769] transition-all duration-500 font-light text-sm"
+                  className="w-full bg-transparent px-0 py-4 text-text-dark placeholder:text-text-dark/20 focus:outline-none transition-all font-light text-[11px] tracking-[0.3em] uppercase"
                 />
-                <div className="absolute bottom-0 left-0 h-[1px] bg-[#C6A769] w-0 group-focus-within:w-full transition-all duration-700" />
               </div>
 
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="bg-[#C6A769] text-white px-10 py-4 text-xs tracking-[0.2em] uppercase font-normal hover:bg-[#b0935b] transition-all duration-500 flex items-center justify-center gap-3 disabled:bg-[#C6A769]/50"
+                className="text-text-dark hover:text-accent transition-all duration-500 flex items-center justify-center gap-4 py-4 disabled:text-text-dark/30 whitespace-nowrap"
               >
                 {status === 'loading' ? (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-text-dark/30 border-t-text-dark rounded-full animate-spin" />
                 ) : (
                   <>
-                    Subscribe <Send size={14} strokeWidth={1.5} />
+                    <span className="text-[11px] tracking-[0.5em] uppercase font-normal">Subscribe</span>
+                    <ArrowRight size={18} strokeWidth={1.5} className="group-hover:translate-x-2 transition-transform" />
                   </>
                 )}
               </button>
             </form>
           ) : (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="py-4 flex flex-col items-center gap-3"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="py-12 flex flex-col items-center gap-6"
             >
-              <CheckCircle2 className="text-[#C6A769] w-10 h-10" strokeWidth={1} />
-              <p className="font-serif text-xl text-[#2B2B2B]">Welcome to the Circle</p>
-              <p className="text-xs text-[#2B2B2B]/50 tracking-widest uppercase">Check your inbox for a private invitation</p>
+              <CheckCircle2 className="text-accent w-12 h-12" strokeWidth={1} />
+              <div className="space-y-4">
+                <p className="font-serif text-3xl text-text-dark italic">Welcome to Velouraz</p>
+                <p className="text-[10px] text-text-dark/30 tracking-[0.4em] uppercase">Check your inbox for your private invitation</p>
+              </div>
             </motion.div>
           )}
         </motion.div>
 
-        {/* 4. Privacy Assurance */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-8 text-[10px] text-[#2B2B2B]/30 tracking-[0.15em] uppercase font-light"
+          transition={{ delay: 0.8 }}
+          className="mt-20 text-[9px] text-text-dark/20 tracking-[0.2em] uppercase font-light"
         >
-          By subscribing, you agree to our <a href="#" className="underline hover:text-[#C6A769] transition-colors">Privacy Policy</a>.
+          By joining, you agree to our <a href="#" className="underline hover:text-accent transition-colors">Privacy Policy</a> & <a href="#" className="underline hover:text-accent transition-colors">Terms</a>.
         </motion.p>
       </div>
     </section>
   );
 };
 
-export default Newsletter;
+export default Newsletter;

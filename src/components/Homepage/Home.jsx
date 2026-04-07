@@ -6,6 +6,8 @@ import BestSellers from './Bestsellers'
 import FeaturedCollections from './Featured'
 import WhyChooseUs from './WhyChoose'
 import SocialGallery from './SocialGallery'
+import EditorialBanner from './EditorialBanner'
+import AtelierService from './AtelierService'
 
 function Home() {
  
@@ -15,6 +17,8 @@ function Home() {
     
      <Hero/>
      <FeaturedCollections/>
+     <EditorialBanner/>
+     <AtelierService/>
      <WhyChooseUs/>
      <BestSellers/>
      <TestimonialSection/>
