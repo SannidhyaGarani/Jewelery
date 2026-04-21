@@ -20,9 +20,8 @@ const QuickView = ({ product, onClose }) => {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[999] transition-opacity duration-300 ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-[999] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
         onClick={handleClose}
       />
@@ -30,9 +29,8 @@ const QuickView = ({ product, onClose }) => {
       {/* Modal */}
       <div className={`fixed inset-0 z-[10000] flex items-center justify-center p-4 pointer-events-none mt-10`}>
         <div
-          className={`bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden pointer-events-auto transform transition-all duration-300 ${
-            isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
-          }`}
+          className={`bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden pointer-events-auto transform transition-all duration-300 ${isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
+            }`}
         >
           {/* Header */}
           <div className="flex justify-between items-center px-8 py-6 border-b border-[#E6CCB2]/50 bg-gradient-to-r from-[#C6A664]/5 to-[#4A4A4A]/5">

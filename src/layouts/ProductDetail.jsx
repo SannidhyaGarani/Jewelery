@@ -91,10 +91,10 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FCFCFC] pt-32 pb-20 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-[#0A0A0A] pt-32 pb-20 font-sans relative overflow-hidden text-white">
       {/* Cinematic vertical lines */}
-      <div className="absolute left-[8%] top-0 w-[1px] h-full bg-neutral-900/[0.03] hidden xl:block" />
-      <div className="absolute right-[8%] top-0 w-[1px] h-full bg-neutral-900/[0.03] hidden xl:block" />
+      <div className="absolute left-[8%] top-0 w-[1px] h-full bg-white/5 hidden xl:block" />
+      <div className="absolute right-[8%] top-0 w-[1px] h-full bg-white/5 hidden xl:block" />
 
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
@@ -102,16 +102,16 @@ const ProductDetail = () => {
         <div className="mb-12 flex justify-between items-center">
           <button 
             onClick={() => navigate(-1)}
-            className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-400 hover:text-neutral-900 transition-all"
+            className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] font-bold text-white/40 hover:text-white transition-all"
           >
             <ArrowLeft size={16} strokeWidth={1} className="group-hover:-translate-x-1 transition-transform" />
             Back to Selection
           </button>
           
           <div className="flex gap-8 items-center">
-             <button className="text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-400 hover:text-neutral-900 transition-all">Previous</button>
-             <span className="w-4 h-[1px] bg-neutral-200"></span>
-             <button className="text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-400 hover:text-neutral-900 transition-all">Next Piece</button>
+             <button className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/40 hover:text-white transition-all">Previous</button>
+             <span className="w-4 h-[1px] bg-white/10"></span>
+             <button className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/40 hover:text-white transition-all">Next Piece</button>
           </div>
         </div>
 
@@ -123,15 +123,15 @@ const ProductDetail = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-[4/5] sm:aspect-[3/2] lg:aspect-[4/5] bg-white rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.02)] border border-neutral-100"
+              className="relative aspect-[4/5] sm:aspect-[3/2] lg:aspect-[4/5] bg-[#111] rounded-3xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.6)] border border-white/10"
             >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-cover transition-transform duration-[4s] hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-[4s] hover:scale-105 opacity-90 hover:opacity-100"
               />
               <div className="absolute top-8 left-8">
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-2.5 rounded-full text-[10px] tracking-[0.2em] font-bold text-white uppercase sm:text-neutral-900 sm:bg-white/80">
+                <div className="bg-black/60 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-full text-[10px] tracking-[0.2em] font-bold text-white uppercase">
                   REF {product.id.slice(0, 6)}
                 </div>
               </div>
@@ -139,8 +139,9 @@ const ProductDetail = () => {
             
             <div className="grid grid-cols-3 gap-6">
                {[...Array(3)].map((_, i) => (
-                 <div key={i} className="aspect-square bg-white rounded-2xl border border-neutral-100 overflow-hidden cursor-pointer hover:border-neutral-900 transition-colors duration-500 shadow-sm">
-                    <img src={product.image} className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity" />
+                 <div key={i} className="aspect-square bg-[#111] rounded-2xl border border-white/5 overflow-hidden cursor-pointer hover:border-accent transition-colors duration-500 shadow-sm relative">
+                    <img src={product.image} alt="Gallery view" className="w-full h-full object-cover opacity-40 hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-black/20" />
                  </div>
                ))}
             </div>
@@ -150,9 +151,9 @@ const ProductDetail = () => {
           <div className="w-full lg:w-[40%] flex flex-col justify-between py-4">
             <div className="space-y-12">
               <div className="space-y-8">
-                <div className="flex items-center gap-3">
-                  <span className="h-[1px] w-8 bg-neutral-300"></span>
-                  <span className="text-[10px] tracking-[0.4em] font-bold uppercase text-neutral-400">
+                <div className="flex items-center gap-4">
+                  <span className="h-[1px] w-10 bg-accent/40"></span>
+                  <span className="text-[10px] tracking-[0.5em] font-bold uppercase text-accent/80">
                     {product.category || 'Atelier Exclusive'}
                   </span>
                 </div>
@@ -161,21 +162,21 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1 }}
-                  className="text-5xl md:text-6xl xl:text-7xl font-serif text-neutral-900 leading-tight tracking-tight"
+                  className="text-5xl md:text-6xl xl:text-7xl font-serif text-white leading-[1.1] tracking-tight"
                 >
-                  <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-6xl md:text-7xl xl:text-8xl block mb-2">
+                  <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-6xl md:text-8xl xl:text-9xl block mb-2 text-accent/80 -ml-4">
                     {product.name.split(' ')[0]}
                   </span>
-                  {product.name.split(' ').slice(1).join(' ')}
+                  <span className="relative z-10">{product.name.split(' ').slice(1).join(' ')}</span>
                 </motion.h1>
                 
-                <p className="text-2xl md:text-3xl font-serif text-neutral-900">
-                  €{product.price.toLocaleString()}
+                <p className="text-3xl md:text-4xl font-serif text-accent">
+                  ₹{product.price.toLocaleString()}.00
                 </p>
               </div>
 
-              <div className="space-y-8 pb-12 border-b border-neutral-100">
-                <p className="text-base text-neutral-500 font-sans leading-relaxed max-w-md">
+              <div className="space-y-8 pb-12 border-b border-white/10">
+                <p className="text-sm md:text-base text-white/70 font-sans leading-loose max-w-sm">
                   {product.description || "An exceptional masterwork of artisanal ingenuity, meticulously handcrafted to embody the pinnacle of Velouraz's design philosophy and timeless elegance."}
                 </p>
 
@@ -183,16 +184,16 @@ const ProductDetail = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={() => addToCollection("cart")}
-                    className="flex-1 h-16 bg-neutral-900 text-white text-[11px] uppercase tracking-[0.3em] font-bold rounded-full hover:bg-neutral-800 transition-all duration-500 flex items-center justify-center gap-4 group"
+                    className="flex-1 h-16 bg-accent text-white text-[11px] uppercase tracking-[0.4em] font-bold rounded-full hover:bg-accent/90 transition-all duration-500 flex items-center justify-center gap-4 group shadow-[0_10px_40px_rgba(199,160,73,0.2)]"
                   >
-                    <ShoppingBag size={18} strokeWidth={1.5} />
-                    Inquire for Acquisition
+                    <ShoppingBag size={18} strokeWidth={2} />
+                    Acquire Selection
                   </button>
                   <button
                     onClick={() => addToCollection("wishlist")}
-                    className="w-16 h-16 rounded-full border border-neutral-100 flex items-center justify-center text-neutral-900 hover:bg-neutral-900 hover:text-white transition-all duration-500"
+                    className="w-16 h-16 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md flex items-center justify-center text-white hover:text-accent hover:border-accent/40 transition-all duration-500"
                   >
-                    <Heart size={20} strokeWidth={1.5} />
+                    <Heart size={20} strokeWidth={1} />
                   </button>
                 </div>
               </div>
@@ -204,11 +205,11 @@ const ProductDetail = () => {
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`text-[10px] uppercase tracking-[0.3em] font-bold transition-all relative pb-2 ${activeTab === tab ? 'text-neutral-900' : 'text-neutral-300 hover:text-neutral-500'}`}
+                      className={`text-[10px] uppercase tracking-[0.3em] font-bold transition-all relative pb-2 ${activeTab === tab ? 'text-white' : 'text-white/20 hover:text-white/40'}`}
                     >
                       {tab}
                       {activeTab === tab && (
-                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-neutral-900" />
+                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-accent" />
                       )}
                     </button>
                   ))}
@@ -222,7 +223,7 @@ const ProductDetail = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.5 }}
-                      className="text-xs text-neutral-400 tracking-[0.1em] uppercase leading-7 max-w-md"
+                      className="text-[11px] text-white/50 tracking-[0.2em] uppercase leading-7 max-w-md"
                     >
                       {activeTab === 'heritage' && (
                         "The Velouraz heritage is defined by a relentless pursuit of perfection. This piece is a continuation of our house legacy, where timeless elegance meets contemporary vision."
@@ -240,16 +241,19 @@ const ProductDetail = () => {
             </div>
 
             {/* Atelier Contact Card */}
-            <div className="mt-12 p-8 bg-neutral-50 rounded-3xl border border-neutral-100 flex items-start gap-6">
-               <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 animate-pulse border-2 border-white shadow-sm">
-                  <img src="https://i.pravatar.cc/100?u=artisan" alt="Artisan" />
+            <div className="mt-12 p-8 bg-white/[0.03] backdrop-blur-md rounded-[32px] border border-white/10 flex items-start gap-6 group hover:border-accent/30 transition-all duration-500">
+               <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-white/20 shadow-xl">
+                  <img src="https://i.pravatar.cc/100?u=artisan" alt="Artisan" className="grayscale group-hover:grayscale-0 transition-all duration-500" />
                </div>
                <div className="space-y-4">
-                  <h4 className="text-[10px] tracking-[0.2em] uppercase font-bold text-neutral-900">Privé Concierge</h4>
-                  <p className="text-[10px] text-neutral-400 tracking-[0.15em] uppercase leading-relaxed italic">
-                    Our master artisans are currently available for bespoke modifications.
+                  <div className="flex items-center gap-4">
+                    <h4 className="text-[11px] tracking-[0.3em] uppercase font-bold text-white">Privé Concierge</h4>
+                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                  </div>
+                  <p className="text-[10px] text-white/40 tracking-[0.18em] uppercase leading-relaxed italic pr-4">
+                    Our master artisans are currently available for bespoke modifications and private consultations.
                   </p>
-                  <button className="flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 hover:border-neutral-900 transition-all">
+                  <button className="flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase font-bold text-accent border-b border-accent/20 pb-2 hover:border-accent transition-all group-hover:gap-5">
                     Start Consultation <ArrowRight size={14} />
                   </button>
                </div>

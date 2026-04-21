@@ -10,14 +10,16 @@
     --font-serif: "Cormorant Garamond", serif;
     --font-sans: "Montserrat", sans-serif;
     --font-script: "Italianno", cursive;
-    --color-accent: #C6A769;
-    --color-bg-cream: #FFFFFF; /* Changed to pure white for KP aesthetic */
-    --color-text-dark: #111111; /* Dark charcoal */
+    --color-accent: #c7a049;
+    --color-bg-dark: #0A0A0A; 
+    --color-bg-paper: #121212; 
+    --color-text-white: #FFFFFF;
+    --color-text-dim: #D1D1D1;
   }
 
   body {
-    background-color: var(--color-bg-cream);
-    color: var(--color-text-dark);
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-white);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -28,6 +30,13 @@
     font-weight: 400;
     letter-spacing: -0.02em;
   }
+}
+
+/* Register accent color so text-accent / bg-accent / border-accent work in Tailwind v4 */
+@theme {
+  --color-accent: #c7a049;
+  --color-bg-dark: #0A0A0A;
+  --color-bg-paper: #121212;
 }
 
 /* Custom Swiper Pagination Styling */

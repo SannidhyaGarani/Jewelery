@@ -94,22 +94,22 @@ const Shop = () => {
   });
 
   return (
-    <div className="min-h-screen bg-bg-cream pt-48 pb-32 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-[#0A0A0A] pt-48 pb-32 font-sans relative overflow-hidden">
       {/* Decorative vertical lines */}
-      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
-      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#1A1A1A]/5 hidden lg:block" />
+      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-white/5 hidden lg:block" />
+      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-white/5 hidden lg:block" />
       
       {selectedProduct && <QuickView product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
 
       <div className="max-w-[1800px] mx-auto px-6 lg:px-16 relative z-10">
         
         {/* Editorial Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-text-dark/5 pb-16">
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-white/10 pb-16">
           <div className="space-y-6">
             <motion.span 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="block text-[10px] tracking-[0.6em] uppercase text-text-dark/40"
+              className="block text-[10px] tracking-[0.6em] uppercase text-white/40"
             >
               Exquisite Selection
             </motion.span>
@@ -117,9 +117,9 @@ const Shop = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-serif text-text-dark leading-tight tracking-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-serif text-accent leading-tight tracking-tight"
             >
-              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl">The</span> Inventory
+              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0 text-accent/80">The</span> Inventory
             </motion.h1>
           </div>
           
@@ -131,7 +131,7 @@ const Shop = () => {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={`text-[10px] tracking-[0.3em] uppercase transition-all duration-300 relative pb-2 ${
-                      selectedCategory === cat ? 'text-accent border-b border-accent' : 'text-text-dark/40 hover:text-text-dark'
+                      selectedCategory === cat ? 'text-accent border-b border-accent' : 'text-white/40 hover:text-white'
                     }`}
                   >
                     {cat}
@@ -141,11 +141,11 @@ const Shop = () => {
              
              {/* Search */}
              <div className="relative group">
-                <Search className="absolute right-0 top-1/2 -translate-y-1/2 text-text-dark/20 group-focus-within:text-accent transition-colors" size={14} />
+                <Search className="absolute right-0 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-accent transition-colors" size={14} />
                 <input 
                    type="text" 
                    placeholder="SEARCH COLLECTION" 
-                   className="bg-transparent border-b border-text-dark/10 pr-8 py-2 text-[10px] tracking-[0.3em] uppercase text-text-dark outline-none focus:border-accent transition-all w-48"
+                   className="bg-transparent border-b border-white/20 pr-8 py-2 text-[10px] tracking-[0.3em] uppercase text-white outline-none focus:border-accent transition-all w-48 font-bold"
                    value={searchTerm}
                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -156,7 +156,7 @@ const Shop = () => {
         {/* Product Grid */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-24">
-            {[...Array(8)].map((_, i) => <div key={i} className="aspect-[3/4] bg-neutral-100 animate-pulse" />)}
+            {[...Array(8)].map((_, i) => <div key={i} className="aspect-[3/4] bg-white/[0.05] animate-pulse rounded-sm" />)}
           </div>
         ) : sortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-24">
@@ -170,36 +170,36 @@ const Shop = () => {
                 className="group cursor-pointer relative"
                 onClick={() => navigate(`/product/${product.id}`)}
               >
-                <div className="aspect-[3/4] overflow-hidden bg-neutral-50 mb-8 relative luxury-card">
+                <div className="aspect-[3/4] overflow-hidden bg-[#111] mb-8 relative luxury-card border border-white/5 rounded-sm">
                   <img 
                     src={product.image || product.images?.[0]} 
                     alt={product.name} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                   />
-                  <div className="absolute inset-0 bg-text-dark/0 group-hover:bg-text-dark/5 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
                   
                   {/* Subtle actions */}
                   <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col gap-4">
-                     <button onClick={(e) => addToCollection(e, product, 'wishlist')} className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-text-dark hover:text-accent transition-colors">
-                        <Heart size={14} strokeWidth={1} />
+                     <button onClick={(e) => addToCollection(e, product, 'wishlist')} className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors border border-white/10">
+                        <Heart size={14} strokeWidth={1.5} />
                      </button>
-                     <button onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }} className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-text-dark hover:text-accent transition-colors">
-                        <Eye size={14} strokeWidth={1} />
+                     <button onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }} className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors border border-white/10">
+                        <Eye size={14} strokeWidth={1.5} />
                      </button>
                   </div>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4 px-2">
                   <div className="flex justify-between items-start">
-                     <h3 className="font-serif text-xl tracking-wide group-hover:text-accent transition-colors">{product.name}</h3>
+                     <h3 className="font-serif text-xl tracking-wide text-white group-hover:text-accent transition-colors">{product.name}</h3>
                   </div>
                   <div className="flex justify-between items-center">
-                     <p className="text-[10px] tracking-[0.2em] uppercase text-text-dark/40">{product.category}</p>
-                     <p className="font-serif text-lg">₹{product.price}.00</p>
+                     <p className="text-[10px] tracking-[0.2em] uppercase text-white/50">{product.category}</p>
+                     <p className="font-serif text-lg text-accent">₹{product.price}.00</p>
                   </div>
-                  <div className="pt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border-t border-text-dark/5">
-                     <button className="text-[9px] tracking-[0.4em] uppercase text-text-dark flex items-center gap-3">
-                        View Details <ArrowRight size={12} />
+                  <div className="pt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border-t border-white/10">
+                     <button className="text-[9px] tracking-[0.4em] uppercase text-white flex items-center gap-3">
+                        View Details <ArrowRight size={12} className="text-accent" />
                      </button>
                   </div>
                 </div>
@@ -207,8 +207,8 @@ const Shop = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-40 border border-text-dark/5">
-             <p className="font-serif text-3xl italic text-text-dark/30 mb-8">No pieces found matching your criteria</p>
+          <div className="text-center py-40 border border-white/5 bg-white/[0.02] rounded-3xl">
+             <p className="font-serif text-3xl italic text-white/30 mb-8">No pieces found matching your criteria</p>
              <button onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }} className="text-[11px] tracking-[0.4em] uppercase text-accent border-b border-accent pb-2">View All Pieces</button>
           </div>
         )}

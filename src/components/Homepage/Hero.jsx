@@ -83,26 +83,16 @@ const Hero = () => {
   const currentSlide = sliderData[currentIndex];
 
   return (
-    <section className="relative w-full bg-[#FCFCFC] pt-24 pb-8 lg:pt-32 lg:pb-16 overflow-hidden">
+    <section className="relative w-full bg-[#0A0A0A] pt-24 pb-8 lg:pt-32 lg:pb-16 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 lg:px-12">
         
         {/* Header Pills - Refined Styling */}
-        <div className="flex justify-start lg:justify-center mb-16 px-2 lg:px-0">
-          <div className="inline-flex items-center bg-white border border-neutral-100 shadow-sm rounded-full p-1.5">
-            <button className="bg-neutral-900 text-white text-[10px] tracking-[0.2em] uppercase rounded-full px-8 py-2.5 font-semibold transition-all">
-              New Stories
-            </button>
-            <button className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase rounded-full px-8 py-2.5 font-semibold hover:text-neutral-900 transition-colors">
-              Archives
-            </button>
-          </div>
-        </div>
-
+        
         <div className="relative group">
-          <div className="flex flex-col lg:flex-row items-center bg-white rounded-[32px] overflow-hidden border border-neutral-100 shadow-[0_20px_50px_rgba(0,0,0,0.02)]">
+          <div className="flex flex-col lg:flex-row items-center bg-[#111] rounded-[32px] overflow-hidden border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             
             {/* Left: Content Area (45%) */}
-            <div className="w-full lg:w-[45%] p-6 lg:p-20 flex flex-col justify-between min-h-[500px] lg:min-h-[700px] z-20 bg-white">
+            <div className="w-full lg:w-[45%] p-6 lg:p-20 flex flex-col justify-between min-h-[500px] lg:min-h-[700px] z-20 bg-[#111]">
               
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
@@ -115,30 +105,30 @@ const Hero = () => {
                   className="flex flex-col space-y-8"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="h-[1px] w-8 bg-neutral-300"></span>
+                    <span className="h-[1px] w-8 bg-accent/30"></span>
                     <div className="flex gap-4">
                       {currentSlide.tags.map(tag => (
-                        <span key={tag} className="text-[9px] tracking-[0.3em] font-bold uppercase text-neutral-400">
+                        <span key={tag} className="text-[9px] tracking-[0.3em] font-bold uppercase text-accent">
                           {tag}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <h2 className="font-serif text-5xl lg:text-7xl leading-[1.05] text-neutral-900 tracking-tight">
-                    <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-6xl lg:text-8xl">
+                  <h2 className="font-serif text-5xl lg:text-7xl leading-[1.05] text-accent tracking-tight">
+                    <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-6xl lg:text-8xl text-accent/80">
                       {currentSlide.title.split(' ')[0]}
                     </span>{" "}
                     {currentSlide.title.split(' ').slice(1).join(' ')}
                   </h2>
 
-                  <p className="text-base lg:text-lg font-sans text-neutral-500 leading-relaxed max-w-md">
+                  <p className="text-sm lg:text-base font-sans text-white leading-relaxed max-w-md">
                     {currentSlide.description}
                   </p>
 
                   <motion.button 
                     whileHover={{ x: 10 }}
-                    className="flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase font-bold text-neutral-900 pt-4"
+                    className="flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase font-bold text-accent pt-4"
                   >
                     Explore Story <ArrowRight size={16} strokeWidth={1.5} />
                   </motion.button>
@@ -148,17 +138,17 @@ const Hero = () => {
               {/* Fractional Pagination & Controls */}
               <div className="flex items-center gap-12 mt-12">
                 <div className="flex items-center gap-4">
-                  <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center hover:bg-neutral-900 hover:text-white transition-all duration-500">
+                  <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-500 text-white">
                     <ChevronLeft size={20} strokeWidth={1} />
                   </button>
-                  <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center hover:bg-neutral-900 hover:text-white transition-all duration-500">
+                  <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-500 text-white">
                     <ChevronRight size={20} strokeWidth={1} />
                   </button>
                 </div>
                 <div className="flex items-baseline gap-2 font-serif">
-                  <span className="text-2xl text-neutral-900">0{currentIndex + 1}</span>
-                  <span className="text-neutral-300">/</span>
-                  <span className="text-sm text-neutral-400">0{sliderData.length}</span>
+                  <span className="text-2xl text-accent">0{currentIndex + 1}</span>
+                  <span className="text-accent/30">/</span>
+                  <span className="text-sm text-white/40">0{sliderData.length}</span>
                 </div>
               </div>
             </div>
@@ -175,7 +165,7 @@ const Hero = () => {
                   transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute inset-0"
                 >
-                  <div className="absolute inset-0 bg-neutral-900/5 z-10" /> {/* Subtle Overlay */}
+                  <div className="absolute inset-0 bg-black/20 z-10" /> {/* Subtle Overlay */}
                   <img
                     src={currentSlide.image}
                     alt={currentSlide.title}
@@ -186,8 +176,8 @@ const Hero = () => {
 
               {/* Floating Decorative Element */}
               <div className="absolute bottom-10 right-10 z-20 hidden lg:block">
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl text-white max-w-[200px]">
-                  <p className="text-[8px] tracking-[0.2em] uppercase opacity-60 mb-2 font-bold">Featured Collection</p>
+                <div className="bg-black/40 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-white max-w-[200px]">
+                  <p className="text-[8px] tracking-[0.2em] uppercase text-accent mb-2 font-bold">Featured Collection</p>
                   <p className="text-xs font-serif leading-tight">The 2026 High Jewelry Series</p>
                 </div>
               </div>
@@ -199,7 +189,7 @@ const Hero = () => {
 
       {/* Background Decorative Text */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 origin-left hidden xl:block">
-        <span className="text-[120px] font-serif text-neutral-950/[0.02] whitespace-nowrap pointer-events-none">
+        <span className="text-[120px] font-serif text-white/[0.03] whitespace-nowrap pointer-events-none uppercase">
           EXCELLENCE • ARTISTRY
         </span>
       </div>

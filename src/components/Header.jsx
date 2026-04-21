@@ -33,8 +33,8 @@ const LuxuryHeader = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
           isScrolled 
-            ? 'bg-white/95 backdrop-blur-md border-neutral-200/50 shadow-sm' 
-            : 'bg-white border-transparent'
+            ? 'bg-black/80 backdrop-blur-md border-white/10 shadow-lg' 
+            : 'bg-transparent border-transparent'
         }`}
       >
         {/* Top Header Bar */}
@@ -58,10 +58,10 @@ const LuxuryHeader = () => {
                 }}
                 className="flex items-center gap-3 group"
               >
-                <div className={`border rounded-full p-2.5 transition-all duration-500 ${isDesktopMenuOpen ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-200 group-hover:border-neutral-400 text-neutral-800'}`}>
+                <div className={`border rounded-full p-2.5 transition-all duration-500 ${isDesktopMenuOpen ? 'border-accent bg-accent text-white' : 'border-white/10 group-hover:border-accent/50 text-white'}`}>
                   {isDesktopMenuOpen ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
                 </div>
-                <span className="text-[10px] tracking-[0.25em] font-bold uppercase font-sans hidden sm:block text-neutral-600 group-hover:text-neutral-900 transition-colors">
+                <span className="text-[10px] tracking-[0.25em] font-bold uppercase font-sans hidden sm:block text-neutral-400 group-hover:text-white transition-colors">
                   {isDesktopMenuOpen ? 'Close' : 'Menu'}
                 </span>
               </button>
@@ -74,7 +74,7 @@ const LuxuryHeader = () => {
                     animate={{ opacity: 1, y: 15, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute left-0 top-full mt-4 w-[280px] bg-white rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.12)] border border-neutral-100 p-8 z-[60]"
+                    className="absolute left-0 top-full mt-4 w-[280px] bg-[#111] rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.5)] border border-white/10 p-8 z-[60]"
                   >
                     <div className="flex flex-col space-y-6">
                       {navLinks.map((link) => (
@@ -82,7 +82,7 @@ const LuxuryHeader = () => {
                           key={link.name} 
                           to={link.href}
                           onClick={() => setIsDesktopMenuOpen(false)}
-                          className="text-[11px] tracking-[0.25em] font-bold uppercase text-neutral-900 hover:text-neutral-400 transition-colors"
+                          className="text-[11px] tracking-[0.25em] font-bold uppercase text-white hover:text-accent transition-colors"
                         >
                           {link.name}
                         </Link>
@@ -121,7 +121,7 @@ const LuxuryHeader = () => {
           {/* Center Logo */}
           <div className="flex flex-col items-center flex-1 lg:flex-none">
             <Link to="/" className="flex flex-col items-center gap-1 group">
-              <h1 className="font-serif text-3xl md:text-4xl text-neutral-900 tracking-tight font-normal">
+              <h1 className="font-serif text-3xl md:text-4xl text-accent tracking-tight font-normal">
                 Velouraz
               </h1>
               <AnimatePresence>
@@ -130,7 +130,7 @@ const LuxuryHeader = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="font-sans text-[8px] tracking-[0.3em] uppercase text-neutral-500 font-bold hidden md:block"
+                    className="font-sans text-[8px] tracking-[0.3em] uppercase text-white/70 font-bold hidden md:block"
                   >
                     Atelier de Luxe
                   </motion.span>
@@ -143,18 +143,18 @@ const LuxuryHeader = () => {
           <div className="flex items-center justify-end gap-6 flex-1">
             <Link 
               to="/login" 
-              className="text-[10px] tracking-[0.2em] font-bold uppercase font-sans text-neutral-500 hover:text-neutral-900 transition-colors hidden sm:block"
+              className="text-[10px] tracking-[0.2em] font-bold uppercase font-sans text-white hover:text-accent transition-colors hidden sm:block"
             >
               Sign In
             </Link>
             <Link 
               to="/contact" 
-              className="bg-neutral-900 text-white border border-neutral-900 rounded-full px-7 py-2.5 hover:bg-neutral-800 transition-all duration-500 text-[10px] tracking-[0.2em] font-bold uppercase font-sans hidden sm:block shadow-sm"
+              className="bg-accent text-white border border-accent rounded-full px-7 py-2.5 hover:bg-accent/80 transition-all duration-500 text-[10px] tracking-[0.2em] font-bold uppercase font-sans hidden sm:block shadow-lg"
             >
               Member Access
             </Link>
-            <Link to="/contact" className="sm:hidden border border-neutral-200 rounded-full p-2.5">
-               <MessageSquare size={16} strokeWidth={1.5} className="text-neutral-800" />
+            <Link to="/contact" className="sm:hidden border border-white/10 rounded-full p-2.5">
+               <MessageSquare size={16} strokeWidth={1.5} className="text-white" />
             </Link>
           </div>
         </motion.div>
@@ -173,10 +173,10 @@ const LuxuryHeader = () => {
                  <Link 
                    key={link.name} 
                    to={link.href}
-                   className="text-[9px] tracking-[0.3em] font-bold uppercase font-sans text-neutral-500 hover:text-neutral-900 transition-all relative group"
+                   className="text-[9px] tracking-[0.3em] font-bold uppercase font-sans text-white hover:text-accent transition-all relative group"
                  >
                    {link.name}
-                   <span className="absolute -bottom-2 left-1/2 w-0 h-[1px] bg-neutral-900 group-hover:w-full group-hover:left-0 transition-all duration-300" />
+                   <span className="absolute -bottom-2 left-1/2 w-0 h-[1px] bg-accent group-hover:w-full group-hover:left-0 transition-all duration-300" />
                  </Link>
                ))}
             </motion.div>
@@ -190,7 +190,7 @@ const LuxuryHeader = () => {
         whileTap={{ scale: 0.95 }}
         className="fixed bottom-6 right-6 z-[60] bg-white border border-neutral-200 rounded-full p-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:shadow-xl transition-all duration-300"
       >
-         <MessageSquare size={20} strokeWidth={1.2} className="text-neutral-900" />
+         <MessageSquare size={20} strokeWidth={1.2} className="text-white" />
       </motion.button>
 
       {/* Mobile Full Screen Menu */}
