@@ -112,8 +112,8 @@ const LuxuryHeader = () => {
             </div>
             
             <button className="flex items-center gap-2 group hidden md:flex transition-opacity hover:opacity-100">
-              <div className="border border-neutral-200 rounded-full p-2.5 group-hover:border-neutral-400 transition-colors">
-                <Search size={16} strokeWidth={1.5} className="text-neutral-800" />
+              <div className="border border-white/20 rounded-full p-2.5 group-hover:border-accent transition-colors">
+                <Search size={16} strokeWidth={1.5} className="text-white group-hover:text-accent transition-colors" />
               </div>
             </button>
           </div>
@@ -190,7 +190,7 @@ const LuxuryHeader = () => {
         whileTap={{ scale: 0.95 }}
         className="fixed bottom-6 right-6 z-[60] bg-white border border-neutral-200 rounded-full p-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:shadow-xl transition-all duration-300"
       >
-         <MessageSquare size={20} strokeWidth={1.2} className="text-white" />
+         <MessageSquare size={20} strokeWidth={1.2} className="text-accent" />
       </motion.button>
 
       {/* Mobile Full Screen Menu */}

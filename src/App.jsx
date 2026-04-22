@@ -32,7 +32,7 @@ const AppRoutes = () => {
       {!hideChrome && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/super" element={<SuperAdmin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -43,7 +43,7 @@ const AppRoutes = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/product/:id/quickview" element={<QuickView />} /> */}
+        <Route path="/product/:id/quickview" element={<QuickView />} />
       </Routes>
       {!hideChrome && <Footer />}
     </>

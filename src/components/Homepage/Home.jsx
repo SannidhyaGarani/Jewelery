@@ -8,6 +8,7 @@ import WhyChooseUs from './WhyChoose'
 import SocialGallery from './SocialGallery'
 import EditorialBanner from './EditorialBanner'
 import AtelierService from './AtelierService'
+import CategorySection from './CategorySection'
 
 function Home() {
  
@@ -16,13 +17,14 @@ function Home() {
     <>
     
      <Hero/>
-     <FeaturedCollections/>
+     <CategorySection/>
      <EditorialBanner/>
+     <BestSellers/>
      <AtelierService/>
      <WhyChooseUs/>
-     <BestSellers/>
      <TestimonialSection/>
      <SocialGallery/>
+     <FeaturedCollections/>
      <Newsletter/>
     </>
   )
