@@ -4,6 +4,7 @@ import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { Search, Heart, ShoppingBag, Eye, ArrowRight, ChevronDown, Filter } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../components/useAuth';
+import { useStore } from '../hooks/useStore';
 import { doc, setDoc } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
 import QuickView from '../components/QuickView';
@@ -31,18 +32,12 @@ const Shop = () => {
   }, [searchParams]);
 
   const curatedProducts = [
-    { id: 'bs-1', name: "Solitaire Droplet Necklace", price: 120, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Luxury" },
-    { id: 'bs-2', name: "Champagne Gold Ring", price: 85, image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60", category: "Everyday" },
-    { id: 'bs-3', name: "Rose Quartz Eternity Ring", price: 150, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Bridal" },
-    { id: 'bs-4', name: "Pearl Infused Bracelet", price: 95, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "New Arrivals" },
-    { id: 'shop-5', name: "Diamond Halo Studs", price: 210, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "Luxury" },
-    { id: 'shop-6', name: "Vintage Gold Locket", price: 175, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60", category: "New Arrivals" },
-    { id: 'shop-7', name: "Sapphire Night Pendant", price: 320, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800", category: "Luxury" },
-    { id: 'shop-8', name: "Minimalist Silver Band", price: 65, image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=800", category: "Everyday" },
-    { id: 'shop-9', name: "Art Deco Emerald Ring", price: 280, image: "https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&auto=format&fit=crop&q=60", category: "Bridal" },
-    { id: 'shop-10', name: "Celestial Moon Necklace", price: 140, image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=800", category: "New Arrivals" },
-    { id: 'shop-11', name: "Ornate Bridal Choker", price: 450, image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60", category: "Bridal" },
-    { id: 'shop-12', name: "Infinity Knot Bangle", price: 110, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Everyday" }
+    { id: 'bs-1', name: "Emerald Blossom Choker", price: 3800, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Necklaces" },
+    { id: 'bs-2', name: "Antique Gold Temple Jhumkas", price: 2400, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60", category: "Earrings" },
+    { id: 'bs-3', name: "American Diamond Band", price: 1500, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Rings" },
+    { id: 'bs-4', name: "Oxidized Silver Kada", price: 950, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Bracelets" },
+    { id: 'shop-5', name: "Kundan Mathapatti", price: 4500, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "Bridal Wear" },
+    { id: 'shop-6', name: "Floral Meenakari Earrings", price: 1750, image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60", category: "Earrings" }
   ];
 
   useEffect(() => {
@@ -66,21 +61,22 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
-  const addToCollection = async (e, product, collectionName) => {
+  const { addToCart, addToWishlist, isInCart, isInWishlist } = useStore();
+
+  const handleAddToCart = async (e, product) => {
     e.stopPropagation();
-    if (!user) { navigate('/login'); return; }
-    try {
-      const itemRef = doc(db, "users", user.uid, collectionName, product.id);
-      await setDoc(itemRef, {
-        name: product.name,
-        price: product.price,
-        image: product.image || product.images?.[0] || "",
-        addedAt: new Date().toISOString()
-      });
-    } catch (error) { console.error(`Error adding to ${collectionName}:`, error); }
+    const success = await addToCart(product);
+    if (success) {
+      // Optional: show a toast or feedback
+    }
   };
 
-  const categories = ['All', 'Bridal', 'Everyday', 'Luxury', 'New Arrivals'];
+  const handleAddToWishlist = async (e, product) => {
+    e.stopPropagation();
+    await addToWishlist(product);
+  };
+
+  const categories = ['All', 'Necklaces', 'Earrings', 'Rings', 'Bracelets', 'Bangles', 'Bridal Wear', 'Anklets'];
   const filteredProducts = products.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
@@ -180,12 +176,33 @@ const Shop = () => {
                   
                   {/* Subtle actions */}
                   <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col gap-4">
-                     <button onClick={(e) => addToCollection(e, product, 'wishlist')} className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors border border-white/10">
-                        <Heart size={14} strokeWidth={1.5} />
+                     <button 
+                       onClick={(e) => handleAddToWishlist(e, product)} 
+                       className={`w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition-colors border ${
+                         isInWishlist(product.id) 
+                         ? 'bg-accent text-white border-accent' 
+                         : 'bg-black/40 text-white hover:text-accent border-white/10'
+                       }`}
+                     >
+                        <Heart size={14} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                      </button>
                      <button onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }} className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors border border-white/10">
                         <Eye size={14} strokeWidth={1.5} />
                      </button>
+                  </div>
+
+                  {/* Add to Cart Overlay Button */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/80 to-transparent">
+                    <button 
+                      onClick={(e) => handleAddToCart(e, product)}
+                      className={`w-full py-3 rounded-full text-[9px] tracking-[0.3em] font-bold uppercase transition-all ${
+                        isInCart(product.id) 
+                        ? 'bg-accent text-white' 
+                        : 'bg-white text-black hover:bg-accent hover:text-white'
+                      }`}
+                    >
+                      {isInCart(product.id) ? 'Added to Cart' : 'Add to Cart'}
+                    </button>
                   </div>
                 </div>
 

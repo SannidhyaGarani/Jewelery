@@ -24,28 +24,28 @@ const orderRows = [
 
 const wishlistItems = [
   {
-    name: "Hydrating Glow Serum",
-    description: "Daily serum for dewy, long-lasting hydration.",
-    price: "$38.00",
+    name: "Emerald Blossom Choker",
+    description: "22K gold plated with premium emerald stones.",
+    price: "₹3,800.00",
     tag: "Best Seller",
   },
   {
-    name: "Gentle Foam Cleanser",
-    description: "Soft, non-stripping cleanse for all skin types.",
-    price: "$24.00",
+    name: "Diamond Stud Earrings",
+    description: "Classic American diamond studs for everyday elegance.",
+    price: "₹1,200.00",
     tag: "New",
   },
   {
-    name: "Overnight Renewal Cream",
-    description: "Rich, restorative night cream.",
-    price: "$46.00",
+    name: "Royal Kundan Kada",
+    description: "Handcrafted traditional kundan bangle.",
+    price: "₹4,600.00",
     tag: "Limited",
   },
 ];
 
 const cartItems = [
-  { name: "Vitamin C Brightening Drops", quantity: 1, price: "$32.00" },
-  { name: "SPF 50 Daily Shield", quantity: 2, price: "$58.00" },
+  { name: "Ruby Teardrop Necklace", quantity: 1, price: "₹3,200.00" },
+  { name: "Pearl Drop Earrings", quantity: 2, price: "₹1,500.00" },
 ];
 
 const statusBadgeClasses = (status) => {
@@ -229,22 +229,22 @@ const UserPanel = () => {
         <div className="space-y-2.5 text-sm">
           <div className="flex items-center justify-between">
             <span className="text-slate-600">Subtotal</span>
-            <span className="font-medium text-slate-900">$90.00</span>
+            <span className="font-medium text-slate-900">₹9,000.00</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-slate-600">Estimated Shipping</span>
-            <span className="font-medium text-slate-900">$5.00</span>
+            <span className="font-medium text-slate-900">₹200.00</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-slate-600">Tax</span>
-            <span className="font-medium text-slate-900">$4.10</span>
+            <span className="font-medium text-slate-900">₹180.00</span>
           </div>
           <div className="border-t border-dashed border-slate-200 pt-3 mt-2 flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Total
             </span>
             <span className="text-base font-semibold text-slate-900">
-              $99.10
+              ₹9,380.00
             </span>
           </div>
         </div>
@@ -277,7 +277,7 @@ const UserPanel = () => {
           <div className="flex justify-between gap-4">
             <dt className="text-slate-500 w-24">Email</dt>
             <dd className="flex-1 text-slate-900">
-              jordan.rivera@example.com
+              jordan.rivera@jewellery.com
             </dd>
           </div>
           <div className="flex justify-between gap-4">
@@ -293,20 +293,23 @@ const UserPanel = () => {
       <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-4 sm:p-5 flex flex-col justify-between gap-4">
         <div>
           <h2 className="text-sm font-semibold text-slate-900 mb-2.5">
-            Preferred Skin Goals
+            Jewellery Style Preferences
           </h2>
           <p className="text-xs text-slate-500 mb-3">
-            We personalize recommendations based on your preferences.
+            We personalize recommendations based on your unique style.
           </p>
           <div className="flex flex-wrap gap-2">
             <span className="px-3 py-1.5 rounded-full bg-slate-50 text-xs font-medium text-slate-700">
-              Hydration
+              Traditional
             </span>
             <span className="px-3 py-1.5 rounded-full bg-slate-50 text-xs font-medium text-slate-700">
-              Even Tone
+              Minimalist
             </span>
             <span className="px-3 py-1.5 rounded-full bg-slate-50 text-xs font-medium text-slate-700">
-              Barrier Care
+              Ethnic Wear
+            </span>
+            <span className="px-3 py-1.5 rounded-full bg-slate-50 text-xs font-medium text-slate-700">
+              Modern
             </span>
           </div>
         </div>
@@ -348,7 +351,7 @@ const UserPanel = () => {
           <div className="hidden sm:flex flex-col items-end text-xs">
             <span className="text-slate-500">Signed in as</span>
             <span className="font-medium text-slate-900">
-              jordan.rivera@example.com
+              jordan.rivera@jewellery.com
             </span>
           </div>
         </div>

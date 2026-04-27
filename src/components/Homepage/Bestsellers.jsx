@@ -3,24 +3,53 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode, Pagination } from 'swiper/modules';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Loader2, ShoppingBag, Heart } from 'lucide-react';
+import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { db } from '../Firebase';
+import { useStore } from '../../hooks/useStore';
 
 // Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-const products = [
-  { id: "bs-1", brand: "Vhernier", name: "Ardis Earclips", price: "€12,000", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "High Jewellery" },
-  { id: "bs-2", brand: "Karina Choudhury", name: "Icon Magic Bracelet", price: "$16,510", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Everyday" },
-  { id: "bs-3", brand: "Gyan Jaipur", name: "Reversible Earring", price: "$12,200", image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Bridal" },
-  { id: "bs-4", brand: "Le Vian", name: "Chocolate Diamond Ring", price: "£POA", image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60", category: "New Arrivals" },
-  { id: "bs-5", brand: "Boucheron", name: "Serpent Bohème", price: "€8,500", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Fine Jewellery" },
+const curatedProducts = [
+  { id: "bs-1", brand: "Velouraz", name: "Emerald Queen Choker", price: "₹12,000", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "High Jewellery" },
+  { id: "bs-2", brand: "Velouraz", name: "Polki Heritage Bangle", price: "₹16,500", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Traditional" },
+  { id: "bs-3", brand: "Velouraz", name: "AD Starburst Earrings", price: "₹8,200", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "Modern" },
+  { id: "bs-4", brand: "Velouraz", name: "Kundan Meena Ring", price: "₹4,500", image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Ethnic" },
 ];
 
 const BestSellers = () => {
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    const fetchBestsellers = async () => {
+      try {
+        const q = query(collection(db, "products"), orderBy("createdAt", "desc"), limit(6));
+        const snap = await getDocs(q);
+        const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        // Merge with curated if list is small
+        if (list.length < 4) {
+          setProducts([...list, ...curatedProducts.slice(list.length)]);
+        } else {
+          setProducts(list);
+        }
+      } catch (e) {
+        console.error("Error fetching bestsellers:", e);
+        setProducts(curatedProducts);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBestsellers();
+  }, []);
   
+  const { addToCart, addToWishlist, isInCart, isInWishlist } = useStore();
+
   // Custom Cursor Logic
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -33,14 +62,21 @@ const BestSellers = () => {
     cursorY.set(e.clientY);
   };
 
+  const handleAddToCart = async (e, product) => {
+    e.stopPropagation();
+    await addToCart(product);
+  };
+
+  const handleAddToWishlist = async (e, product) => {
+    e.stopPropagation();
+    await addToWishlist(product);
+  };
+
   return (
     <section 
       className="bg-[#0A0A0A] py-16 lg:py-24 relative overflow-hidden"
       onMouseMove={handleMouseMove}
     >
-      {/* Custom Floating Cursor */}
-      
-
       <div className="max-w-[1800px] mx-auto px-4 sm:px-8 lg:px-16">
         
         {/* Header - Editorial Style */}
@@ -78,13 +114,19 @@ const BestSellers = () => {
             }}
             className="!overflow-visible"
           >
-            {products.map((product) => (
+            {loading ? (
+              <div className="flex gap-8">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="min-w-[300px] aspect-[4/5] bg-white/[0.05] animate-pulse rounded-sm" />
+                ))}
+              </div>
+            ) : products.map((product) => (
               <SwiperSlide key={product.id}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="group relative"
+                  className="group relative cursor-pointer"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   {/* Image Container */}
@@ -100,10 +142,31 @@ const BestSellers = () => {
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
                     
-                    {/* Quick View Button */}
-                    <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                      <button className="w-full bg-accent/90 backdrop-blur-md py-4 text-[10px] tracking-[0.2em] font-bold uppercase text-white flex items-center justify-center gap-2">
-                        View Detail <ArrowUpRight size={14} />
+                    {/* Subtle Actions */}
+                    <div className="absolute top-8 right-8 flex flex-col gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
+                      <button 
+                        onClick={(e) => handleAddToWishlist(e, product)} 
+                        className={`w-12 h-12 rounded-full backdrop-blur-md flex items-center justify-center transition-all border ${
+                          isInWishlist(product.id)
+                          ? 'bg-accent text-white border-accent'
+                          : 'bg-black/40 text-white hover:bg-accent hover:text-white border-white/10'
+                        }`}
+                      >
+                        <Heart size={18} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                      </button>
+                    </div>
+
+                    {/* Quick View / Add to Cart Button */}
+                    <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 flex flex-col gap-2">
+                      <button 
+                        onClick={(e) => handleAddToCart(e, product)}
+                        className={`w-full py-4 text-[10px] tracking-[0.2em] font-bold uppercase flex items-center justify-center gap-2 transition-all ${
+                          isInCart(product.id)
+                          ? 'bg-accent text-white'
+                          : 'bg-white/90 backdrop-blur-md text-black hover:bg-accent hover:text-white'
+                        }`}
+                      >
+                        {isInCart(product.id) ? 'Added to Cart' : 'Acquire Piece'} <ShoppingBag size={14} />
                       </button>
                     </div>
                   </div>
@@ -111,13 +174,13 @@ const BestSellers = () => {
                   {/* Product Info */}
                   <div className="mt-8 lg:text-center text-left px-4">
                     <h3 className="text-[11px] tracking-[0.3em] font-bold uppercase text-accent/60 mb-2">
-                      {product.brand}
+                      {product.brand || "Velouraz Atelier"}
                     </h3>
                     <p className="font-serif text-xl text-white mb-1">
                       {product.name}
                     </p>
                     <p className="text-sm font-sans text-white/70">
-                      {product.price}
+                      {typeof product.price === 'number' ? `₹${product.price.toLocaleString()}` : product.price}
                     </p>
                   </div>
                 </motion.div>

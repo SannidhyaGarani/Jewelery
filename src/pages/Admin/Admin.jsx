@@ -33,13 +33,13 @@ const sidebarItems = ["Dashboard", "Products", "Orders", "Categories", "Users"];
 const metricCards = [
   { label: "Active Products", value: "864", hint: "Across all categories" },
   { label: "Open Orders", value: "214", hint: "Awaiting fulfillment" },
-  { label: "Today\u2019s Revenue", value: "$4,920", hint: "Live store total" },
+  { label: "Today’s Revenue", value: "₹4,92,000", hint: "Live store total" },
 ];
 
 const orderRows = [
-  { id: "#98234", customer: "Ariana Dell", total: "$124.00", status: "Paid" },
-  { id: "#98215", customer: "Michael Lee", total: "$89.00", status: "Pending" },
-  { id: "#98198", customer: "Sofia Park", total: "$212.00", status: "Shipped" },
+  { id: "#98234", customer: "Ariana Dell", total: "₹12,400.00", status: "Paid" },
+  { id: "#98215", customer: "Michael Lee", total: "₹8,900.00", status: "Pending" },
+  { id: "#98198", customer: "Sofia Park", total: "₹21,200.00", status: "Shipped" },
 ];
 
 const statusBadgeClasses = (status) => {
@@ -173,7 +173,7 @@ const Admin = () => {
               <th className="px-5 py-3">Name</th>
               <th className="px-5 py-3">Category</th>
               <th className="px-5 py-3">Price</th>
-              <th className="px-5 py-3">Suitable For</th>
+              <th className="px-5 py-3">Material</th>
               <th className="px-5 py-3">Status</th>
               <th className="px-5 py-3 text-right">Actions</th>
             </tr>
@@ -191,7 +191,7 @@ const Admin = () => {
                   ₹{Number(row.price || 0).toFixed(2)}
                 </td>
                 <td className="px-5 py-3 text-slate-600">
-                  {row.suitable_for || "-"}
+                  {row.material || "-"}
                 </td>
                 <td className="px-5 py-3">
                   <span
@@ -387,26 +387,26 @@ const Admin = () => {
                   <p className="text-xs font-medium text-slate-500 uppercase">
                     Core
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-900">
-                    Cleansers
+                  <p className="text-sm font-semibold text-slate-900">
+                    Necklaces
                   </p>
                   <p className="mt-1 text-xs text-slate-500">18 products</p>
                 </div>
                 <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-4 py-3">
                   <p className="text-xs font-medium text-slate-500 uppercase">
-                    Treatment
+                    Adornment
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-900">
-                    Serums
+                  <p className="text-sm font-semibold text-slate-900">
+                    Earrings
                   </p>
                   <p className="mt-1 text-xs text-slate-500">27 products</p>
                 </div>
                 <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-4 py-3">
                   <p className="text-xs font-medium text-slate-500 uppercase">
-                    Finish
+                    Accents
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-900">
-                    Moisturizers
+                  <p className="text-sm font-semibold text-slate-900">
+                    Rings
                   </p>
                   <p className="mt-1 text-xs text-slate-500">15 products</p>
                 </div>
@@ -563,20 +563,20 @@ export const ProductForm = ({ onSuccess }) => {
       category: "",
       description: "",
       discount: 0,
-      how_to_use: "",
-      ingredients: "",
-      net_quantity: "",
+      care_instructions: "",
+      stones: "",
+      size_weight: "",
       original_price: 0,
       price: 0,
       rating: 0,
       stock_status: "In Stock",
-      suitable_for: "",
+      material: "",
     },
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const categories = ["Cleansers", "Serums", "Moisturizers", "Treatments", "Sunscreen", "Eye Care"];
+  const categories = ["Necklaces", "Earrings", "Rings", "Bracelets", "Bangles", "Bridal Wear", "Anklets"];
 
   const onSubmit = async (values) => {
     setError("");
@@ -594,16 +594,16 @@ export const ProductForm = ({ onSuccess }) => {
         category: values.category,
         description: values.description,
         discount: Number(values.discount) || 0,
-        how_to_use: values.how_to_use,
+        care_instructions: values.care_instructions,
         images: uploadUrls,
         image: uploadUrls[0] || "",
-        ingredients: values.ingredients,
-        net_quantity: values.net_quantity,
+        stones: values.stones,
+        size_weight: values.size_weight,
         original_price: Number(values.original_price) || 0,
         price: Number(values.price) || 0,
         rating: Number(values.rating) || 0,
         stock_status: values.stock_status,
-        suitable_for: values.suitable_for,
+        material: values.material,
         createdAt: serverTimestamp(),
       };
       await addDoc(collection(db, "products"), docData);
@@ -625,7 +625,7 @@ export const ProductForm = ({ onSuccess }) => {
           <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Product Name</label>
           <input
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm"
-            placeholder="e.g. Vitamin C Radiance Serum"
+            placeholder="e.g. Emerald Queen Choker"
             {...register("name", { required: true })}
           />
         </div>
@@ -673,13 +673,42 @@ export const ProductForm = ({ onSuccess }) => {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Suitable For</label>
+          <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Material</label>
           <input
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm"
-            placeholder="e.g. All Skin Types"
-            {...register("suitable_for")}
+            placeholder="e.g. 22K Gold Plated Brass"
+            {...register("material")}
           />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Stones/Details</label>
+          <input
+            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm"
+            placeholder="e.g. Handcrafted Kundan, American Diamonds"
+            {...register("stones")}
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Size/Weight</label>
+          <input
+            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm"
+            placeholder="e.g. 2.4 inches / 45g"
+            {...register("size_weight")}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Care Instructions</label>
+        <textarea
+          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm min-h-[80px]"
+          placeholder="e.g. Keep away from water and perfume. Store in a dry pouch."
+          rows={2}
+          {...register("care_instructions")}
+        />
       </div>
 
       <div className="space-y-1">
@@ -735,13 +764,13 @@ const EditProductForm = ({ product, onSuccess }) => {
       description: product?.description || "",
       original_price: product?.original_price || 0,
       price: product?.price || 0,
-      suitable_for: product?.suitable_for || "",
+      material: product?.material || "",
     },
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const categories = ["Cleansers", "Serums", "Moisturizers", "Treatments", "Sunscreen", "Eye Care"];
+  const categories = ["Necklaces", "Earrings", "Rings", "Bracelets", "Bangles", "Bridal Wear", "Anklets"];
 
   useEffect(() => {
     if (product) {
@@ -751,7 +780,7 @@ const EditProductForm = ({ product, onSuccess }) => {
         description: product.description || "",
         original_price: product.original_price || 0,
         price: product.price || 0,
-        suitable_for: product.suitable_for || "",
+        material: product.material || "",
       });
     }
   }, [product, reset]);
@@ -777,7 +806,7 @@ const EditProductForm = ({ product, onSuccess }) => {
         description: values.description,
         original_price: Number(values.original_price) || 0,
         price: Number(values.price) || 0,
-        suitable_for: values.suitable_for,
+        material: values.material,
         images: uploadUrls,
         image: uploadUrls[0] || product.image || "",
       };
@@ -800,7 +829,7 @@ const EditProductForm = ({ product, onSuccess }) => {
           <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Product Name</label>
           <input
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm"
-            placeholder="e.g. Vitamin C Radiance Serum"
+            placeholder="e.g. Emerald Queen Choker"
             {...register("name", { required: true })}
           />
         </div>
@@ -848,11 +877,11 @@ const EditProductForm = ({ product, onSuccess }) => {
           />
         </div>
         <div className="space-y-1">
-          <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Suitable For</label>
+          <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Material</label>
           <input
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#811331] focus:ring-1 focus:ring-[#811331] outline-none transition-all text-sm"
-            placeholder="e.g. Oily Skin"
-            {...register("suitable_for")}
+            placeholder="e.g. 22K Gold Plated Brass"
+            {...register("material")}
           />
         </div>
       </div>

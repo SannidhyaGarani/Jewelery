@@ -8,28 +8,28 @@ const categories = [
     id: 1,
     name: "Rings",
     image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800",
-    description: "Symbolizing eternal beauty and timeless commitment.",
+    description: "Exquisite hand-finished bands, from minimalist gold-plated to intricate kundan pieces.",
     link: "/category/rings"
   },
   {
     id: 2,
     name: "Necklaces",
     image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800",
-    description: "Elegant pieces that grace your neck with sophistication.",
+    description: "Statement chokers and delicate pendants crafted with American diamonds and semi-precious stones.",
     link: "/category/necklaces"
   },
   {
     id: 3,
     name: "Earrings",
     image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800",
-    description: "Dazzling accents that illuminate your every expression.",
+    description: "Dazzling jhumkas and contemporary studs that illuminate every occasion.",
     link: "/category/earrings"
   },
   {
     id: 4,
     name: "Bracelets",
     image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800",
-    description: "Graceful adornments for the modern woman's wrist.",
+    description: "Graceful bangles and contemporary cuffs for the modern visionary's wrist.",
     link: "/category/bracelets"
   }
 ];

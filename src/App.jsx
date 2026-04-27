@@ -7,6 +7,7 @@ import Admin from "./pages/Admin/Admin";
 import SuperAdmin from "./pages/SuperAdmin/SuperAdmin";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import AuthProvider from "./components/AuthProvider";
+import { StoreProvider } from "./hooks/useStore";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Cart from "./layouts/Cart";
@@ -58,7 +59,9 @@ function App() {
       {!isPreloaderDone && <Preloader onComplete={() => setIsPreloaderDone(true)} />}
       <AuthProvider>
         <BrowserRouter>
-          <AppRoutes />
+          <StoreProvider>
+            <AppRoutes />
+          </StoreProvider>
         </BrowserRouter>
       </AuthProvider>
     </>

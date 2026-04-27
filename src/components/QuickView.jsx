@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { X, ShoppingBag, Heart } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '../hooks/useStore';
 
 const QuickView = ({ product, onClose }) => {
+  const { addToCart, addToWishlist, isInCart, isInWishlist } = useStore();
   const [isOpen, setIsOpen] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
@@ -148,16 +150,24 @@ const QuickView = ({ product, onClose }) => {
                     View Full Details
                   </button>
                   <button
+                    onClick={() => addToWishlist(product)}
                     className="px-6 py-4 rounded-2xl bg-[#FDFBF7] border border-[#E6CCB2] text-[#C6A664] font-black hover:bg-[#E6CCB2]/10 transition-colors"
                   >
-                    <Heart size={20} />
+                    <Heart size={20} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                   </button>
                 </div>
 
                 {/* Add to Cart */}
-                <button className="w-full px-6 py-4 rounded-2xl bg-[#C6A664] text-white font-black uppercase tracking-wider hover:bg-[#B59553] transition-all transform active:scale-95 shadow-lg shadow-[#C6A664]/20 flex items-center justify-center gap-2">
+                <button 
+                  onClick={() => addToCart(product, quantity)}
+                  className={`w-full px-6 py-4 rounded-2xl font-black uppercase tracking-wider transition-all transform active:scale-95 shadow-lg flex items-center justify-center gap-2 ${
+                    isInCart(product.id)
+                    ? 'bg-accent text-white shadow-accent/20'
+                    : 'bg-[#C6A664] text-white hover:bg-[#B59553] shadow-[#C6A664]/20'
+                  }`}
+                >
                   <ShoppingBag size={20} />
-                  Add to Cart
+                  {isInCart(product.id) ? 'Added to Cart' : 'Add to Cart'}
                 </button>
               </div>
             </div>

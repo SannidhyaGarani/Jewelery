@@ -156,7 +156,7 @@ const SuperAdmin = () => {
               <th className="px-5 py-3">Name</th>
               <th className="px-5 py-3">Category</th>
               <th className="px-5 py-3">Price</th>
-              <th className="px-5 py-3">Suitable For</th>
+              <th className="px-5 py-3">Material</th>
               <th className="px-5 py-3">Status</th>
               <th className="px-5 py-3 text-right">Actions</th>
             </tr>
@@ -174,7 +174,7 @@ const SuperAdmin = () => {
                   ₹{Number(row.price || 0).toFixed(2)}
                 </td>
                 <td className="px-5 py-3 text-slate-600">
-                  {row.suitable_for || "-"}
+                  {row.material || "-"}
                 </td>
                 <td className="px-5 py-3">
                   <span

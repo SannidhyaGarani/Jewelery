@@ -14,8 +14,11 @@ import {
   CreditCard, 
   MapPin, 
   Bell,
-  Award
+  Award,
+  Star,
+  Crown
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Account = () => {
   const { user, logout } = useAuth();
@@ -46,8 +49,14 @@ const Account = () => {
         
         // Fetch Recent Orders
         const ordersRef = collection(db, "users", user.uid, "orders");
-        const ordersQuery = query(ordersRef, orderBy("createdAt", "desc"), limit(3));
-        const ordersSnap = await getDocs(ordersQuery);
+        let ordersSnap;
+        try {
+          const ordersQuery = query(ordersRef, orderBy("createdAt", "desc"), limit(3));
+          ordersSnap = await getDocs(ordersQuery);
+        } catch (e) {
+          // If index doesn't exist yet
+          ordersSnap = await getDocs(query(ordersRef, limit(3)));
+        }
         
         setRecentOrders(ordersSnap.docs.map(d => ({ id: d.id, ...d.data() })));
         setStats({
@@ -75,46 +84,59 @@ const Account = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C6A664]"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-[#0A0A0A] pt-40 pb-20 px-6">
       <div className="max-w-[1440px] mx-auto">
         
         {/* Profile Header Card */}
-        <div className="bg-[#4A4A4A] rounded-[48px] p-8 md:p-16 mb-12 relative overflow-hidden shadow-2xl shadow-[#4A4A4A]/20">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#C6A664]/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/[0.02] backdrop-blur-xl rounded-[60px] p-10 md:p-20 mb-16 relative overflow-hidden border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)]"
+        >
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C6A664]/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
           
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
+            <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="relative group">
-                <div className="w-32 h-32 rounded-[40px] bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white overflow-hidden">
+                <div className="w-44 h-44 rounded-[48px] bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white overflow-hidden shadow-2xl">
                   {userData?.photoURL ? (
                     <img src={userData.photoURL} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
-                    <User size={56} className="text-white/40" />
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent">
+                      <User size={72} className="text-[#C6A664]/30" />
+                    </div>
                   )}
                 </div>
-                <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-[#C6A664] rounded-2xl flex items-center justify-center text-white border-4 border-[#4A4A4A] shadow-lg">
-                  <Award size={18} />
-                </div>
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -bottom-4 -right-4 w-14 h-14 bg-[#C6A664] rounded-[24px] flex items-center justify-center text-black border-[6px] border-[#0A0A0A] shadow-2xl"
+                >
+                  <Crown size={24} />
+                </motion.div>
               </div>
               
-              <div className="text-center md:text-left space-y-2">
-                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
-                  {userData?.displayName || "ElySkin Member"}
-                </h1>
-                <p className="text-white/60 font-medium text-lg">{user?.email}</p>
-                <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
-                  <span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white text-[10px] font-black uppercase tracking-widest border border-white/10">
-                    Platinum Status
+              <div className="text-center lg:text-left space-y-4">
+                <div className="flex flex-col gap-2">
+                  <span className="text-[10px] font-bold text-[#C6A664] uppercase tracking-[0.4em]">Velouraz Elite Member</span>
+                  <h1 className="text-5xl md:text-7xl font-serif text-white tracking-tighter">
+                    {userData?.displayName || "L'Excellence Member"}
+                  </h1>
+                </div>
+                <p className="text-white/40 font-sans text-lg tracking-wide">{user?.email}</p>
+                <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-6">
+                  <span className="px-6 py-2 rounded-2xl bg-white/5 backdrop-blur-sm text-white/60 text-[10px] font-bold uppercase tracking-widest border border-white/10 flex items-center gap-2">
+                    <Star size={12} className="text-[#C6A664]" /> Platinum Status
                   </span>
-                  <span className="px-4 py-1.5 rounded-full bg-[#C6A664]/20 text-[#C6A664] text-[10px] font-black uppercase tracking-widest border border-[#C6A664]/20">
-                    2,450 Points
+                  <span className="px-6 py-2 rounded-2xl bg-[#C6A664]/10 text-[#C6A664] text-[10px] font-bold uppercase tracking-widest border border-[#C6A664]/20">
+                    2,450 Prestige Points
                   </span>
                 </div>
               </div>
@@ -122,56 +144,58 @@ const Account = () => {
 
             <button
               onClick={handleLogout}
-              className="px-8 py-4 rounded-2xl bg-[#FDFBF7] text-[#4A4A4A] font-black hover:bg-red-50 hover:text-red-600 transition-all shadow-xl shadow-black/10 flex items-center gap-3"
+              className="px-10 py-5 rounded-[24px] bg-white/[0.03] text-white/60 font-bold uppercase tracking-[0.2em] text-[10px] border border-white/10 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all flex items-center gap-3 shadow-xl"
             >
-              <LogOut size={20} />
-              Logout Account
+              <LogOut size={16} />
+              Secured Logout
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-12">
+        <div className="grid lg:grid-cols-12 gap-16">
           
           {/* Left Column: Stats & Menu */}
-          <div className="lg:col-span-4 space-y-8">
+          <div className="lg:col-span-4 space-y-12">
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-6">
-              <Link to="/cart" className="group bg-[#FDFBF7] p-8 rounded-[40px] border border-[#E6CCB2]/30 shadow-sm hover:shadow-[0_20px_50px_rgba(198,166,100,0.05)] transition-all">
-                <div className="w-14 h-14 rounded-2xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664] mb-6 group-hover:scale-110 transition-transform">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <Link to="/cart" className="group bg-white/[0.02] p-10 rounded-[48px] border border-white/10 hover:bg-white/[0.04] transition-all relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#C6A664]/5 rounded-full blur-2xl" />
+                <div className="w-14 h-14 rounded-2xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664] mb-8 group-hover:scale-110 transition-transform">
                   <ShoppingBag size={28} />
                 </div>
-                <p className="text-4xl font-black text-[#4A4A4A] tracking-tighter">{stats.cart}</p>
-                <p className="text-xs font-black text-[#4A4A4A]/40 uppercase tracking-[0.2em] mt-2">In Cart</p>
+                <p className="text-5xl font-sans font-bold text-white tracking-tighter leading-none">{stats.cart}</p>
+                <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] mt-4 italic">Acquisitions</p>
               </Link>
               
-              <Link to="/wishlist" className="group bg-[#FDFBF7] p-8 rounded-[40px] border border-[#E6CCB2]/30 shadow-sm hover:shadow-[0_20px_50px_rgba(198,166,100,0.05)] transition-all">
-                <div className="w-14 h-14 rounded-2xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664] mb-6 group-hover:scale-110 transition-transform">
+              <Link to="/wishlist" className="group bg-white/[0.02] p-10 rounded-[48px] border border-white/10 hover:bg-white/[0.04] transition-all relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#C6A664]/5 rounded-full blur-2xl" />
+                <div className="w-14 h-14 rounded-2xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664] mb-8 group-hover:scale-110 transition-transform">
                   <Heart size={28} fill="currentColor" />
                 </div>
-                <p className="text-4xl font-black text-[#4A4A4A] tracking-tighter">{stats.wishlist}</p>
-                <p className="text-xs font-black text-[#4A4A4A]/40 uppercase tracking-[0.2em] mt-2">Saved</p>
+                <p className="text-5xl font-sans font-bold text-white tracking-tighter leading-none">{stats.wishlist}</p>
+                <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] mt-4 italic">Sanctuary Pieces</p>
               </Link>
             </div>
 
             {/* Navigation Menu */}
-            <div className="bg-[#FDFBF7] rounded-[48px] border border-[#E6CCB2]/30 shadow-sm overflow-hidden p-4">
-              <h3 className="px-6 py-4 text-xs font-black text-[#4A4A4A]/30 uppercase tracking-[0.3em]">Account Management</h3>
-              <div className="space-y-1">
+            <div className="bg-white/[0.02] rounded-[56px] border border-white/10 overflow-hidden p-6 shadow-2xl">
+              <h3 className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Personal Atelier</h3>
+              <div className="space-y-2">
                 {[
-                  { icon: Settings, label: "Profile Settings", color: "text-[#C6A664]", bg: "bg-[#C6A664]/5" },
-                  { icon: Package, label: "Order History", color: "text-[#C6A664]", bg: "bg-[#C6A664]/5" },
-                  { icon: CreditCard, label: "Payment Methods", color: "text-[#C6A664]", bg: "bg-[#C6A664]/5" },
-                  { icon: MapPin, label: "Saved Addresses", color: "text-[#C6A664]", bg: "bg-[#C6A664]/5" },
-                  { icon: Bell, label: "Notifications", color: "text-[#C6A664]", bg: "bg-[#C6A664]/5" },
+                  { icon: Settings, label: "House Settings" },
+                  { icon: Package, label: "Order Archives" },
+                  { icon: CreditCard, label: "Vault Methods" },
+                  { icon: MapPin, label: "Elite Addresses" },
+                  { icon: Bell, label: "Communications" },
                 ].map((item, idx) => (
-                  <button key={idx} className="w-full flex items-center justify-between p-5 rounded-3xl hover:bg-white/50 transition-all group text-left">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-xl ${item.bg} ${item.color} flex items-center justify-center`}>
+                  <button key={idx} className="w-full flex items-center justify-between p-6 rounded-[32px] hover:bg-white/5 transition-all group text-left border border-transparent hover:border-white/5">
+                    <div className="flex items-center gap-5">
+                      <div className="w-12 h-12 rounded-2xl bg-white/5 text-[#C6A664] flex items-center justify-center border border-white/5 group-hover:bg-[#C6A664] group-hover:text-black transition-colors">
                         <item.icon size={20} />
                       </div>
-                      <span className="font-black text-[#4A4A4A]">{item.label}</span>
+                      <span className="text-sm font-bold text-white uppercase tracking-widest">{item.label}</span>
                     </div>
-                    <ChevronRight size={18} className="text-[#4A4A4A]/20 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight size={18} className="text-white/10 group-hover:translate-x-1 group-hover:text-[#C6A664] transition-all" />
                   </button>
                 ))}
               </div>
@@ -179,68 +203,76 @@ const Account = () => {
           </div>
 
           {/* Right Column: Recent Activity */}
-          <div className="lg:col-span-8 space-y-12">
-            <div className="bg-[#FDFBF7] rounded-[56px] border border-[#E6CCB2]/30 shadow-sm p-10 md:p-14">
-              <div className="flex items-center justify-between mb-12">
+          <div className="lg:col-span-8 space-y-16">
+            <div className="bg-white/[0.02] rounded-[64px] border border-white/10 p-12 md:p-16 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C6A664]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 mb-16 relative z-10">
                 <div>
-                  <h3 className="text-3xl font-black text-[#4A4A4A] tracking-tighter">Recent Orders</h3>
-                  <p className="text-[#4A4A4A]/40 font-medium mt-1">Tracking your latest skincare arrivals.</p>
+                  <h3 className="text-4xl font-serif text-white tracking-tight">Recent Archives</h3>
+                  <p className="text-white/30 font-sans text-sm tracking-widest uppercase mt-2">Tracking your latest masterpieces</p>
                 </div>
-                <Link to="/orders" className="px-6 py-3 rounded-2xl border border-[#E6CCB2]/30 text-xs font-black text-[#4A4A4A] uppercase tracking-widest hover:bg-[#4A4A4A] hover:text-white transition-all">
-                  View All
+                <Link to="/orders" className="px-10 py-4 rounded-2xl border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-[0.3em] hover:bg-white hover:text-black hover:border-white transition-all w-fit">
+                  Full Catalog
                 </Link>
               </div>
 
-              {recentOrders.length > 0 ? (
-                <div className="space-y-6">
-                  {recentOrders.map((order) => (
-                    <div key={order.id} className="group flex flex-col sm:flex-row items-center justify-between p-8 rounded-[40px] bg-white/30 border border-transparent hover:border-[#C6A664]/20 hover:bg-white transition-all duration-500">
-                      <div className="flex items-center gap-6 mb-4 sm:mb-0">
-                        <div className="w-16 h-16 rounded-[24px] bg-[#FDFBF7] flex items-center justify-center text-[#4A4A4A] border border-[#E6CCB2]/30 shadow-sm group-hover:scale-110 transition-transform">
-                          <Package size={28} />
+              <div className="relative z-10">
+                {recentOrders.length > 0 ? (
+                  <div className="space-y-6">
+                    {recentOrders.map((order) => (
+                      <div key={order.id} className="group flex flex-col sm:flex-row items-center justify-between p-10 rounded-[48px] bg-white/[0.03] border border-white/5 hover:border-[#C6A664]/30 hover:bg-white/[0.05] transition-all duration-700">
+                        <div className="flex items-center gap-8 mb-6 sm:mb-0">
+                          <div className="w-20 h-20 rounded-[28px] bg-black/40 flex items-center justify-center text-[#C6A664] border border-white/10 shadow-2xl group-hover:scale-110 transition-transform duration-700">
+                            <Package size={32} />
+                          </div>
+                          <div>
+                            <p className="text-xl font-serif text-white">Ref. #{order.id.slice(0, 8).toUpperCase()}</p>
+                            <p className="text-[10px] text-white/20 font-bold uppercase tracking-[0.3em] mt-2">Acquired {new Date(order.createdAt?.seconds * 1000).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-lg font-black text-[#4A4A4A]">Order #{order.id.slice(0, 8)}</p>
-                          <p className="text-sm text-[#4A4A4A]/40 font-bold uppercase tracking-widest">{order.createdAt?.toDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                        <div className="text-center sm:text-right space-y-4">
+                          <p className="text-3xl font-sans font-bold text-[#C6A664] tracking-tighter">₹{Number(order.total).toLocaleString()}</p>
+                          <span className="inline-flex px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] bg-[#C6A664]/10 text-[#C6A664] border border-[#C6A664]/20 shadow-lg shadow-[#C6A664]/5">
+                            {order.status}
+                          </span>
                         </div>
                       </div>
-                      <div className="text-center sm:text-right space-y-2">
-                        <p className="text-3xl font-black text-[#4A4A4A] tracking-tighter">${order.total}</p>
-                        <span className="inline-flex px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-600 border border-emerald-100">
-                          {order.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-24 bg-white/30 rounded-[48px] border border-dashed border-[#E6CCB2]/30">
-                  <div className="w-24 h-24 rounded-[32px] bg-[#FDFBF7] flex items-center justify-center text-[#4A4A4A]/10 mx-auto mb-8 shadow-sm">
-                    <ShoppingBag size={48} />
+                    ))}
                   </div>
-                  <h4 className="text-2xl font-black text-[#4A4A4A] mb-2">No orders yet</h4>
-                  <p className="text-[#4A4A4A]/40 font-medium mb-10 max-w-xs mx-auto">Your skincare journey begins with your first selection.</p>
-                  <Link to="/shop" className="inline-flex items-center gap-3 px-10 py-5 bg-[#C6A664] text-white rounded-[24px] font-black hover:bg-[#4A4A4A] transition-all shadow-xl shadow-[#C6A664]/20">
-                    Explore Collection
-                    <ChevronRight size={20} />
-                  </Link>
-                </div>
-              )}
+                ) : (
+                  <div className="text-center py-28 bg-white/[0.01] rounded-[56px] border border-dashed border-white/10">
+                    <div className="w-24 h-24 rounded-[36px] bg-white/5 flex items-center justify-center text-[#C6A664]/20 mx-auto mb-10 shadow-2xl">
+                      <ShoppingBag size={48} />
+                    </div>
+                    <h4 className="text-3xl font-serif text-white/60 mb-4 italic">No acquisitions recorded</h4>
+                    <p className="text-white/20 font-sans text-xs tracking-[0.3em] uppercase mb-12 max-w-xs mx-auto leading-relaxed">Your jewellery journey awaits its first chapter.</p>
+                    <Link to="/shop" className="inline-flex items-center gap-4 px-12 py-6 bg-[#C6A664] text-black rounded-[28px] font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white transition-all shadow-2xl shadow-[#C6A664]/10">
+                      Explore Atelier
+                      <ChevronRight size={16} />
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Loyalty Banner */}
-            <div className="bg-[#C6A664] rounded-[48px] p-10 md:p-14 text-white relative overflow-hidden shadow-2xl shadow-[#C6A664]/20">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="text-center md:text-left">
-                  <h3 className="text-3xl font-black tracking-tighter mb-2">ElySkin Rewards</h3>
-                  <p className="text-white/80 font-medium">You're only 550 points away from your next luxury gift.</p>
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="bg-[#C6A664] rounded-[60px] p-12 md:p-20 text-black relative overflow-hidden shadow-[0_40px_100px_rgba(198,166,100,0.2)]"
+            >
+              <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="text-center md:text-left space-y-4">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-60">Loyalty Program</span>
+                  <h3 className="text-4xl md:text-5xl font-serif tracking-tight leading-tight">Prestige Rewards</h3>
+                  <p className="text-black/60 font-medium text-lg italic">You are approaching your next complimentary acquisition.</p>
                 </div>
-                <button className="px-10 py-5 bg-[#4A4A4A] text-white rounded-[24px] font-black hover:bg-white hover:text-[#4A4A4A] transition-all shadow-xl shadow-black/10">
-                  Redeem Points
+                <button className="px-12 py-6 bg-[#0A0A0A] text-white rounded-[32px] font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-[#0A0A0A] transition-all shadow-2xl shadow-black/20">
+                  Redeem Excellence
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

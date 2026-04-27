@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../components/Firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useAuth } from "../components/useAuth";
+import { useStore } from '../hooks/useStore';
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Star, Shield, Truck, RotateCcw, Heart, ShoppingBag, 
@@ -19,18 +20,10 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
 
   const curatedProducts = [
-    { id: "bs-1", name: "Solitaire Droplet Necklace", price: 12400, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "High Jewellery", description: "A breathtaking solitaire diamond-cut crystal suspended on a delicate 18k gold-toned chain, designed to capture and reflect every fragment of light." },
-    { id: "bs-2", name: "Champagne Gold Ring", price: 8900, image: "https://images.unsplash.com/photo-1607703829739-c05b7beddf60?w=600&auto=format&fit=crop&q=60", category: "Everyday", description: "The Champagne Gold Ring features a subtle, warm-toned finish that elegantly complements any outfit, making it a timeless staple for daily wear." },
-    { id: "bs-3", name: "Rose Quartz Eternity Ring", price: 15200, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Bridal", description: "Embodying eternal love, this ring features delicately set rose quartz crystals that radiate a soft, romantic glow." },
-    { id: "bs-4", name: "Pearl Infused Bracelet", price: 9500, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "New Arrivals", description: "A sophisticated blend of baroque pearls and polished gold links, this bracelet is a testament to classical beauty reimagined." },
-    { id: 'shop-5', name: "Diamond Halo Studs", price: 21000, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "High Jewellery" },
-    { id: 'shop-6', name: "Vintage Gold Locket", price: 17500, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60", category: "New Arrivals" },
-    { id: 'shop-7', name: "Sapphire Night Pendant", price: 32000, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800", category: "High Jewellery" },
-    { id: 'shop-8', name: "Minimalist Silver Band", price: 6500, image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=800", category: "Everyday" },
-    { id: 'shop-9', name: "Art Deco Emerald Ring", price: 28000, image: "https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&auto=format&fit=crop&q=60", category: "Bridal" },
-    { id: 'shop-10', name: "Celestial Moon Necklace", price: 14000, image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=800", category: "New Arrivals" },
-    { id: 'shop-11', name: "Ornate Bridal Choker", price: 45000, image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60", category: "Bridal" },
-    { id: 'shop-12', name: "Infinity Knot Bangle", price: 11000, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Everyday" }
+    { id: "bs-1", name: "Emerald Blossom Choker", price: 3800, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Necklaces", description: "A breathtaking emerald choker with gold plating, designed for royalty." },
+    { id: "bs-2", name: "Antique Gold Temple Jhumkas", price: 2400, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60", category: "Earrings", description: "Traditional temple jewelry with intricate carvings and ruby stones." },
+    { id: "bs-3", name: "American Diamond Band", price: 1500, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Rings", description: "A minimalist ring set with high-grade American diamonds for everyday sparkle." },
+    { id: "bs-4", name: "Oxidized Silver Kada", price: 950, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Bracelets", description: "Artisan-crafted oxidized silver kada with floral engravings." },
   ];
 
   useEffect(() => {
@@ -56,20 +49,19 @@ const ProductDetail = () => {
     load();
   }, [id]);
 
-  const addToCollection = async (collectionName) => {
-    if (!user) { navigate("/login"); return; }
+  const { addToCart, addToWishlist, isInCart, isInWishlist } = useStore();
+
+  const handleAddToCart = async () => {
     if (!product) return;
-    try {
-      const itemRef = doc(db, "users", user.uid, collectionName, id);
-      await setDoc(itemRef, {
-        name: product.name,
-        price: product.price,
-        image: product.image || product.images?.[0] || "",
-        addedAt: new Date().toISOString(),
-        quantity: quantity
-      });
-      alert(`Added to ${collectionName}!`);
-    } catch (error) { console.error(`Error adding to ${collectionName}:`, error); }
+    const success = await addToCart(product);
+    if (success) {
+      // Optional: show feedback
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    if (!product) return;
+    await addToWishlist(product);
   };
 
   if (loading) {
@@ -212,9 +204,15 @@ const ProductDetail = () => {
                       transition={{ duration: 0.3 }}
                       className="text-[11px] text-white/50 tracking-[0.15em] uppercase leading-relaxed"
                     >
-                      {activeTab === 'heritage' && "The Velouraz heritage is defined by a relentless pursuit of perfection. This piece is a continuation of our house legacy, where timeless elegance meets contemporary vision."}
-                      {activeTab === 'details' && "Meticulously finished with conflict-free hand-selected materials and high-purity sustainable alloys. Designed to reflect light with exceptional brilliance."}
-                      {activeTab === 'care' && "Preserve your treasure by avoiding direct contact with liquids. Store within the provided velvet atelier pouch. Professional inspection is recommended annually."}
+                      {activeTab === 'heritage' && (product.heritage || "The Velouraz heritage is defined by a relentless pursuit of perfection. This piece is a continuation of our house legacy, where timeless elegance meets contemporary vision.")}
+                      {activeTab === 'details' && (
+                        <div className="space-y-2">
+                          <p>Material: {product.material || "High-grade alloy with gold plating"}</p>
+                          <p>Stones: {product.stones || "Semi-precious / AD stones"}</p>
+                          <p>Weight/Size: {product.size_weight || "Adjustable"}</p>
+                        </div>
+                      )}
+                      {activeTab === 'care' && (product.care_instructions || "Preserve your treasure by avoiding direct contact with liquids. Store within the provided velvet atelier pouch. Professional inspection is recommended annually.")}
                     </motion.div>
                   </AnimatePresence>
                 </div>
@@ -223,17 +221,25 @@ const ProductDetail = () => {
               {/* Desktop Acquisition Actions (Hidden on Mobile) */}
               <div className="hidden lg:flex gap-4 pt-4">
                 <button
-                  onClick={() => addToCollection("cart")}
-                  className="flex-1 h-14 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-bold rounded-full hover:bg-accent hover:text-white transition-all duration-300 flex items-center justify-center gap-3"
+                  onClick={handleAddToCart}
+                  className={`flex-1 h-14 text-[10px] uppercase tracking-[0.3em] font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-3 ${
+                    isInCart(product.id)
+                    ? 'bg-accent text-white'
+                    : 'bg-white text-black hover:bg-accent hover:text-white'
+                  }`}
                 >
                   <ShoppingBag size={16} strokeWidth={1.5} />
-                  Acquire Selection
+                  {isInCart(product.id) ? 'Added to Cart' : 'Acquire Selection'}
                 </button>
                 <button
-                  onClick={() => addToCollection("wishlist")}
-                  className="w-14 h-14 rounded-full border border-white/10 bg-[#111] flex items-center justify-center text-white hover:text-accent hover:border-accent/40 transition-all duration-300"
+                  onClick={handleAddToWishlist}
+                  className={`w-14 h-14 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                    isInWishlist(product.id)
+                    ? 'bg-accent border-accent text-white'
+                    : 'border-white/10 bg-[#111] text-white hover:text-accent hover:border-accent/40'
+                  }`}
                 >
-                  <Heart size={18} strokeWidth={1.5} />
+                  <Heart size={18} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                 </button>
               </div>
 
@@ -263,17 +269,25 @@ const ProductDetail = () => {
       {/* Mobile Fixed Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#0A0A0A]/80 backdrop-blur-xl border-t border-white/10 z-50 lg:hidden flex gap-3 pb-safe-area">
          <button
-            onClick={() => addToCollection("cart")}
-            className="flex-1 h-12 bg-white text-black text-[10px] uppercase tracking-[0.2em] font-bold rounded-full active:scale-95 transition-transform flex items-center justify-center gap-2"
+            onClick={handleAddToCart}
+            className={`flex-1 h-12 text-[10px] uppercase tracking-[0.2em] font-bold rounded-full active:scale-95 transition-all flex items-center justify-center gap-2 ${
+              isInCart(product.id)
+              ? 'bg-accent text-white'
+              : 'bg-white text-black'
+            }`}
           >
             <ShoppingBag size={14} strokeWidth={2} />
-            Acquire
+            {isInCart(product.id) ? 'Added' : 'Acquire'}
          </button>
          <button
-            onClick={() => addToCollection("wishlist")}
-            className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white active:scale-95 transition-transform"
+            onClick={handleAddToWishlist}
+            className={`w-12 h-12 rounded-full border flex items-center justify-center active:scale-95 transition-all ${
+              isInWishlist(product.id)
+              ? 'bg-accent border-accent text-white'
+              : 'border-white/10 bg-white/5 text-white'
+            }`}
           >
-            <Heart size={16} strokeWidth={1.5} />
+            <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
          </button>
       </div>
 

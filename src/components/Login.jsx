@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "./useAuth";
 import { Mail, Lock, ArrowRight, Sparkles, AlertCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const { login } = useAuth();
@@ -18,50 +19,59 @@ const Login = () => {
     try {
       await login(email, password);
       navigate("/");
-    } catch {
-      setError("The credentials provided do not match our records.");
+    } catch (err) {
+      setError(err.message || "Invalid email or password.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center px-6 py-32 relative overflow-hidden">
-      {/* Background Decorations */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#C6A664]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#4A4A4A]/5 rounded-full blur-[120px]" />
+    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6 py-32 relative overflow-hidden">
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#C6A664]/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px]" />
       </div>
 
-      <div className="w-full max-w-xl bg-[#FDFBF7] rounded-[48px] border border-[#E6CCB2]/20 shadow-[0_40px_100px_rgba(198,166,100,0.05)] p-8 md:p-16 relative z-10">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-xl bg-white/[0.02] backdrop-blur-xl rounded-[48px] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] p-8 md:p-16 relative z-10"
+      >
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#4A4A4A] rounded-2xl text-white mb-8 shadow-xl shadow-[#4A4A4A]/20">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#C6A664] rounded-2xl text-black mb-8 shadow-2xl shadow-[#C6A664]/20">
             <Sparkles size={32} />
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-[#4A4A4A] tracking-tighter mb-4">
+          <h2 className="text-4xl md:text-5xl font-serif text-white tracking-tight mb-4">
             Welcome <span className="text-[#C6A664]">Back</span>
           </h2>
-          <p className="text-[#4A4A4A]/60 font-medium">Continue your journey to radiant skin.</p>
+          <p className="text-white/40 font-sans text-sm tracking-widest uppercase">The Atelier Awaits Your Presence</p>
         </div>
 
         {error && (
-          <div className="mb-8 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-sm font-bold">
+          <motion.div 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3 text-red-400 text-sm font-bold"
+          >
             <AlertCircle size={18} />
             {error}
-          </div>
+          </motion.div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#4A4A4A]/40 ml-4">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-[#4A4A4A]/20" size={20} />
+            <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 ml-4">Email Address</label>
+            <div className="relative group">
+              <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C6A664] transition-colors" size={20} />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
-                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-[#FDFBF7] border border-[#E6CCB2]/20 focus:bg-white focus:border-[#C6A664]/30 outline-none transition-all font-bold text-[#4A4A4A] placeholder:text-[#4A4A4A]/20 shadow-sm"
+                placeholder="Excellence@velouraz.com"
+                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-[#C6A664]/50 outline-none transition-all font-sans text-white placeholder:text-white/10 shadow-inner"
                 required
               />
             </div>
@@ -69,17 +79,17 @@ const Login = () => {
 
           <div className="space-y-2">
             <div className="flex justify-between items-center px-4">
-              <label className="text-[10px] font-black uppercase tracking-widest text-[#4A4A4A]/40">Password</label>
-              <button type="button" className="text-[10px] font-black uppercase tracking-widest text-[#C6A664] hover:underline">Forgot?</button>
+              <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Secret Password</label>
+              <button type="button" className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C6A664] hover:text-white transition-colors">Recovery</button>
             </div>
-            <div className="relative">
-              <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-[#4A4A4A]/20" size={20} />
+            <div className="relative group">
+              <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C6A664] transition-colors" size={20} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-[#FDFBF7] border border-[#E6CCB2]/20 focus:bg-white focus:border-[#C6A664]/30 outline-none transition-all font-bold text-[#4A4A4A] placeholder:text-[#4A4A4A]/20 shadow-sm"
+                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-[#C6A664]/50 outline-none transition-all font-sans text-white placeholder:text-white/10 shadow-inner"
                 required
               />
             </div>
@@ -88,28 +98,28 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="group w-full py-5 rounded-2xl bg-[#C6A664] text-white font-black text-lg hover:bg-[#4A4A4A] transition-all transform active:scale-[0.98] shadow-xl shadow-[#C6A664]/20 flex items-center justify-center gap-3"
+            className="group w-full py-5 rounded-2xl bg-[#C6A664] text-black font-bold text-sm tracking-[0.3em] uppercase hover:bg-white transition-all transform active:scale-[0.98] shadow-2xl shadow-[#C6A664]/10 flex items-center justify-center gap-3"
           >
             {loading ? (
-              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-6 h-6 border-2 border-black/30 border-t-black rounded-full animate-spin" />
             ) : (
               <>
                 Enter Boutique
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
         </form>
 
         <div className="mt-12 text-center">
-          <p className="text-sm text-[#4A4A4A]/60 font-medium">
-            New to ElySkin?{" "}
-            <Link to="/signup" className="text-[#C6A664] font-black hover:underline ml-1">
-              Create an Account
+          <p className="text-xs text-white/30 font-medium tracking-wide">
+            New to the legacy?{" "}
+            <Link to="/signup" className="text-[#C6A664] font-bold hover:text-white ml-1 transition-colors underline-offset-4 hover:underline">
+              Initialize Membership
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { db } from "./Firebase";
 import { collection, getDocs, doc, deleteDoc, addDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { Heart, Trash2, ShoppingCart, ArrowLeft, Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Wishlist = () => {
   const { user } = useAuth();
@@ -56,136 +57,133 @@ const Wishlist = () => {
     }
   };
 
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/login');
+    }
+  }, [user, loading, navigate]);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C6A664]"></div>
       </div>
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center px-6">
-        <div className="bg-white p-12 rounded-[40px] border border-[#E6CCB2] shadow-[0_20px_50px_rgba(198,166,100,0.05)] max-w-md w-full text-center">
-          <div className="w-20 h-20 bg-[#FDFBF7] rounded-3xl flex items-center justify-center mx-auto mb-8 text-[#C6A664]/20">
-            <Heart size={40} />
-          </div>
-          <h2 className="text-2xl font-black text-[#4A4A4A] mb-4 text-center">Your Sanctuary Awaits</h2>
-          <p className="text-[#4A4A4A]/60 font-medium mb-8">
-            Sign in to access your curated collection of favorites and saved rituals.
-          </p>
-          <Link 
-            to="/login" 
-            className="block w-full py-4 bg-[#C6A664] text-white rounded-2xl font-black hover:bg-[#4A4A4A] transition-all transform hover:-translate-y-1 shadow-lg shadow-[#C6A664]/20"
-          >
-            Sign In to Wishlist
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-[#0A0A0A] pt-40 pb-20 px-6">
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="space-y-4">
-            <Link to="/shop" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#4A4A4A]/40 hover:text-[#C6A664] transition-colors">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
+          <div className="space-y-6">
+            <Link to="/shop" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 hover:text-[#C6A664] transition-colors">
               <ArrowLeft size={14} />
-              Back to Collection
+              Return to Gallery
             </Link>
-            <h1 className="text-5xl md:text-7xl font-black text-[#4A4A4A] tracking-tighter leading-none">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-6xl md:text-8xl font-serif text-white tracking-tighter leading-none"
+            >
               The <span className="text-[#C6A664]">Wishlist</span>
-            </h1>
-            <p className="text-lg text-[#4A4A4A]/60 font-medium max-w-md">
-              Your personal selection of luxury skincare, ready for your next ritual.
+            </motion.h1>
+            <p className="text-white/40 font-sans text-sm tracking-widest uppercase italic max-w-md">
+              A curated selection of exquisite jewelry, awaiting your next celebration.
             </p>
           </div>
-          <div className="flex items-center gap-4 bg-white px-6 py-4 rounded-2xl border border-[#E6CCB2] shadow-sm">
-            <div className="w-10 h-10 bg-[#C6A664]/10 rounded-xl flex items-center justify-center text-[#C6A664]">
-              <Heart size={20} fill="currentColor" />
+          <div className="flex items-center gap-6 bg-white/[0.03] backdrop-blur-md px-8 py-5 rounded-[32px] border border-white/10 shadow-2xl shadow-black/50">
+            <div className="w-12 h-12 bg-[#C6A664]/10 rounded-2xl flex items-center justify-center text-[#C6A664]">
+              <Heart size={24} fill="currentColor" />
             </div>
             <div>
-              <p className="text-2xl font-black text-[#4A4A4A] leading-none">{items.length}</p>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#4A4A4A]/40 mt-1">Saved Treasures</p>
+              <p className="text-3xl font-sans font-bold text-white leading-none tracking-tight">{items.length}</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 mt-2">Saved Treasures</p>
             </div>
           </div>
         </div>
 
         {/* Grid */}
-        {items.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {items.map((item) => (
-              <div 
-                key={item.id}
-                className="group relative bg-white rounded-[40px] p-6 transition-all duration-500 hover:shadow-[0_30px_100px_rgba(198,166,100,0.1)] border border-[#E6CCB2]/50"
-              >
-                {/* Image Container */}
-                <div className="relative aspect-[4/5] rounded-[32px] overflow-hidden bg-[#FDFBF7] mb-8">
-                  <img 
-                    src={item.image} 
-                    alt={item.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#C6A664]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
-                  {/* Quick Actions */}
-                  <button 
-                    onClick={() => removeItem(item.id)}
-                    className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-md rounded-xl flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-all transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 shadow-lg"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-
-                {/* Content */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-1 text-[#C6A664]">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={10} fill="currentColor" />
-                    ))}
-                  </div>
-                  
-                  <h3 className="text-xl font-black text-[#4A4A4A] leading-tight group-hover:text-[#C6A664] transition-colors">
-                    {item.name}
-                  </h3>
-                  
-                  <div className="flex items-center justify-between">
-                    <p className="text-2xl font-black text-[#4A4A4A]">
-                      ₹{Number(item.price || 0).toFixed(2)}
-                    </p>
+        <AnimatePresence>
+          {items.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+              {items.map((item, idx) => (
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  key={item.id}
+                  className="group relative bg-white/[0.02] backdrop-blur-xl rounded-[48px] p-7 transition-all duration-700 hover:bg-white/[0.05] border border-white/5"
+                >
+                  {/* Image Container */}
+                  <div className="relative aspect-[4/5] rounded-[40px] overflow-hidden bg-black/50 mb-10 border border-white/5">
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    {/* Quick Actions */}
                     <button 
-                      onClick={() => moveToCart(item)}
-                      className="flex items-center gap-2 bg-[#C6A664] text-white px-6 py-3 rounded-2xl text-xs font-black hover:bg-[#4A4A4A] transition-all transform active:scale-95 shadow-lg shadow-[#C6A664]/20"
+                      onClick={() => removeItem(item.id)}
+                      className="absolute top-6 right-6 w-12 h-12 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl flex items-center justify-center text-white/30 hover:text-red-500 transition-all transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 shadow-2xl"
                     >
-                      <ShoppingCart size={14} />
-                      Add to Cart
+                      <Trash2 size={20} />
                     </button>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white rounded-[60px] border border-dashed border-[#E6CCB2] p-20 text-center">
-            <div className="w-24 h-24 bg-[#FDFBF7] rounded-full flex items-center justify-center mx-auto mb-8 text-[#C6A664]/10">
-              <Heart size={48} />
+
+                  {/* Content */}
+                  <div className="space-y-6 px-2">
+                    <div className="flex items-center gap-1 text-[#C6A664]/40">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={10} fill="currentColor" />
+                      ))}
+                    </div>
+                    
+                    <h3 className="text-2xl font-serif text-white leading-tight group-hover:text-[#C6A664] transition-colors">
+                      {item.name}
+                    </h3>
+                    
+                    <div className="flex items-center justify-between pt-2">
+                      <p className="text-2xl font-sans font-bold text-white tracking-tight">
+                        ₹{Number(item.price || 0).toLocaleString()}
+                      </p>
+                      <button 
+                        onClick={() => moveToCart(item)}
+                        className="w-12 h-12 bg-[#C6A664] text-black rounded-2xl flex items-center justify-center hover:bg-white transition-all transform active:scale-95 shadow-2xl shadow-[#C6A664]/10"
+                      >
+                        <ShoppingCart size={20} />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-            <h3 className="text-3xl font-black text-[#4A4A4A] mb-4">Your collection is empty</h3>
-            <p className="text-[#4A4A4A]/40 font-medium max-w-sm mx-auto mb-12">
-              Explore our boutique and save your favorites here for later.
-            </p>
-            <Link 
-              to="/shop" 
-              className="inline-flex items-center gap-3 bg-[#C6A664] text-white px-10 py-5 rounded-3xl font-black hover:bg-[#4A4A4A] transition-all shadow-xl shadow-[#C6A664]/20"
+          ) : (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-white/[0.01] rounded-[60px] border border-dashed border-white/10 p-24 text-center"
             >
-              Start Exploring
-              <ArrowLeft size={20} className="rotate-180" />
-            </Link>
-          </div>
-        )}
+              <div className="w-24 h-24 bg-white/[0.03] rounded-[32px] flex items-center justify-center mx-auto mb-10 text-[#C6A664]">
+                <Heart size={48} />
+              </div>
+              <h3 className="text-3xl font-serif text-white mb-6 italic text-white/60">Your collection is empty</h3>
+              <p className="text-white/20 font-sans text-sm tracking-widest uppercase mb-12">
+                Explore our boutique and save your favorites here for later.
+              </p>
+              <Link 
+                to="/shop" 
+                className="inline-flex items-center gap-4 bg-[#C6A664] text-black px-12 py-5 rounded-3xl font-bold uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-2xl shadow-[#C6A664]/10"
+              >
+                Start Exploring
+                <ArrowLeft size={20} className="rotate-180" />
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
