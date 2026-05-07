@@ -25,17 +25,13 @@ import MediaLibrary from "./components/MediaLibrary";
 
 const sidebarItems = ["Dashboard", "Products", "Orders", "Categories", "Users", "Media"];
 
-const metricCards = [
-  { label: "Active Products", value: "864", hint: "Across all categories" },
-  { label: "Open Orders", value: "214", hint: "Awaiting fulfillment" },
-  { label: "Today’s Revenue", value: "₹4,92,000", hint: "Live store total" },
+const metricCards = (productCount, userCount) => [
+  { label: "Active Products", value: productCount, hint: "Across all categories" },
+  { label: "Total Users", value: userCount, hint: "Registered accounts" },
+  { label: "Today’s Revenue", value: "₹0", hint: "Live store total" },
 ];
 
-const orderRows = [
-  { id: "#98234", customer: "Ariana Dell", total: "₹12,400.00", status: "Paid" },
-  { id: "#98215", customer: "Michael Lee", total: "₹8,900.00", status: "Pending" },
-  { id: "#98198", customer: "Sofia Park", total: "₹21,200.00", status: "Shipped" },
-];
+const orderRows = [];
 
 const Admin = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -121,11 +117,12 @@ const Admin = () => {
   );
 
   const renderMainContent = () => {
+    const cards = metricCards(products.length, users.length);
     switch (activeItem) {
       case "Products":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <ProductsTable
               products={products}
               onAddProduct={() => setIsProductModalOpen(true)}
@@ -138,21 +135,21 @@ const Admin = () => {
       case "Orders":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <OrdersTable orders={orderRows} />
           </>
         );
       case "Categories":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <CategoriesOverview />
           </>
         );
       case "Users":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <UsersTable users={users} />
           </>
         );
@@ -163,7 +160,7 @@ const Admin = () => {
       default:
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <div className="grid gap-6 lg:grid-cols-2">
               <ProductsTable
                 products={products}

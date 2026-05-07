@@ -33,17 +33,14 @@ const sidebarItems = [
   "Settings",
 ];
 
-const metricCards = [
-  { label: "Total Products", value: "1,240", trend: "+32 this month" },
-  { label: "Total Orders", value: "8,532", trend: "+124 today" },
-  { label: "Revenue", value: "₹1,28,430", trend: "Last 30 days" },
+const metricCards = (productCount, userCount, adminCount) => [
+  { label: "Total Products", value: productCount, trend: "In catalog" },
+  { label: "Total Users", value: userCount, trend: "Registered" },
+  { label: "Total Admins", value: adminCount, trend: "Active team" },
+  { label: "Revenue", value: "₹0", trend: "Total platform" },
 ];
 
-const orderRows = [
-  { id: "#98234", customer: "Ariana Dell", total: "₹124.00", status: "Paid" },
-  { id: "#98215", customer: "Michael Lee", total: "₹89.00", status: "Pending" },
-  { id: "#98198", customer: "Sofia Park", total: "₹212.00", status: "Shipped" },
-];
+const orderRows = [];
 
 const SuperAdmin = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -161,11 +158,12 @@ const SuperAdmin = () => {
   );
 
   const renderMainContent = () => {
+    const cards = metricCards(products.length, users.length, adminsList.length);
     switch (activeItem) {
       case "Products":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <ProductsTable 
               products={products} 
               onAddProduct={() => setIsProductModalOpen(true)}
@@ -177,21 +175,21 @@ const SuperAdmin = () => {
       case "Orders":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <OrdersTable orders={orderRows} />
           </>
         );
       case "Users":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <UsersTable users={users} />
           </>
         );
       case "Admins":
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <AdminsTable 
               adminsList={adminsList} 
               onAddAdmin={() => setIsAdminModalOpen(true)}
@@ -206,7 +204,7 @@ const SuperAdmin = () => {
       default:
         return (
           <>
-            <MetricCards cards={metricCards} />
+            <MetricCards cards={cards} />
             <div className="grid gap-6 lg:grid-cols-2">
               <ProductsTable 
                 products={products} 
