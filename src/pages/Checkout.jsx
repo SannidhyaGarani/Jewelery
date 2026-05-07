@@ -87,13 +87,16 @@ const Checkout = () => {
       return;
     }
 
+    const RAZORPAY_KEY_ID = "rzp_test_1DP5mmOlF5G5ag";
+    const RAZORPAY_SECRET = "7szD8Yk9xA1bcDEFghIJklmn";
+
     const options = {
-      key: "rzp_test_1DP5mmOlF5G5ag",
+      key: RAZORPAY_KEY_ID,
       amount: total * 100, // Amount in paise
       currency: "INR",
       name: "Velouraz Luxury",
       description: "Order Payment",
-      image: "https://example.com/logo.png", // Optional
+      image: "/img/logo.png",
       handler: async function (response) {
         // Payment successful
         try {
@@ -156,8 +159,8 @@ const Checkout = () => {
       },
       prefill: {
         name: formData.name,
-        email: formData.email,
-        contact: formData.phone,
+        email: formData.email || "info@velouraz.in",
+        contact: formData.phone || "695035916",
       },
       theme: {
         color: "#C6A664",

@@ -28,8 +28,8 @@ const Footer = () => {
         <div className="border-b border-white/5 pb-20 mb-20">
           <div className="flex flex-col lg:flex-row justify-between items-end gap-12">
             <div>
-              <Link to="/" className="font-serif text-8xl lg:text-[10rem] tracking-tighter text-accent leading-none block -ml-2 mb-8">
-                Velouraz
+              <Link to="/" className="block -ml-2 mb-8">
+                <img src="/img/logo.png" alt="Velouraz" className="h-20 lg:h-28 object-contain" />
               </Link>
               <p className="text-white/40 text-[11px] tracking-[0.4em] uppercase max-w-xl leading-relaxed">
                 Defining the pinnacle of artisanal brilliance. From our atelier to the modern visionary, we architect legacies in gold and light.
@@ -79,7 +79,9 @@ const Footer = () => {
               <div>
                 <p className="text-[11px] tracking-[0.2em] text-white/40 uppercase mb-2">Global Flagship</p>
                 <p className="text-[12px] tracking-[0.1em] font-light leading-relaxed">
-                  24 Place Vendôme<br />75001 Paris, France
+                  24 Place Vendôme, Paris<br />
+                  <a href="mailto:info@velouraz.in" className="hover:text-accent transition-colors">info@velouraz.in</a><br />
+                  Care: +91 695035916
                 </p>
               </div>
               <Link to="/contact" className="inline-block text-[11px] tracking-[0.3em] uppercase border-b border-accent pb-1 text-accent hover:text-white hover:border-white transition-all">

@@ -129,21 +129,12 @@ const LuxuryHeader = () => {
           {/* Center Logo */}
           <div className="flex flex-col items-center flex-1 lg:flex-none">
             <Link to="/" className="flex flex-col items-center gap-1 group text-center">
-              <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-accent tracking-tight font-normal whitespace-nowrap">
-                Velouraz
-              </h1>
-              <AnimatePresence>
-                {!isScrolled && (
-                  <motion.span 
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="font-sans text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-white/70 font-bold hidden sm:block"
-                  >
-                    Atelier de Luxe
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              <img 
+                src="/img/logo.png" 
+                alt="Velouraz" 
+                className={`transition-all duration-500 ${isScrolled ? 'h-13' : 'h-15'}`} 
+              />
+             
             </Link>
           </div>
 
@@ -272,7 +263,7 @@ const LuxuryHeader = () => {
             className="fixed inset-0 z-[100] bg-[#0A0A0A] flex flex-col overflow-hidden"
           >
             <div className="flex justify-between items-center p-6 border-b border-white/5 bg-black/50 backdrop-blur-xl">
-              <span className="font-serif text-3xl text-accent">Velouraz</span>
+              <img src="/img/logo.png" alt="Velouraz" className="h-10" />
               <button 
                 onClick={() => setMobileMenuOpen(false)}
                 className="border border-white/10 rounded-full p-2.5 text-white bg-white/5"
