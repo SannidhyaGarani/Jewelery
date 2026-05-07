@@ -1,42 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../components/useAuth";
 import { db } from "../components/Firebase";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { collection, getDocs, doc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingBag, Trash2, ArrowLeft, ShieldCheck, Truck, RotateCcw } from "lucide-react";
+import { useStore } from "../hooks/useStore";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Cart = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { cartItems, updateCartQuantity } = useStore();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [liveStocks, setLiveStocks] = useState({});
 
+  // Sync internal items state and Validate Stock
   useEffect(() => {
-    const load = async () => {
-      if (user) {
+    setItems(cartItems);
+    
+    const validateStock = async () => {
+      if (cartItems.length === 0) return;
+      
+      const newLiveStocks = {};
+      let needsUpdate = false;
+      for (const item of cartItems) {
         try {
-          const snap = await getDocs(collection(db, "users", user.uid, "cart"));
-          const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-          setItems(list);
-        } catch (error) {
-          console.error("Error loading cart:", error);
-        } finally {
-          setLoading(false);
+          if (!item.id || item.id.startsWith('bs-')) continue;
+          const pRef = doc(db, "products", item.id);
+          const pSnap = await getDoc(pRef);
+          
+          if (pSnap.exists()) {
+            const actualStock = Number(pSnap.data().stock || 0);
+            newLiveStocks[item.id] = actualStock;
+            if (item.quantity > actualStock) {
+              await updateCartQuantity(item.id, actualStock);
+              needsUpdate = true;
+            }
+          }
+        } catch (e) {
+          console.error("Stock validation error:", e);
         }
-      } else {
-        const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-        setItems(localCart);
-        setLoading(false);
+      }
+      setLiveStocks(newLiveStocks);
+      if (needsUpdate) {
+        console.log("Cart quantities adjusted due to stock changes.");
       }
     };
-    load();
-  }, [user]);
+
+    if (cartItems.length > 0) {
+      validateStock();
+    }
+    
+    setLoading(false);
+  }, [cartItems]); // Run when cartItems change (including quantity updates)
 
   const removeItem = async (id) => {
     if (user) {
       try {
         await deleteDoc(doc(db, "users", user.uid, "cart", id));
-        setItems((prev) => prev.filter((i) => i.id !== id));
       } catch (error) {
         console.error("Error removing item:", error);
       }
@@ -56,8 +78,7 @@ const Cart = () => {
     );
   }
 
-
-  const total = items.reduce((sum, i) => sum + (Number(i.price) || 0), 0);
+  const subtotal = items.reduce((sum, i) => sum + (Number(i.price) * (i.quantity || 1)), 0);
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] pt-32 pb-20 px-6">
@@ -102,8 +123,49 @@ const Cart = () => {
                         <h3 className="text-2xl font-serif text-white">{item.name}</h3>
                         <p className="text-xs text-white/40 font-sans tracking-wide mt-2 leading-relaxed">Artisan-crafted masterpiece featuring premium stones and timeless detailing.</p>
                       </div>
-                      <div className="mt-6 flex items-center justify-center sm:justify-start gap-4">
-                        <span className="text-2xl font-sans font-bold text-white tracking-tight">₹{Number(item.price).toLocaleString()}</span>
+
+                      {/* Quantity Controls */}
+                      <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-8">
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[8px] font-bold text-white/20 uppercase tracking-[0.2em]">Quantity</span>
+                          <div className="flex items-center border border-white/10 rounded-xl overflow-hidden bg-white/5">
+                            <button
+                              onClick={() => updateCartQuantity(item.id, (item.quantity || 1) - 1)}
+                              className="px-4 py-2 text-white hover:bg-white/10 transition-colors"
+                            >
+                              −
+                            </button>
+                            <span className="px-4 py-2 font-bold text-white border-l border-r border-white/10 min-w-[45px] text-center text-sm">
+                              {item.quantity || 1}
+                            </span>
+                            <button 
+                              onClick={() => updateCartQuantity(item.id, (item.quantity || 1) + 1)}
+                              disabled={(item.quantity || 1) >= Math.min(10, liveStocks[item.id] ?? item.stock ?? 1)}
+                              className={`px-4 py-2 text-white transition-colors font-bold border-l border-white/10 ${
+                                (item.quantity || 1) >= Math.min(10, liveStocks[item.id] ?? item.stock ?? 1) 
+                                ? 'opacity-20 cursor-not-allowed bg-white/5' 
+                                : 'hover:bg-white/10'
+                              }`}
+                            >
+                              +
+                            </button>
+                          </div>
+                          {(item.quantity || 1) >= (liveStocks[item.id] ?? item.stock ?? 1) && (
+                            <span className="text-[8px] font-bold text-red-500 uppercase tracking-widest mt-1">
+                              Max Stock Reached
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[8px] font-bold text-white/20 uppercase tracking-[0.2em]">Item Price</span>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-xl font-sans font-bold text-white tracking-tight">₹{Number(item.price).toLocaleString()}</span>
+                            {item.original_price > item.price && (
+                              <span className="text-xs font-sans font-bold text-white/20 line-through">₹{Number(item.original_price).toLocaleString()}</span>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -139,7 +201,7 @@ const Cart = () => {
               <div className="space-y-6 mb-10 relative z-10">
                 <div className="flex justify-between text-white/40 font-sans text-sm tracking-wide">
                   <span>Subtotal Value</span>
-                  <span className="font-bold text-white">₹{total.toLocaleString()}</span>
+                  <span className="font-bold text-white">₹{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-white/40 font-sans text-sm tracking-wide">
                   <span>Elite Concierge Delivery</span>
@@ -152,12 +214,13 @@ const Cart = () => {
                 <div className="pt-8 border-t border-dashed border-white/10 flex justify-between items-end">
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Total Acquisition</span>
-                    <span className="text-5xl font-sans font-bold text-[#C6A664] tracking-tighter">₹{total.toLocaleString()}</span>
+                    <span className="text-5xl font-sans font-bold text-[#C6A664] tracking-tighter">₹{subtotal.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
 
               <button 
+                onClick={() => navigate("/checkout")}
                 disabled={items.length === 0}
                 className="w-full py-6 rounded-2xl bg-[#C6A664] text-black font-bold text-sm tracking-[0.3em] uppercase hover:bg-white transition-all transform active:scale-[0.98] disabled:opacity-10 disabled:grayscale shadow-2xl shadow-[#C6A664]/10 mb-10 relative z-10"
               >

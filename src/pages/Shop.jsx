@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../components/Firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { Search, Heart, ShoppingBag, Eye, ArrowRight, ChevronDown, Filter } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Eye, ArrowRight, ChevronDown, Filter, Loader2 } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../components/useAuth';
 import { useStore } from '../hooks/useStore';
@@ -17,6 +17,8 @@ const Shop = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
   const [showFilters, setShowFilters] = useState(false);
+  const [cartLoadings, setCartLoadings] = useState({});
+  const [wishlistLoadings, setWishlistLoadings] = useState({});
   
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -31,14 +33,7 @@ const Shop = () => {
     }
   }, [searchParams]);
 
-  const curatedProducts = [
-    { id: 'bs-1', name: "Emerald Blossom Choker", price: 3800, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Necklaces" },
-    { id: 'bs-2', name: "Antique Gold Temple Jhumkas", price: 2400, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60", category: "Earrings" },
-    { id: 'bs-3', name: "American Diamond Band", price: 1500, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Rings" },
-    { id: 'bs-4', name: "Oxidized Silver Kada", price: 950, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Bracelets" },
-    { id: 'shop-5', name: "Kundan Mathapatti", price: 4500, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "Bridal Wear" },
-    { id: 'shop-6', name: "Floral Meenakari Earrings", price: 1750, image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60", category: "Earrings" }
-  ];
+  const curatedProducts = [];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,11 +41,7 @@ const Shop = () => {
         const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
         const dbProducts = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const allProducts = [...curatedProducts];
-        dbProducts.forEach(dbP => {
-           if (!allProducts.find(p => p.name === dbP.name)) allProducts.push(dbP);
-        });
-        setProducts(allProducts);
+        setProducts(dbProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
         setProducts(curatedProducts);
@@ -65,18 +56,25 @@ const Shop = () => {
 
   const handleAddToCart = async (e, product) => {
     e.stopPropagation();
-    const success = await addToCart(product);
-    if (success) {
-      // Optional: show a toast or feedback
+    setCartLoadings(prev => ({ ...prev, [product.id]: true }));
+    try {
+      await addToCart(product);
+    } finally {
+      setCartLoadings(prev => ({ ...prev, [product.id]: false }));
     }
   };
 
   const handleAddToWishlist = async (e, product) => {
     e.stopPropagation();
-    await addToWishlist(product);
+    setWishlistLoadings(prev => ({ ...prev, [product.id]: true }));
+    try {
+      await addToWishlist(product);
+    } finally {
+      setWishlistLoadings(prev => ({ ...prev, [product.id]: false }));
+    }
   };
 
-  const categories = ['All', 'Necklaces', 'Earrings', 'Rings', 'Bracelets', 'Bangles', 'Bridal Wear', 'Anklets'];
+  const categories = ['All', 'Necklace', 'Earrings', 'Rings', 'Bracelet', 'Bangles', 'Bridal Wear', 'Anklets'];
   const filteredProducts = products.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
@@ -178,13 +176,18 @@ const Shop = () => {
                   <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col gap-4">
                      <button 
                        onClick={(e) => handleAddToWishlist(e, product)} 
+                       disabled={wishlistLoadings[product.id]}
                        className={`w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition-colors border ${
                          isInWishlist(product.id) 
                          ? 'bg-accent text-white border-accent' 
                          : 'bg-black/40 text-white hover:text-accent border-white/10'
                        }`}
                      >
-                        <Heart size={14} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                        {wishlistLoadings[product.id] ? (
+                          <Loader2 size={12} className="animate-spin" />
+                        ) : (
+                          <Heart size={14} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                        )}
                      </button>
                      <button onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }} className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white hover:text-accent transition-colors border border-white/10">
                         <Eye size={14} strokeWidth={1.5} />
@@ -193,17 +196,28 @@ const Shop = () => {
 
                   {/* Add to Cart Overlay Button */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/80 to-transparent">
-                    <button 
-                      onClick={(e) => handleAddToCart(e, product)}
-                      className={`w-full py-3 rounded-full text-[9px] tracking-[0.3em] font-bold uppercase transition-all ${
-                        isInCart(product.id) 
-                        ? 'bg-accent text-white' 
-                        : 'bg-white text-black hover:bg-accent hover:text-white'
-                      }`}
-                    >
-                      {isInCart(product.id) ? 'Added to Cart' : 'Add to Cart'}
-                    </button>
+                     <button 
+                       onClick={(e) => product.stock > 0 && handleAddToCart(e, product)}
+                       disabled={product.stock <= 0 || cartLoadings[product.id]}
+                       className={`w-full py-3 rounded-full text-[9px] tracking-[0.3em] font-bold uppercase transition-all flex items-center justify-center gap-2 ${
+                         product.stock <= 0
+                         ? 'bg-red-900/50 text-white cursor-not-allowed border border-red-500/30'
+                         : isInCart(product.id) 
+                         ? 'bg-accent text-white' 
+                         : 'bg-white text-black hover:bg-accent hover:text-white'
+                       }`}
+                     >
+                        {cartLoadings[product.id] && <Loader2 size={12} className="animate-spin" />}
+                        {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'Added to Cart' : 'Add to Cart'}
+                     </button>
                   </div>
+                  {product.stock <= 0 && (
+                    <div className="absolute top-6 left-6 z-10">
+                      <span className="bg-red-600 text-white text-[8px] tracking-[0.2em] font-black uppercase px-2 py-1 rounded-sm shadow-xl">
+                        Sold Out
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-4 px-2">
@@ -212,7 +226,12 @@ const Shop = () => {
                   </div>
                   <div className="flex justify-between items-center">
                      <p className="text-[10px] tracking-[0.2em] uppercase text-white/50">{product.category}</p>
-                     <p className="font-serif text-lg text-accent">₹{product.price}.00</p>
+                     <div className="flex items-center gap-3">
+                        <p className="font-serif text-lg text-accent">₹{Number(product.price).toLocaleString()}</p>
+                        {product.original_price > product.price && (
+                           <p className="text-xs text-white/30 line-through">₹{Number(product.original_price).toLocaleString()}</p>
+                        )}
+                     </div>
                   </div>
                   <div className="pt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border-t border-white/10">
                      <button className="text-[9px] tracking-[0.4em] uppercase text-white flex items-center gap-3">

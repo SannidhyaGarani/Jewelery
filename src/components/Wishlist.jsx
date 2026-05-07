@@ -3,14 +3,18 @@ import { useAuth } from "./useAuth";
 import { db } from "./Firebase";
 import { collection, getDocs, doc, deleteDoc, addDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, Trash2, ShoppingCart, ArrowLeft, Star } from "lucide-react";
+import { Heart, Trash2, ShoppingCart, ArrowLeft, Star, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { useStore } from "../hooks/useStore";
 
 const Wishlist = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { addToCart } = useStore();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [movingItems, setMovingItems] = useState({});
 
   useEffect(() => {
     const load = async () => {
@@ -43,17 +47,21 @@ const Wishlist = () => {
 
   const moveToCart = async (item) => {
     if (!user) return;
+    if (item.stock <= 0) {
+      alert("This item is currently out of stock.");
+      return;
+    }
+    setMovingItems(prev => ({ ...prev, [item.id]: true }));
     try {
-      // Add to cart
-      await addDoc(collection(db, "users", user.uid, "cart"), {
-        ...item,
-        addedAt: new Date().toISOString()
-      });
-      // Remove from wishlist
-      await removeItem(item.id);
-      alert("Moved to cart!");
+      const success = await addToCart(item);
+      if (success) {
+        await removeItem(item.id);
+        alert("Moved to your collection!");
+      }
     } catch (error) {
       console.error("Error moving to cart:", error);
+    } finally {
+      setMovingItems(prev => ({ ...prev, [item.id]: false }));
     }
   };
 
@@ -152,11 +160,27 @@ const Wishlist = () => {
                       </p>
                       <button 
                         onClick={() => moveToCart(item)}
-                        className="w-12 h-12 bg-[#C6A664] text-black rounded-2xl flex items-center justify-center hover:bg-white transition-all transform active:scale-95 shadow-2xl shadow-[#C6A664]/10"
+                        disabled={item.stock <= 0 || movingItems[item.id]}
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all transform active:scale-95 shadow-2xl ${
+                          item.stock <= 0
+                          ? 'bg-red-900/50 text-white cursor-not-allowed border border-red-500/20'
+                          : 'bg-[#C6A664] text-black hover:bg-white shadow-[#C6A664]/10'
+                        }`}
                       >
-                        <ShoppingCart size={20} />
+                        {movingItems[item.id] ? (
+                          <Loader2 size={16} className="animate-spin" />
+                        ) : (
+                          <ShoppingCart size={20} />
+                        )}
                       </button>
                     </div>
+                    {item.stock <= 0 && (
+                      <div className="pt-4">
+                        <span className="text-[10px] font-bold text-red-500 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                          Currently Unavailable
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}

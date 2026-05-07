@@ -55,7 +55,20 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("velouraz_user");
   };
 
-  const value = { user, loading, login, signup, logout };
+  const deleteAccount = async () => {
+    if (!user?.uid) return;
+    try {
+      const { deleteDoc, doc } = await import("firebase/firestore");
+      await deleteDoc(doc(db, "users", user.uid));
+      logout();
+      return true;
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      throw error;
+    }
+  };
+
+  const value = { user, loading, login, signup, logout, deleteAccount };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

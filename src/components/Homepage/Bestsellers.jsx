@@ -12,35 +12,26 @@ import { useStore } from '../../hooks/useStore';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-const curatedProducts = [
-  { id: "bs-1", brand: "Velouraz", name: "Emerald Queen Choker", price: "₹12,000", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "High Jewellery" },
-  { id: "bs-2", brand: "Velouraz", name: "Polki Heritage Bangle", price: "₹16,500", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Traditional" },
-  { id: "bs-3", brand: "Velouraz", name: "AD Starburst Earrings", price: "₹8,200", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800", category: "Modern" },
-  { id: "bs-4", brand: "Velouraz", name: "Kundan Meena Ring", price: "₹4,500", image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Ethnic" },
-];
+const curatedProducts = [];
 
 const BestSellers = () => {
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cartLoadings, setCartLoadings] = useState({});
+  const [wishlistLoadings, setWishlistLoadings] = useState({});
 
   React.useEffect(() => {
     const fetchBestsellers = async () => {
       try {
-        const q = query(collection(db, "products"), orderBy("createdAt", "desc"), limit(6));
+        const q = query(collection(db, "products"), orderBy("createdAt", "desc"), limit(8));
         const snap = await getDocs(q);
         const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
-        // Merge with curated if list is small
-        if (list.length < 4) {
-          setProducts([...list, ...curatedProducts.slice(list.length)]);
-        } else {
-          setProducts(list);
-        }
+        setProducts(list);
       } catch (e) {
         console.error("Error fetching bestsellers:", e);
-        setProducts(curatedProducts);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -64,12 +55,22 @@ const BestSellers = () => {
 
   const handleAddToCart = async (e, product) => {
     e.stopPropagation();
-    await addToCart(product);
+    setCartLoadings(prev => ({ ...prev, [product.id]: true }));
+    try {
+      await addToCart(product);
+    } finally {
+      setCartLoadings(prev => ({ ...prev, [product.id]: false }));
+    }
   };
 
   const handleAddToWishlist = async (e, product) => {
     e.stopPropagation();
-    await addToWishlist(product);
+    setWishlistLoadings(prev => ({ ...prev, [product.id]: true }));
+    try {
+      await addToWishlist(product);
+    } finally {
+      setWishlistLoadings(prev => ({ ...prev, [product.id]: false }));
+    }
   };
 
   return (
@@ -146,29 +147,49 @@ const BestSellers = () => {
                     <div className="absolute top-8 right-8 flex flex-col gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
                       <button 
                         onClick={(e) => handleAddToWishlist(e, product)} 
+                        disabled={wishlistLoadings[product.id]}
                         className={`w-12 h-12 rounded-full backdrop-blur-md flex items-center justify-center transition-all border ${
                           isInWishlist(product.id)
                           ? 'bg-accent text-white border-accent'
                           : 'bg-black/40 text-white hover:bg-accent hover:text-white border-white/10'
                         }`}
                       >
-                        <Heart size={18} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                        {wishlistLoadings[product.id] ? (
+                          <Loader2 size={16} className="animate-spin" />
+                        ) : (
+                          <Heart size={18} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                        )}
                       </button>
                     </div>
 
                     {/* Quick View / Add to Cart Button */}
                     <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 flex flex-col gap-2">
                       <button 
-                        onClick={(e) => handleAddToCart(e, product)}
+                        onClick={(e) => product.stock > 0 && handleAddToCart(e, product)}
+                        disabled={product.stock <= 0 || cartLoadings[product.id]}
                         className={`w-full py-4 text-[10px] tracking-[0.2em] font-bold uppercase flex items-center justify-center gap-2 transition-all ${
-                          isInCart(product.id)
+                          product.stock <= 0
+                          ? 'bg-red-900/50 text-white cursor-not-allowed border border-red-500/30'
+                          : isInCart(product.id)
                           ? 'bg-accent text-white'
                           : 'bg-white/90 backdrop-blur-md text-black hover:bg-accent hover:text-white'
                         }`}
                       >
-                        {isInCart(product.id) ? 'Added to Cart' : 'Acquire Piece'} <ShoppingBag size={14} />
+                        {cartLoadings[product.id] ? (
+                          <Loader2 size={14} className="animate-spin" />
+                        ) : (
+                          <ShoppingBag size={14} />
+                        )}
+                        {product.stock <= 0 ? 'Sold Out' : isInCart(product.id) ? 'Added to Cart' : 'Acquire Piece'}
                       </button>
                     </div>
+                    {product.stock <= 0 && (
+                      <div className="absolute top-8 left-8 z-10">
+                        <span className="bg-red-600 text-white text-[9px] tracking-[0.3em] font-black uppercase px-3 py-1 rounded-sm shadow-2xl">
+                          Sold Out
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Product Info */}
@@ -179,9 +200,16 @@ const BestSellers = () => {
                     <p className="font-serif text-xl text-white mb-1">
                       {product.name}
                     </p>
-                    <p className="text-sm font-sans text-white/70">
-                      {typeof product.price === 'number' ? `₹${product.price.toLocaleString()}` : product.price}
-                    </p>
+                    <div className="flex items-center lg:justify-center gap-3">
+                      <p className="text-sm font-sans text-white/70">
+                        ₹{Number(product.price || 0).toLocaleString()}
+                      </p>
+                      {product.original_price > product.price && (
+                        <p className="text-xs font-sans text-white/30 line-through">
+                          ₹{Number(product.original_price).toLocaleString()}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               </SwiperSlide>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, ShoppingBag, Heart } from "lucide-react";
+import { X, ShoppingBag, Heart, Loader2 } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../hooks/useStore';
 
@@ -7,11 +7,26 @@ const QuickView = ({ product, onClose }) => {
   const { addToCart, addToWishlist, isInCart, isInWishlist } = useStore();
   const [isOpen, setIsOpen] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [cartLoading, setCartLoading] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleClose = () => {
-    setIsOpen(false);
-    setTimeout(() => onClose?.(), 300);
+  const handleAddToCart = async () => {
+    setCartLoading(true);
+    try {
+      await addToCart(product, quantity);
+    } finally {
+      setCartLoading(false);
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    setWishlistLoading(true);
+    try {
+      await addToWishlist(product);
+    } finally {
+      setWishlistLoading(false);
+    }
   };
 
   if (!isOpen || !product) {
@@ -41,7 +56,10 @@ const QuickView = ({ product, onClose }) => {
             </h2>
             <button
               type="button"
-              onClick={handleClose}
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => onClose?.(), 300);
+              }}
               className="p-2 rounded-full hover:bg-[#FDFBF7] transition-colors text-[#4A4A4A]"
             >
               <X size={24} />
@@ -87,11 +105,11 @@ const QuickView = ({ product, onClose }) => {
 
                   <div className="flex items-center gap-3">
                     <span className="text-3xl font-black text-[#C6A664]">
-                      ₹{product.price}.00
+                      ₹{Number(product.price).toLocaleString()}
                     </span>
-                    {product.original_price && product.original_price > product.price && (
+                    {product.original_price > product.price && (
                       <span className="text-lg font-bold text-[#4A4A4A]/30 line-through">
-                        ₹{product.original_price}.00
+                        ₹{Number(product.original_price).toLocaleString()}
                       </span>
                     )}
                   </div>
@@ -150,24 +168,36 @@ const QuickView = ({ product, onClose }) => {
                     View Full Details
                   </button>
                   <button
-                    onClick={() => addToWishlist(product)}
-                    className="px-6 py-4 rounded-2xl bg-[#FDFBF7] border border-[#E6CCB2] text-[#C6A664] font-black hover:bg-[#E6CCB2]/10 transition-colors"
+                    onClick={handleAddToWishlist}
+                    disabled={wishlistLoading}
+                    className="px-6 py-4 rounded-2xl bg-[#FDFBF7] border border-[#E6CCB2] text-[#C6A664] font-black hover:bg-[#E6CCB2]/10 transition-colors flex items-center justify-center"
                   >
-                    <Heart size={20} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                    {wishlistLoading ? (
+                      <Loader2 size={20} className="animate-spin" />
+                    ) : (
+                      <Heart size={20} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                    )}
                   </button>
                 </div>
 
                 {/* Add to Cart */}
                 <button 
-                  onClick={() => addToCart(product, quantity)}
+                  onClick={() => product.stock > 0 && handleAddToCart()}
+                  disabled={product.stock <= 0 || cartLoading}
                   className={`w-full px-6 py-4 rounded-2xl font-black uppercase tracking-wider transition-all transform active:scale-95 shadow-lg flex items-center justify-center gap-2 ${
-                    isInCart(product.id)
+                    product.stock <= 0
+                    ? 'bg-red-900/50 text-white cursor-not-allowed border border-red-500/30'
+                    : isInCart(product.id)
                     ? 'bg-accent text-white shadow-accent/20'
                     : 'bg-[#C6A664] text-white hover:bg-[#B59553] shadow-[#C6A664]/20'
                   }`}
                 >
-                  <ShoppingBag size={20} />
-                  {isInCart(product.id) ? 'Added to Cart' : 'Add to Cart'}
+                  {cartLoading ? (
+                    <Loader2 size={20} className="animate-spin" />
+                  ) : (
+                    <ShoppingBag size={20} />
+                  )}
+                  {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'Added to Cart' : 'Add to Cart'}
                 </button>
               </div>
             </div>

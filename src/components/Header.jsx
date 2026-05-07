@@ -25,10 +25,10 @@ const LuxuryHeader = () => {
     { name: 'ABOUT', href: '/about' },
     { name: 'SHOP', href: '/shop' },
     { name: 'CATEGORY', href: '/shop', dropdown: [
-      { name: 'Necklaces', href: '/shop?category=necklaces' },
+      { name: 'Necklace', href: '/shop?category=necklace' },
       { name: 'Rings', href: '/shop?category=rings' },
       { name: 'Earrings', href: '/shop?category=earrings' },
-      { name: 'Bracelets', href: '/shop?category=bracelets' },
+      { name: 'Bracelet', href: '/shop?category=bracelet' },
       { name: 'Watches', href: '/shop?category=watches' },
     ]},
     { name: 'CONTACT', href: '/contact' },
@@ -44,7 +44,7 @@ const LuxuryHeader = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
           isScrolled 
-            ? 'bg-black/80 backdrop-blur-md border-white/10 shadow-lg' 
+            ? 'bg-black/90 backdrop-blur-md border-white/10 shadow-lg' 
             : 'bg-transparent border-transparent'
         }`}
       >
@@ -57,7 +57,7 @@ const LuxuryHeader = () => {
         >
           
           {/* Left Actions */}
-          <div className="flex items-center gap-4 flex-1">
+          <div className="flex items-center gap-3 md:gap-4 flex-1">
             <div className="relative">
               <button 
                 onClick={() => {
@@ -69,10 +69,10 @@ const LuxuryHeader = () => {
                 }}
                 className="flex items-center gap-3 group"
               >
-                <div className={`border rounded-full p-2.5 transition-all duration-500 ${isDesktopMenuOpen ? 'border-accent bg-accent text-white' : 'border-white/10 group-hover:border-accent/50 text-white'}`}>
+                <div className={`border rounded-full p-2 md:p-2.5 transition-all duration-500 ${isDesktopMenuOpen ? 'border-accent bg-accent text-white' : 'border-white/10 group-hover:border-accent/50 text-white'}`}>
                   {isDesktopMenuOpen ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
                 </div>
-                <span className="text-[10px] tracking-[0.25em] font-bold uppercase font-sans hidden sm:block text-neutral-400 group-hover:text-white transition-colors">
+                <span className="text-[10px] tracking-[0.25em] font-bold uppercase font-sans hidden xl:block text-neutral-400 group-hover:text-white transition-colors">
                   {isDesktopMenuOpen ? 'Close' : 'Menu'}
                 </span>
               </button>
@@ -85,7 +85,7 @@ const LuxuryHeader = () => {
                     animate={{ opacity: 1, y: 15, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute left-0 top-full mt-4 w-[280px] bg-[#111] rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.5)] border border-white/10 p-8 z-[60]"
+                    className="absolute left-0 top-full mt-4 w-[280px] bg-[#111] rounded-3xl shadow-[0_30px_90px_rgba(0,0,0,0.5)] border border-white/10 p-8 z-[60] hidden lg:block"
                   >
                     <div className="flex flex-col space-y-6">
                       {navLinks.map((link) => (
@@ -113,31 +113,13 @@ const LuxuryHeader = () => {
                           )}
                         </div>
                       ))}
-                      
-                      <div className="py-2">
-                        <Link 
-                          to="/contact"
-                          onClick={() => setIsDesktopMenuOpen(false)}
-                          className="flex items-center justify-center gap-3 bg-neutral-50 border border-neutral-100 rounded-full py-4 text-[10px] tracking-[0.3em] font-bold uppercase text-neutral-900 hover:bg-neutral-900 hover:text-white transition-all duration-500"
-                        >
-                          <Sparkles size={12} className="text-accent" />
-                          Join the Club
-                          <Sparkles size={12} className="text-accent" />
-                        </Link>
-                      </div>
-
-                      <div className="flex flex-col space-y-4 pt-4 border-t border-neutral-50">
-                        <Link to="/login" onClick={() => setIsDesktopMenuOpen(false)} className="text-[9px] tracking-[0.2em] font-bold uppercase text-neutral-400 hover:text-neutral-900 transition-colors">Sign In</Link>
-                        <button onClick={() => setIsDesktopMenuOpen(false)} className="text-[9px] tracking-[0.2em] font-bold uppercase text-neutral-400 hover:text-neutral-900 transition-colors text-left">Search</button>
-                        <button onClick={() => setIsDesktopMenuOpen(false)} className="text-[9px] tracking-[0.2em] font-bold uppercase text-neutral-400 hover:text-neutral-900 transition-colors text-left">Newsletter</button>
-                      </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
             
-            <button className="flex items-center gap-2 group hidden md:flex transition-opacity hover:opacity-100">
+            <button className="flex items-center gap-2 group hidden lg:flex transition-opacity hover:opacity-100">
               <div className="border border-white/20 rounded-full p-2.5 group-hover:border-accent transition-colors">
                 <Search size={16} strokeWidth={1.5} className="text-white group-hover:text-accent transition-colors" />
               </div>
@@ -146,8 +128,8 @@ const LuxuryHeader = () => {
 
           {/* Center Logo */}
           <div className="flex flex-col items-center flex-1 lg:flex-none">
-            <Link to="/" className="flex flex-col items-center gap-1 group">
-              <h1 className="font-serif text-3xl md:text-4xl text-accent tracking-tight font-normal">
+            <Link to="/" className="flex flex-col items-center gap-1 group text-center">
+              <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-accent tracking-tight font-normal whitespace-nowrap">
                 Velouraz
               </h1>
               <AnimatePresence>
@@ -156,7 +138,7 @@ const LuxuryHeader = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="font-sans text-[8px] tracking-[0.3em] uppercase text-white/70 font-bold hidden md:block"
+                    className="font-sans text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-white/70 font-bold hidden sm:block"
                   >
                     Atelier de Luxe
                   </motion.span>
@@ -166,9 +148,9 @@ const LuxuryHeader = () => {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center justify-end gap-6 flex-1">
-            <div className="flex items-center gap-4">
-              <Link to="/wishlist" className="p-2.5 border border-white/10 rounded-full text-white hover:text-accent hover:border-accent transition-all relative group">
+          <div className="flex items-center justify-end gap-2 md:gap-6 flex-1">
+            <div className="flex items-center gap-2 md:gap-4">
+              <Link to="/wishlist" className="p-2 md:p-2.5 border border-white/10 rounded-full text-white hover:text-accent hover:border-accent transition-all relative group hidden sm:flex">
                 <Heart size={18} strokeWidth={1.5} />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-accent text-black text-[9px] font-black rounded-full flex items-center justify-center shadow-lg">
@@ -176,7 +158,7 @@ const LuxuryHeader = () => {
                   </span>
                 )}
               </Link>
-              <Link to="/cart" className="p-2.5 border border-white/10 rounded-full text-white hover:text-accent hover:border-accent transition-all relative group">
+              <Link to="/cart" className="p-2 md:p-2.5 border border-white/10 rounded-full text-white hover:text-accent hover:border-accent transition-all relative group">
                 <ShoppingBag size={18} strokeWidth={1.5} />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-accent text-black text-[9px] font-black rounded-full flex items-center justify-center shadow-lg">
@@ -186,28 +168,28 @@ const LuxuryHeader = () => {
               </Link>
               
               {user ? (
-                <Link to="/account" className="flex items-center gap-3 p-1.5 pr-5 border border-accent/30 rounded-full bg-accent/10 hover:bg-accent/20 transition-all group">
-                  <div className="w-8 h-8 rounded-full bg-accent text-black flex items-center justify-center">
-                    <User size={16} strokeWidth={2.5} />
+                <Link to="/account" className="flex items-center gap-2 p-1 md:p-1.5 md:pr-5 border border-accent/30 rounded-full bg-accent/10 hover:bg-accent/20 transition-all group">
+                  <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-accent text-black flex items-center justify-center">
+                    <User size={14} md:size={16} strokeWidth={2.5} />
                   </div>
                   <span className="text-[10px] tracking-[0.2em] font-black uppercase text-accent group-hover:text-white transition-colors hidden lg:block">
                     {user.displayName?.split(' ')[0] || 'Member'}
                   </span>
                 </Link>
               ) : (
-                <Link to="/login" className="p-2.5 border border-white/10 rounded-full text-white hover:text-accent hover:border-accent transition-all relative group">
+                <Link to="/login" className="p-2 md:p-2.5 border border-white/10 rounded-full text-white hover:text-accent hover:border-accent transition-all relative group">
                   <User size={18} strokeWidth={1.5} />
                 </Link>
               )}
             </div>
             
-            <Link to="/contact" className="sm:hidden border border-white/10 rounded-full p-2.5">
+            <Link to="/contact" className="hidden sm:flex lg:hidden border border-white/10 rounded-full p-2 md:p-2.5 hover:border-accent transition-colors">
                <MessageSquare size={16} strokeWidth={1.5} className="text-white" />
             </Link>
           </div>
         </motion.div>
 
-        {/* Sub Navigation Bar */}
+        {/* Sub Navigation Bar - Only for Desktop */}
         <AnimatePresence>
           {!isScrolled && (
             <motion.div 
@@ -258,16 +240,6 @@ const LuxuryHeader = () => {
                                  </Link>
                                ))}
                              </div>
-                             
-                             <div className="mt-4 pt-4 border-t border-white/5">
-                               <Link 
-                                 to="/shop" 
-                                 onClick={() => setActiveDropdown(null)}
-                                 className="text-[8px] tracking-[0.3em] font-black uppercase text-accent hover:text-white transition-colors block text-center"
-                               >
-                                 View All Collections
-                               </Link>
-                             </div>
                            </div>
                          </motion.div>
                        )}
@@ -280,11 +252,11 @@ const LuxuryHeader = () => {
         </AnimatePresence>
       </motion.header>
 
-      {/* Floating Chat Icon */}
+      {/* Floating Chat Icon - Desktop Only */}
       <motion.button 
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-[60] bg-white border border-neutral-200 rounded-full p-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:shadow-xl transition-all duration-300"
+        className="fixed bottom-6 right-6 z-[60] bg-white border border-neutral-200 rounded-full p-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:shadow-xl transition-all duration-300 hidden md:block"
       >
          <MessageSquare size={20} strokeWidth={1.2} className="text-accent" />
       </motion.button>
@@ -293,46 +265,46 @@ const LuxuryHeader = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-100%' }}
+            initial={{ opacity: 0, x: '-100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '-100%' }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] bg-white flex flex-col"
+            className="fixed inset-0 z-[100] bg-[#0A0A0A] flex flex-col overflow-hidden"
           >
-            <div className="flex justify-between items-center p-6 border-b border-neutral-100">
-              <span className="font-serif text-2xl text-neutral-900">Velouraz</span>
+            <div className="flex justify-between items-center p-6 border-b border-white/5 bg-black/50 backdrop-blur-xl">
+              <span className="font-serif text-3xl text-accent">Velouraz</span>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="border border-neutral-200 rounded-full p-2.5"
+                className="border border-white/10 rounded-full p-2.5 text-white bg-white/5"
               >
-                <X strokeWidth={1.5} size={20} className="text-neutral-900" />
+                <X strokeWidth={1.5} size={24} />
               </button>
             </div>
             
-            <div className="p-8 flex flex-col space-y-10 flex-1 overflow-y-auto">
+            <div className="p-8 flex flex-col space-y-8 flex-1 overflow-y-auto">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 + i * 0.05 }}
                   className="space-y-4"
                 >
                   <Link 
                     to={link.href} 
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-4xl font-serif text-neutral-900 block"
+                    className="text-4xl font-serif text-white hover:text-accent transition-colors block"
                   >
                     {link.name}
                   </Link>
                   {link.dropdown && (
-                    <div className="pl-6 flex flex-col gap-4 border-l-2 border-accent/20">
+                    <div className="pl-6 flex flex-col gap-4 border-l border-white/10">
                       {link.dropdown.map(sub => (
                         <Link 
                           key={sub.name}
                           to={sub.href}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="text-lg font-sans font-medium text-neutral-500 hover:text-accent transition-colors"
+                          className="text-lg font-sans font-medium text-white/40 hover:text-accent transition-colors"
                         >
                           {sub.name}
                         </Link>
@@ -346,26 +318,26 @@ const LuxuryHeader = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="flex flex-col gap-8 pt-10 mt-auto border-t border-neutral-100"
+                className="flex flex-col gap-8 pt-10 mt-auto border-t border-white/5"
               >
                  <div className="grid grid-cols-3 gap-4">
-                    <Link to="/wishlist" onClick={() => setMobileMenuOpen(false)} className="flex flex-col items-center gap-3 p-6 bg-neutral-50 rounded-3xl group">
-                      <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-neutral-400 group-hover:text-accent transition-colors shadow-sm">
-                        <Heart size={24} />
+                    <Link to="/wishlist" onClick={() => setMobileMenuOpen(false)} className="flex flex-col items-center gap-3 p-4 bg-white/5 rounded-2xl group border border-white/5">
+                      <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/30 group-hover:text-accent transition-colors">
+                        <Heart size={20} />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Wishlist</span>
+                      <span className="text-[8px] font-bold uppercase tracking-widest text-white/30">Wishlist</span>
                     </Link>
-                    <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className="flex flex-col items-center gap-3 p-6 bg-neutral-50 rounded-3xl group">
-                      <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-neutral-400 group-hover:text-accent transition-colors shadow-sm">
-                        <ShoppingBag size={24} />
+                    <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className="flex flex-col items-center gap-3 p-4 bg-white/5 rounded-2xl group border border-white/5">
+                      <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/30 group-hover:text-accent transition-colors">
+                        <ShoppingBag size={20} />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Cart ({cartCount})</span>
+                      <span className="text-[8px] font-bold uppercase tracking-widest text-white/30">Cart ({cartCount})</span>
                     </Link>
-                    <Link to={user ? "/account" : "/login"} onClick={() => setMobileMenuOpen(false)} className="flex flex-col items-center gap-3 p-6 bg-neutral-50 rounded-3xl group">
-                      <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-neutral-400 group-hover:text-accent transition-colors shadow-sm">
-                        <User size={24} />
+                    <Link to={user ? "/account" : "/login"} onClick={() => setMobileMenuOpen(false)} className="flex flex-col items-center gap-3 p-4 bg-white/5 rounded-2xl group border border-white/5">
+                      <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/30 group-hover:text-accent transition-colors">
+                        <User size={20} />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">{user ? "Profile" : "Sign In"}</span>
+                      <span className="text-[8px] font-bold uppercase tracking-widest text-white/30">{user ? "Profile" : "Sign In"}</span>
                     </Link>
                  </div>
               </motion.div>

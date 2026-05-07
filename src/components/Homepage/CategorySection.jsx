@@ -13,10 +13,10 @@ const categories = [
   },
   {
     id: 2,
-    name: "Necklaces",
+    name: "Necklace",
     image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800",
     description: "Statement chokers and delicate pendants crafted with American diamonds and semi-precious stones.",
-    link: "/category/necklaces"
+    link: "/category/necklace"
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const categories = [
     name: "Bracelets",
     image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800",
     description: "Graceful bangles and contemporary cuffs for the modern visionary's wrist.",
-    link: "/category/bracelets"
+    link: "/category/bracelet"
   }
 ];
 

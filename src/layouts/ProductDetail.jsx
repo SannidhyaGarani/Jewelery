@@ -7,7 +7,7 @@ import { useStore } from '../hooks/useStore';
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Star, Shield, Truck, RotateCcw, Heart, ShoppingBag, 
-  ArrowLeft, Share2, Info, Gem, Sparkles, Ruler, ArrowRight
+  ArrowLeft, Share2, Info, Gem, Sparkles, Ruler, ArrowRight, Loader2
 } from 'lucide-react';
 
 const ProductDetail = () => {
@@ -16,15 +16,12 @@ const ProductDetail = () => {
   const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('heritage');
+  const [activeTab, setActiveTab] = useState('details');
   const [quantity, setQuantity] = useState(1);
+  const [cartLoading, setCartLoading] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
 
-  const curatedProducts = [
-    { id: "bs-1", name: "Emerald Blossom Choker", price: 3800, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800", category: "Necklaces", description: "A breathtaking emerald choker with gold plating, designed for royalty." },
-    { id: "bs-2", name: "Antique Gold Temple Jhumkas", price: 2400, image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=600&auto=format&fit=crop&q=60", category: "Earrings", description: "Traditional temple jewelry with intricate carvings and ruby stones." },
-    { id: "bs-3", name: "American Diamond Band", price: 1500, image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=800", category: "Rings", description: "A minimalist ring set with high-grade American diamonds for everyday sparkle." },
-    { id: "bs-4", name: "Oxidized Silver Kada", price: 950, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800", category: "Bracelets", description: "Artisan-crafted oxidized silver kada with floral engravings." },
-  ];
+  const curatedProducts = [];
 
   useEffect(() => {
     const load = async () => {
@@ -53,15 +50,22 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     if (!product) return;
-    const success = await addToCart(product);
-    if (success) {
-      // Optional: show feedback
+    setCartLoading(true);
+    try {
+      await addToCart(product, quantity);
+    } finally {
+      setCartLoading(false);
     }
   };
 
   const handleAddToWishlist = async () => {
     if (!product) return;
-    await addToWishlist(product);
+    setWishlistLoading(true);
+    try {
+      await addToWishlist(product);
+    } finally {
+      setWishlistLoading(false);
+    }
   };
 
   if (loading) {
@@ -165,9 +169,34 @@ const ProductDetail = () => {
                   <span className="relative z-10">{product.name.split(' ').slice(1).join(' ')}</span>
                 </motion.h1>
                 
-                <p className="text-2xl md:text-3xl font-serif text-white/90">
-                  ₹{product.price.toLocaleString()}.00
-                </p>
+                <div className="flex items-center gap-4">
+                  <p className="text-2xl md:text-3xl font-serif text-white/90">
+                    ₹{product.price.toLocaleString()}.00
+                  </p>
+                  {product.original_price > product.price && (
+                    <p className="text-xl font-serif text-white/30 line-through">
+                      ₹{product.original_price.toLocaleString()}.00
+                    </p>
+                  )}
+                </div>
+                <div className="flex items-center gap-4">
+                  {product.stock <= 0 ? (
+                    <span className="bg-red-600/10 text-red-500 border border-red-500/20 px-4 py-1.5 rounded-full text-[10px] tracking-[0.2em] font-bold uppercase">
+                      Sold Out
+                    </span>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <span className="bg-emerald-600/10 text-emerald-500 border border-emerald-500/20 px-4 py-1.5 rounded-full text-[10px] tracking-[0.2em] font-bold uppercase">
+                        In Stock
+                      </span>
+                      {product.stock <= 5 && (
+                        <span className="text-[10px] text-amber-500 font-bold uppercase tracking-wider animate-pulse">
+                          Only {product.stock} Left
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Description */}
@@ -178,69 +207,228 @@ const ProductDetail = () => {
               </div>
 
               {/* Editorial Tabs Selection */}
-              <div className="space-y-6">
-                <div className="flex gap-8 border-b border-white/5 pb-px">
-                  {['heritage', 'details', 'care'].map((tab) => (
+              <div className="space-y-8">
+                <div className="flex gap-8 border-b border-white/5 pb-px overflow-x-auto scrollbar-hide">
+                  {[
+                    { id: 'details', label: 'Bespoke Details' },
+                    { id: 'craft', label: 'Atelier Craft' },
+                    { id: 'styling', label: 'Heritage & Style' },
+                    { id: 'care', label: 'Longevity' }
+                  ].map((tab) => (
                     <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`text-[9px] uppercase tracking-[0.3em] font-medium transition-all relative pb-3 ${activeTab === tab ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`text-[9px] uppercase tracking-[0.3em] font-bold transition-all relative pb-3 whitespace-nowrap ${activeTab === tab.id ? 'text-accent' : 'text-white/30 hover:text-white/60'}`}
                     >
-                      {tab}
-                      {activeTab === tab && (
-                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-accent" />
+                      {tab.label}
+                      {activeTab === tab.id && (
+                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-accent shadow-[0_0_10px_rgba(198,166,100,0.5)]" />
                       )}
                     </button>
                   ))}
                 </div>
                 
-                <div className="min-h-[80px]">
+                <div className="min-h-[250px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeTab}
-                      initial={{ opacity: 0, y: 5 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-[11px] text-white/50 tracking-[0.15em] uppercase leading-relaxed"
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="space-y-6"
                     >
-                      {activeTab === 'heritage' && (product.heritage || "The Velouraz heritage is defined by a relentless pursuit of perfection. This piece is a continuation of our house legacy, where timeless elegance meets contemporary vision.")}
                       {activeTab === 'details' && (
-                        <div className="space-y-2">
-                          <p>Material: {product.material || "High-grade alloy with gold plating"}</p>
-                          <p>Stones: {product.stones || "Semi-precious / AD stones"}</p>
-                          <p>Weight/Size: {product.size_weight || "Adjustable"}</p>
+                        <div className="space-y-8">
+                          <div className="space-y-4">
+                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Key Features</h4>
+                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                              {[
+                                "Premium quality material for long-lasting shine",
+                                "Lightweight & comfortable for all-day wear",
+                                "Skin-friendly & hypoallergenic",
+                                "Waterproof, Anti Tarnish",
+                                "Handcrafted with precision and care"
+                              ].map((feature, i) => (
+                                <li key={i} className="flex items-center gap-3 text-[11px] text-white/50 tracking-wider">
+                                  <span className="w-1 h-1 rounded-full bg-accent/40" />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="space-y-4 pt-4 border-t border-white/5">
+                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Detail & Dimensions</h4>
+                            <div className="grid grid-cols-2 gap-6">
+                              <div className="space-y-1">
+                                <p className="text-[8px] uppercase tracking-widest text-white/20">Length / Size</p>
+                                <p className="text-[11px] text-white/60 tracking-wider">{product.size_weight || "Standard Adjustable"}</p>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-[8px] uppercase tracking-widest text-white/20">Weight</p>
+                                <p className="text-[11px] text-white/60 tracking-wider">Lightweight / Comfort Fit</p>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-[8px] uppercase tracking-widest text-white/20">Closure Type</p>
+                                <p className="text-[11px] text-white/60 tracking-wider">{product.material?.includes('hook') ? 'Signature Hook' : 'Secure Clasp'}</p>
+                              </div>
+                              <div className="space-y-1">
+                                <p className="text-[8px] uppercase tracking-widest text-white/20">Jewellery Type</p>
+                                <p className="text-[11px] text-white/60 tracking-wider">Demi Fine Masterpiece</p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       )}
-                      {activeTab === 'care' && (product.care_instructions || "Preserve your treasure by avoiding direct contact with liquids. Store within the provided velvet atelier pouch. Professional inspection is recommended annually.")}
+
+                      {activeTab === 'craft' && (
+                        <div className="space-y-8">
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-3">
+                              <Gem size={12} className="text-accent/60" />
+                              <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Advanced Metal Finishing</h4>
+                            </div>
+                            <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase">
+                              Each Velouraz piece undergoes a meticulous polishing process to achieve a smooth, high-lustre surface. We use advanced plating techniques — including gold, rose gold, and rhodium finishes — to enhance both appearance and longevity. This multi-layered finishing not only gives the jewellery its rich, radiant look but also adds a protective barrier to the metal beneath.
+                            </p>
+                          </div>
+                          <div className="space-y-4">
+                            <div className="flex items-center gap-3">
+                              <Shield size={12} className="text-accent/60" />
+                              <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Signature Anti-Tarnish Technology</h4>
+                            </div>
+                            <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase">
+                              Our jewellery is treated with specialized anti-tarnish coatings designed to reduce oxidation and surface degradation. These protective layers help preserve the original finish, minimizing dullness and discoloration over time — even when exposed to humidity, air, and routine environmental factors.
+                            </p>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-white/5">
+                            <div className="space-y-3">
+                              <h5 className="text-[9px] uppercase tracking-widest text-white/30 font-bold">Skin-Safe & Wearable</h5>
+                              <p className="text-[10px] text-white/40 leading-relaxed italic">Designed to be skin-friendly and suitable for prolonged wear through lightweight construction and balanced design.</p>
+                            </div>
+                            <div className="space-y-3">
+                              <h5 className="text-[9px] uppercase tracking-widest text-white/30 font-bold">Material Focus</h5>
+                              <p className="text-[10px] text-white/40 leading-relaxed italic">Crafted using high-quality metals such as sterling silver with premium plating, aligning with international demi-fine standards.</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {activeTab === 'styling' && (
+                        <div className="space-y-8">
+                          <div className="space-y-4">
+                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">The Style Tip</h4>
+                            <div className="bg-white/[0.02] border-l-2 border-accent p-6 rounded-r-2xl italic">
+                              <p className="text-[12px] text-white/70 leading-relaxed tracking-wide">
+                                "Pair it with a minimal outfit, layered necklaces, or traditional wear for a chic look and statement style. Designed to elevate your style with timeless charm."
+                              </p>
+                            </div>
+                          </div>
+                          <div className="space-y-4 pt-4">
+                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Perfect For</h4>
+                            <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase">
+                              Every occasion—from thoughtful gifting to grand weddings, festive celebrations to effortless everyday elegance. Each piece makes every moment feel a little more special.
+                            </p>
+                          </div>
+                          <div className="space-y-4 pt-4 border-t border-white/5">
+                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30">Seasonal & Limited Editions</h4>
+                            <p className="text-[11px] text-white/40 leading-relaxed tracking-wider italic">
+                              Small-batch collections inspired by evolving global trends, ensuring exclusivity and freshness within the portfolio.
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {activeTab === 'care' && (
+                        <div className="space-y-8">
+                          <div className="space-y-6">
+                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Care Instructions</h4>
+                            <div className="space-y-4">
+                              <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase font-bold">
+                                To preserve the beauty of your piece, avoid contact with water, perfumes, and harsh chemicals. Store it in a cool, dry place when not in use to maintain its shine and finish.
+                              </p>
+                              <p className="text-[11px] text-white/40 leading-relaxed tracking-wider uppercase">
+                                With proper care, Velouraz jewellery is crafted to retain its brilliance and elegance over time. Thoughtfully made using high-quality base metals, refined polishing techniques, and advanced anti-tarnish technology.
+                              </p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 pt-8 border-t border-white/5">
+                            <div className="flex items-center gap-3 text-white/20">
+                              <RotateCcw size={14} />
+                              <span className="text-[8px] uppercase tracking-[0.2em] font-bold">Wipe with soft cloth</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-white/20">
+                              <Shield size={14} />
+                              <span className="text-[8px] uppercase tracking-[0.2em] font-bold">Avoid Chemicals</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </motion.div>
                   </AnimatePresence>
                 </div>
               </div>
 
               {/* Desktop Acquisition Actions (Hidden on Mobile) */}
-              <div className="hidden lg:flex gap-4 pt-4">
-                <button
-                  onClick={handleAddToCart}
-                  className={`flex-1 h-14 text-[10px] uppercase tracking-[0.3em] font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-3 ${
-                    isInCart(product.id)
-                    ? 'bg-accent text-white'
-                    : 'bg-white text-black hover:bg-accent hover:text-white'
-                  }`}
-                >
-                  <ShoppingBag size={16} strokeWidth={1.5} />
-                  {isInCart(product.id) ? 'Added to Cart' : 'Acquire Selection'}
-                </button>
-                <button
-                  onClick={handleAddToWishlist}
-                  className={`w-14 h-14 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                    isInWishlist(product.id)
-                    ? 'bg-accent border-accent text-white'
-                    : 'border-white/10 bg-[#111] text-white hover:text-accent hover:border-accent/40'
-                  }`}
-                >
-                  <Heart size={18} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
-                </button>
+              <div className="hidden lg:flex flex-col gap-6 pt-4">
+                <div className="flex items-center gap-6">
+                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/40">Quantity</span>
+                  <div className="flex items-center border border-white/10 rounded-full overflow-hidden bg-white/5">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-5 py-2 text-white hover:bg-white/10 transition-colors font-bold"
+                    >
+                      −
+                    </button>
+                    <span className="px-6 py-2 font-bold text-white border-l border-r border-white/10 min-w-[60px] text-center">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(Math.min(Math.min(10, Number(product.stock)), quantity + 1))}
+                      disabled={quantity >= Math.min(10, Number(product.stock))}
+                      className={`px-5 py-2 text-white hover:bg-white/10 transition-colors font-bold ${quantity >= Math.min(10, Number(product.stock)) ? 'opacity-20 cursor-not-allowed' : ''}`}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <span className="text-[9px] text-white/20 uppercase tracking-widest">(Max 10)</span>
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={product.stock <= 0 || cartLoading}
+                    className={`flex-1 h-14 text-[10px] uppercase tracking-[0.3em] font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-3 ${
+                      product.stock <= 0
+                      ? 'bg-red-900/50 text-white cursor-not-allowed border border-red-500/30'
+                      : isInCart(product.id)
+                      ? 'bg-accent text-white'
+                      : 'bg-white text-black hover:bg-accent hover:text-white'
+                    }`}
+                  >
+                    {cartLoading ? (
+                      <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                      <ShoppingBag size={16} strokeWidth={1.5} />
+                    )}
+                    {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'In Collection' : 'Acquire Selection'}
+                  </button>
+                  <button
+                    onClick={handleAddToWishlist}
+                    disabled={wishlistLoading}
+                    className={`w-14 h-14 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                      isInWishlist(product.id)
+                      ? 'bg-accent border-accent text-white'
+                      : 'border-white/10 bg-[#111] text-white hover:text-accent hover:border-accent/40'
+                    }`}
+                  >
+                    {wishlistLoading ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      <Heart size={18} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* Atelier Contact Card */}
@@ -268,26 +456,38 @@ const ProductDetail = () => {
 
       {/* Mobile Fixed Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#0A0A0A]/80 backdrop-blur-xl border-t border-white/10 z-50 lg:hidden flex gap-3 pb-safe-area">
-         <button
+          <button
             onClick={handleAddToCart}
+            disabled={product.stock <= 0 || cartLoading}
             className={`flex-1 h-12 text-[10px] uppercase tracking-[0.2em] font-bold rounded-full active:scale-95 transition-all flex items-center justify-center gap-2 ${
-              isInCart(product.id)
+              product.stock <= 0
+              ? 'bg-red-900/50 text-white'
+              : isInCart(product.id)
               ? 'bg-accent text-white'
               : 'bg-white text-black'
             }`}
           >
-            <ShoppingBag size={14} strokeWidth={2} />
-            {isInCart(product.id) ? 'Added' : 'Acquire'}
+            {cartLoading ? (
+              <Loader2 size={14} className="animate-spin" />
+            ) : (
+              <ShoppingBag size={14} strokeWidth={2} />
+            )}
+            {product.stock <= 0 ? 'Sold Out' : isInCart(product.id) ? 'In Collection' : 'Acquire'}
          </button>
          <button
             onClick={handleAddToWishlist}
+            disabled={wishlistLoading}
             className={`w-12 h-12 rounded-full border flex items-center justify-center active:scale-95 transition-all ${
               isInWishlist(product.id)
               ? 'bg-accent border-accent text-white'
               : 'border-white/10 bg-white/5 text-white'
             }`}
           >
-            <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+            {wishlistLoading ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+            )}
          </button>
       </div>
 

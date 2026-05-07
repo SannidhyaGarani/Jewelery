@@ -16,17 +16,19 @@ import {
   Bell,
   Award,
   Star,
-  Crown
+  Crown,
+  ArrowRight
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Account = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, deleteAccount } = useAuth();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [recentOrders, setRecentOrders] = useState([]);
   const [stats, setStats] = useState({ cart: 0, wishlist: 0 });
   const [loading, setLoading] = useState(true);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -36,25 +38,21 @@ const Account = () => {
 
     const fetchData = async () => {
       try {
-        // Fetch User Profile
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           setUserData(userSnap.data());
         }
 
-        // Fetch Cart Count
         const cartSnap = await getDocs(collection(db, "users", user.uid, "cart"));
         const wishlistSnap = await getDocs(collection(db, "users", user.uid, "wishlist"));
         
-        // Fetch Recent Orders
         const ordersRef = collection(db, "users", user.uid, "orders");
         let ordersSnap;
         try {
           const ordersQuery = query(ordersRef, orderBy("createdAt", "desc"), limit(3));
           ordersSnap = await getDocs(ordersQuery);
         } catch (e) {
-          // If index doesn't exist yet
           ordersSnap = await getDocs(query(ordersRef, limit(3)));
         }
         
@@ -82,6 +80,15 @@ const Account = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount();
+      navigate("/");
+    } catch (error) {
+      alert("Failed to delete account. Please try again.");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
@@ -91,188 +98,189 @@ const Account = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pt-40 pb-20 px-6">
-      <div className="max-w-[1440px] mx-auto">
+    <div className="min-h-screen bg-[#0A0A0A] pt-32 pb-20 px-6">
+      <div className="max-w-[1200px] mx-auto">
         
-        {/* Profile Header Card */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white/[0.02] backdrop-blur-xl rounded-[60px] p-10 md:p-20 mb-16 relative overflow-hidden border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)]"
-        >
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C6A664]/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
           
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              <div className="relative group">
-                <div className="w-44 h-44 rounded-[48px] bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white overflow-hidden shadow-2xl">
-                  {userData?.photoURL ? (
-                    <img src={userData.photoURL} alt="Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent">
-                      <User size={72} className="text-[#C6A664]/30" />
-                    </div>
-                  )}
-                </div>
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -bottom-4 -right-4 w-14 h-14 bg-[#C6A664] rounded-[24px] flex items-center justify-center text-black border-[6px] border-[#0A0A0A] shadow-2xl"
-                >
-                  <Crown size={24} />
-                </motion.div>
-              </div>
-              
-              <div className="text-center lg:text-left space-y-4">
-                <div className="flex flex-col gap-2">
-                  <span className="text-[10px] font-bold text-[#C6A664] uppercase tracking-[0.4em]">Velouraz Elite Member</span>
-                  <h1 className="text-5xl md:text-7xl font-serif text-white tracking-tighter">
-                    {userData?.displayName || "L'Excellence Member"}
-                  </h1>
-                </div>
-                <p className="text-white/40 font-sans text-lg tracking-wide">{user?.email}</p>
-                <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-6">
-                  <span className="px-6 py-2 rounded-2xl bg-white/5 backdrop-blur-sm text-white/60 text-[10px] font-bold uppercase tracking-widest border border-white/10 flex items-center gap-2">
-                    <Star size={12} className="text-[#C6A664]" /> Platinum Status
-                  </span>
-                  <span className="px-6 py-2 rounded-2xl bg-[#C6A664]/10 text-[#C6A664] text-[10px] font-bold uppercase tracking-widest border border-[#C6A664]/20">
-                    2,450 Prestige Points
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={handleLogout}
-              className="px-10 py-5 rounded-[24px] bg-white/[0.03] text-white/60 font-bold uppercase tracking-[0.2em] text-[10px] border border-white/10 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all flex items-center gap-3 shadow-xl"
-            >
-              <LogOut size={16} />
-              Secured Logout
-            </button>
-          </div>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-12 gap-16">
-          
-          {/* Left Column: Stats & Menu */}
-          <div className="lg:col-span-4 space-y-12">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <Link to="/cart" className="group bg-white/[0.02] p-10 rounded-[48px] border border-white/10 hover:bg-white/[0.04] transition-all relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#C6A664]/5 rounded-full blur-2xl" />
-                <div className="w-14 h-14 rounded-2xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664] mb-8 group-hover:scale-110 transition-transform">
-                  <ShoppingBag size={28} />
-                </div>
-                <p className="text-5xl font-sans font-bold text-white tracking-tighter leading-none">{stats.cart}</p>
-                <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] mt-4 italic">Acquisitions</p>
-              </Link>
-              
-              <Link to="/wishlist" className="group bg-white/[0.02] p-10 rounded-[48px] border border-white/10 hover:bg-white/[0.04] transition-all relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#C6A664]/5 rounded-full blur-2xl" />
-                <div className="w-14 h-14 rounded-2xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664] mb-8 group-hover:scale-110 transition-transform">
-                  <Heart size={28} fill="currentColor" />
-                </div>
-                <p className="text-5xl font-sans font-bold text-white tracking-tighter leading-none">{stats.wishlist}</p>
-                <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] mt-4 italic">Sanctuary Pieces</p>
-              </Link>
-            </div>
-
-            {/* Navigation Menu */}
-            <div className="bg-white/[0.02] rounded-[56px] border border-white/10 overflow-hidden p-6 shadow-2xl">
-              <h3 className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Personal Atelier</h3>
-              <div className="space-y-2">
-                {[
-                  { icon: Settings, label: "House Settings" },
-                  { icon: Package, label: "Order Archives" },
-                  { icon: CreditCard, label: "Vault Methods" },
-                  { icon: MapPin, label: "Elite Addresses" },
-                  { icon: Bell, label: "Communications" },
-                ].map((item, idx) => (
-                  <button key={idx} className="w-full flex items-center justify-between p-6 rounded-[32px] hover:bg-white/5 transition-all group text-left border border-transparent hover:border-white/5">
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 rounded-2xl bg-white/5 text-[#C6A664] flex items-center justify-center border border-white/5 group-hover:bg-[#C6A664] group-hover:text-black transition-colors">
-                        <item.icon size={20} />
-                      </div>
-                      <span className="text-sm font-bold text-white uppercase tracking-widest">{item.label}</span>
-                    </div>
-                    <ChevronRight size={18} className="text-white/10 group-hover:translate-x-1 group-hover:text-[#C6A664] transition-all" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Recent Activity */}
-          <div className="lg:col-span-8 space-y-16">
-            <div className="bg-white/[0.02] rounded-[64px] border border-white/10 p-12 md:p-16 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C6A664]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-              
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 mb-16 relative z-10">
-                <div>
-                  <h3 className="text-4xl font-serif text-white tracking-tight">Recent Archives</h3>
-                  <p className="text-white/30 font-sans text-sm tracking-widest uppercase mt-2">Tracking your latest masterpieces</p>
-                </div>
-                <Link to="/orders" className="px-10 py-4 rounded-2xl border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-[0.3em] hover:bg-white hover:text-black hover:border-white transition-all w-fit">
-                  Full Catalog
-                </Link>
-              </div>
-
-              <div className="relative z-10">
-                {recentOrders.length > 0 ? (
-                  <div className="space-y-6">
-                    {recentOrders.map((order) => (
-                      <div key={order.id} className="group flex flex-col sm:flex-row items-center justify-between p-10 rounded-[48px] bg-white/[0.03] border border-white/5 hover:border-[#C6A664]/30 hover:bg-white/[0.05] transition-all duration-700">
-                        <div className="flex items-center gap-8 mb-6 sm:mb-0">
-                          <div className="w-20 h-20 rounded-[28px] bg-black/40 flex items-center justify-center text-[#C6A664] border border-white/10 shadow-2xl group-hover:scale-110 transition-transform duration-700">
-                            <Package size={32} />
-                          </div>
-                          <div>
-                            <p className="text-xl font-serif text-white">Ref. #{order.id.slice(0, 8).toUpperCase()}</p>
-                            <p className="text-[10px] text-white/20 font-bold uppercase tracking-[0.3em] mt-2">Acquired {new Date(order.createdAt?.seconds * 1000).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
-                          </div>
-                        </div>
-                        <div className="text-center sm:text-right space-y-4">
-                          <p className="text-3xl font-sans font-bold text-[#C6A664] tracking-tighter">₹{Number(order.total).toLocaleString()}</p>
-                          <span className="inline-flex px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] bg-[#C6A664]/10 text-[#C6A664] border border-[#C6A664]/20 shadow-lg shadow-[#C6A664]/5">
-                            {order.status}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-28 bg-white/[0.01] rounded-[56px] border border-dashed border-white/10">
-                    <div className="w-24 h-24 rounded-[36px] bg-white/5 flex items-center justify-center text-[#C6A664]/20 mx-auto mb-10 shadow-2xl">
-                      <ShoppingBag size={48} />
-                    </div>
-                    <h4 className="text-3xl font-serif text-white/60 mb-4 italic">No acquisitions recorded</h4>
-                    <p className="text-white/20 font-sans text-xs tracking-[0.3em] uppercase mb-12 max-w-xs mx-auto leading-relaxed">Your jewellery journey awaits its first chapter.</p>
-                    <Link to="/shop" className="inline-flex items-center gap-4 px-12 py-6 bg-[#C6A664] text-black rounded-[28px] font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white transition-all shadow-2xl shadow-[#C6A664]/10">
-                      Explore Atelier
-                      <ChevronRight size={16} />
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Loyalty Banner */}
+          {/* Sidebar - Compact Profile */}
+          <div className="lg:col-span-4 space-y-6">
             <motion.div 
-              whileHover={{ scale: 1.01 }}
-              className="bg-[#C6A664] rounded-[60px] p-12 md:p-20 text-black relative overflow-hidden shadow-[0_40px_100px_rgba(198,166,100,0.2)]"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-white/[0.03] backdrop-blur-xl rounded-[32px] p-8 border border-white/10 shadow-2xl relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-                <div className="text-center md:text-left space-y-4">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-60">Loyalty Program</span>
-                  <h3 className="text-4xl md:text-5xl font-serif tracking-tight leading-tight">Prestige Rewards</h3>
-                  <p className="text-black/60 font-medium text-lg italic">You are approaching your next complimentary acquisition.</p>
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#C6A664]/10 rounded-full blur-3xl" />
+              
+              <div className="flex items-center gap-6 mb-8">
+                <div className="relative">
+                  <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white overflow-hidden shadow-xl">
+                    {userData?.photoURL ? (
+                      <img src={userData.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <User size={32} className="text-[#C6A664]/30" />
+                    )}
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-[#C6A664] rounded-lg flex items-center justify-center text-black border-4 border-[#0A0A0A] shadow-lg">
+                    <Crown size={14} />
+                  </div>
                 </div>
-                <button className="px-12 py-6 bg-[#0A0A0A] text-white rounded-[32px] font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-[#0A0A0A] transition-all shadow-2xl shadow-black/20">
-                  Redeem Excellence
+                <div>
+                  <h2 className="text-2xl font-serif text-white tracking-tight leading-none mb-2">
+                    {userData?.displayName || "Member"}
+                  </h2>
+                  <p className="text-[9px] font-bold text-[#C6A664] uppercase tracking-[0.3em]">Elite Status</p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                  <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Points</span>
+                  <span className="text-sm font-bold text-[#C6A664]">2,450 XP</span>
+                </div>
+                <div className="flex justify-between items-center p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                  <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Member Since</span>
+                  <span className="text-sm font-bold text-white/70">2026</span>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-8 border-t border-white/5 space-y-2">
+                <button 
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 transition-all group text-left"
+                >
+                  <div className="flex items-center gap-4">
+                    <LogOut size={16} className="text-white/30 group-hover:text-red-400" />
+                    <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">Sign Out</span>
+                  </div>
                 </button>
               </div>
             </motion.div>
+
+            {/* Stats Grid - Very Compact */}
+            <div className="grid grid-cols-2 gap-4">
+              <Link to="/cart" className="bg-white/[0.02] p-6 rounded-[24px] border border-white/10 hover:bg-white/[0.05] transition-all group">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664]">
+                    <ShoppingBag size={16} />
+                  </div>
+                  <ChevronRight size={14} className="text-white/10 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <p className="text-2xl font-sans font-bold text-white">{stats.cart}</p>
+                <p className="text-[8px] font-bold text-white/20 uppercase tracking-[0.2em] mt-1">Cart Pieces</p>
+              </Link>
+              <Link to="/wishlist" className="bg-white/[0.02] p-6 rounded-[24px] border border-white/10 hover:bg-white/[0.05] transition-all group">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664]">
+                    <Heart size={16} fill="currentColor" />
+                  </div>
+                  <ChevronRight size={14} className="text-white/10 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <p className="text-2xl font-sans font-bold text-white">{stats.wishlist}</p>
+                <p className="text-[8px] font-bold text-white/20 uppercase tracking-[0.2em] mt-1">Saved Items</p>
+              </Link>
+            </div>
+
+            {/* Danger Zone */}
+            <div className="bg-red-500/[0.02] rounded-[32px] p-6 border border-red-500/10">
+              {!showDeleteConfirm ? (
+                <button 
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="w-full py-4 text-[9px] font-bold text-red-500/50 hover:text-red-500 uppercase tracking-[0.3em] transition-colors"
+                >
+                  Delete Account
+                </button>
+              ) : (
+                <div className="space-y-4 text-center">
+                  <p className="text-[10px] text-red-400 font-bold uppercase tracking-widest">Are you sure?</p>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => setShowDeleteConfirm(false)}
+                      className="flex-1 py-2 bg-white/5 rounded-xl text-[9px] font-bold text-white uppercase tracking-widest"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      onClick={handleDeleteAccount}
+                      className="flex-1 py-2 bg-red-600 rounded-xl text-[9px] font-bold text-white uppercase tracking-widest"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Main Content - Activity */}
+          <div className="lg:col-span-8 space-y-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white/[0.02] rounded-[32px] border border-white/10 p-8 md:p-12 relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between mb-12">
+                <div>
+                  <h3 className="text-3xl font-serif text-white mb-2">Acquisition History</h3>
+                  <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Tracking your latest masterpieces</p>
+                </div>
+                <Link to="/orders" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:bg-white hover:text-black transition-all">
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+
+              <div className="space-y-4">
+                {recentOrders.length > 0 ? (
+                  recentOrders.map((order) => (
+                    <div key={order.id} className="group flex items-center justify-between p-6 rounded-[24px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all">
+                      <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 rounded-xl bg-black/40 flex items-center justify-center text-[#C6A664] border border-white/5">
+                          <Package size={20} />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-white tracking-widest">#{order.id.slice(0, 8).toUpperCase()}</p>
+                          <p className="text-[9px] text-white/20 font-bold uppercase tracking-widest mt-1">
+                            {new Date(order.createdAt?.seconds * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-bold text-[#C6A664] mb-1">₹{Number(order.total).toLocaleString()}</p>
+                        <span className="text-[8px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                          {order.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-20 bg-white/[0.01] rounded-[32px] border border-dashed border-white/10">
+                    <ShoppingBag size={40} className="mx-auto text-white/5 mb-6" />
+                    <p className="text-white/20 font-serif text-xl italic">No acquisitions yet</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Quick Actions Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { icon: MapPin, label: "Shipping Addresses", sub: "2 Saved Locations" },
+                { icon: CreditCard, label: "Payment Vault", sub: "Encrypted Methods" },
+                { icon: Award, label: "Elite Rewards", sub: "Level: Platinum" },
+                { icon: Bell, label: "Notification Center", sub: "3 Unread Updates" }
+              ].map((action, i) => (
+                <button key={i} className="flex items-center gap-6 p-6 rounded-[28px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-[#C6A664]/30 transition-all text-left group">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#C6A664] group-hover:bg-[#C6A664] group-hover:text-black transition-all">
+                    <action.icon size={20} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-white uppercase tracking-widest mb-1">{action.label}</p>
+                    <p className="text-[8px] text-white/20 font-bold uppercase tracking-widest">{action.sub}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
