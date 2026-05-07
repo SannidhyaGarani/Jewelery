@@ -132,7 +132,7 @@ const LuxuryHeader = () => {
               <img 
                 src="/img/logo.png" 
                 alt="Velouraz" 
-                className={`transition-all duration-500 ${isScrolled ? 'h-13' : 'h-15'}`} 
+                className={`transition-all duration-500 object-contain w-auto ${isScrolled ? 'h-11' : 'h-14'}`} 
               />
              
             </Link>
