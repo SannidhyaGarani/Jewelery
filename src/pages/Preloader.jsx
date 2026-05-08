@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const PremiumPreloader = () => {
+const PremiumPreloader = ({ onComplete }) => {
   const [loading, setLoading] = useState(true);
   const [counter, setCounter] = useState(0);
 
-  // Sophisticated Counter Logic
   useEffect(() => {
+    // A non-linear, "sophisticated" counter that pauses at 99 for tension
     const interval = setInterval(() => {
-      setCounter((prev) => (prev < 100 ? prev + 1 : 100));
-    }, 25);
-    
-    // Simulate initial asset loading
+      setCounter((prev) => {
+        if (prev < 99) {
+          const jump = Math.random() * 3; 
+          return Math.min(prev + jump, 99);
+        }
+        return prev;
+      });
+    }, 40);
+
     const timeout = setTimeout(() => {
+      setCounter(100);
       setLoading(false);
-    }, 3500);
+      if (onComplete) setTimeout(onComplete, 1200);
+    }, 4500);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, []);
+  }, [onComplete]);
+
+  // Luxury Ease: ultra-slow out, fast center, ultra-slow in
+  const luxuryEase = [0.19, 1, 0.22, 1];
 
   return (
     <AnimatePresence>
@@ -28,95 +38,105 @@ const PremiumPreloader = () => {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ 
-            y: "-100%", 
-            transition: { duration: 1, ease: [0.7, 0, 0.3, 1] } 
+            y: "-100%",
+            transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1] } 
           }}
-          className="fixed inset-0 z-[9999] bg-[#0A0A0A] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] bg-[#0A0A0A] flex flex-col items-center justify-center overflow-hidden selection:bg-none"
         >
-          {/* 1. Cinematic Background Texture */}
-          <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-screen bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-          
-          {/* 2. Central Logo & Brand Reveal */}
-          <div className="relative flex flex-col items-center">
-            {/* The "A" Stroke Animation (Abstract Brand Element) */}
-            <svg width="80" height="80" viewBox="0 0 100 100" className="mb-8">
-              <motion.path
-                d="M50 10 L85 90 L15 90 Z"
-                fill="transparent"
-                stroke="#c7a049"
-                strokeWidth="0.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-              />
-            </svg>
+          {/* 1. Subtle Caustics (Light reflecting off jewelry) */}
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.03, 0.08, 0.03],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#C6A664_0%,transparent_50%)]"
+          />
 
-            {/* Main Logo Text */}
+          {/* 2. Thin Editorial Frame */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 2, ease: luxuryEase }}
+            className="absolute inset-8 border border-white/[0.03] pointer-events-none"
+          />
+
+          {/* 3. Central Brand Reveal */}
+          <div className="relative z-10 flex flex-col items-center">
+            {/* Logo Masking Effect */}
+            <div className="overflow-hidden mb-8">
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.5, ease: luxuryEase }}
+                className="px-4"
+              >
+                <img 
+                  src="/img/logo.png" 
+                  alt="Velouraz" 
+                  className="h-16 sm:h-20 w-auto object-contain brightness-110 contrast-125" 
+                />
+              </motion.div>
+            </div>
+
+            {/* Letter Spacing Animation - The hallmark of luxury */}
             <motion.div
-              initial={{ opacity: 0, letterSpacing: "1em" }}
-              animate={{ opacity: 1, letterSpacing: "0.4em" }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="font-serif text-3xl md:text-5xl text-white relative"
+              initial={{ opacity: 0, letterSpacing: "0.2em" }}
+              animate={{ opacity: 0.6, letterSpacing: "1.2em" }}
+              transition={{ duration: 3, ease: luxuryEase }}
+              className="flex flex-col items-center"
             >
-              Velouraz
-              {/* Subtle Gold Glint Sweep */}
-              <motion.div 
-                initial={{ x: "-100%" }}
-                animate={{ x: "100%" }}
-                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-[#c7a049]/20 to-transparent skew-x-12"
-              />
+              <span className="text-[9px] uppercase text-white font-light ml-[1.2em]">
+                Excellence Personified
+              </span>
             </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              transition={{ delay: 0.5 }}
-              className="text-[9px] tracking-[0.6em] uppercase text-white mt-4 font-light"
-            >
-              Excellence Since 2026
-            </motion.p>
           </div>
 
-          {/* 3. The "Silent" Progress Indicator */}
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center">
-            {/* Progress Counter */}
-            <div className="overflow-hidden h-6">
-               <motion.span 
-                 className="text-[#c7a049] font-serif text-lg block"
-                 animate={{ y: 0 }}
-                 initial={{ y: 20 }}
-               >
-                 {counter}%
-               </motion.span>
-            </div>
-            
-            {/* Ultra-thin Progress Line */}
-            <div className="w-48 h-[1px] bg-white/10 mt-4 relative overflow-hidden">
+          {/* 4. The "Golden Ratio" Loader */}
+          <div className="absolute bottom-20 flex flex-col items-center space-y-6">
+            {/* The Hairline Loader (0.5px height) */}
+            <div className="w-40 h-[1px] bg-white/[0.05] relative">
               <motion.div 
-                className="absolute top-0 left-0 h-full bg-[#c7a049]"
+                className="absolute top-0 left-0 h-full bg-[#C6A664]"
                 initial={{ width: "0%" }}
                 animate={{ width: `${counter}%` }}
                 transition={{ ease: "linear" }}
               />
+              
+              {/* Floating Light Spark (Diamond Glint) */}
+              <motion.div 
+                animate={{ 
+                  left: `${counter}%`,
+                  opacity: [0, 1, 0] 
+                }}
+                transition={{ duration: 1, repeat: Infinity }}
+                className="absolute -top-1 -translate-x-1/2 w-2 h-2 bg-white rounded-full blur-[4px]"
+              />
+            </div>
+
+            {/* Vertical Counter - Inspired by high-end watch complications */}
+            <div className="h-4 overflow-hidden text-[#C6A664]">
+              <motion.div
+                animate={{ y: `-${counter}%` }}
+                className="flex flex-col items-center font-serif italic text-xs tabular-nums"
+              >
+                {Array.from({ length: 101 }).map((_, i) => (
+                  <span key={i} className="h-4">{i}</span>
+                ))}
+              </motion.div>
             </div>
           </div>
 
-          {/* 4. Decorative Luxury Accents */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute top-10 left-10 text-[8px] tracking-[0.3em] uppercase text-white/30 hidden md:block"
-          >
-            Atelier Collection • N° 01
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute bottom-10 right-10 text-[8px] tracking-[0.3em] uppercase text-white/30 hidden md:block"
-          >
-            Handcrafted for the Extraordinary
-          </motion.div>
+          {/* 5. Minimalist Metadata */}
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 flex items-center gap-12">
+            <span className="text-[7px] tracking-[0.5em] uppercase text-white/20">London</span>
+            <span className="text-[7px] tracking-[0.5em] uppercase text-white/20">Paris</span>
+            <span className="text-[7px] tracking-[0.5em] uppercase text-white/20">Uluberia</span>
+          </div>
+
+          {/* Background Noise for texture */}
+          <div className="absolute inset-0 opacity-[0.15] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
         </motion.div>
       )}
     </AnimatePresence>

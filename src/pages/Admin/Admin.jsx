@@ -14,6 +14,21 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { useForm } from "react-hook-form";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Menu, 
+  X, 
+  LayoutDashboard, 
+  ShoppingBag, 
+  List, 
+  Users, 
+  Image, 
+  LogOut,
+  Settings,
+  Plus,
+  Package,
+  Activity
+} from "lucide-react";
 import AdminAuth from "./AdminAuth";
 import MetricCards from "./components/MetricCards";
 import ProductsTable from "./components/ProductsTable";
@@ -23,12 +38,19 @@ import CategoriesOverview from "./components/CategoriesOverview";
 import { ProductForm, EditProductForm } from "./components/ProductForms";
 import MediaLibrary from "./components/MediaLibrary";
 
-const sidebarItems = ["Dashboard", "Products", "Orders", "Categories", "Users", "Media"];
+const sidebarItems = [
+  { name: "Dashboard", icon: LayoutDashboard },
+  { name: "Products", icon: Package },
+  { name: "Orders", icon: ShoppingBag },
+  { name: "Categories", icon: List },
+  { name: "Users", icon: Users },
+  { name: "Media", icon: Image },
+];
 
 const metricCards = (productCount, userCount) => [
-  { label: "Active Products", value: productCount, hint: "Across all categories" },
-  { label: "Total Users", value: userCount, hint: "Registered accounts" },
-  { label: "Today’s Revenue", value: "₹0", hint: "Live store total" },
+  { label: "Active Products", value: productCount, hint: "Across all categories", icon: Package },
+  { label: "Total Users", value: userCount, hint: "Registered accounts", icon: Users },
+  { label: "Today’s Revenue", value: "₹0", hint: "Live store total", icon: Activity },
 ];
 
 const orderRows = [];
@@ -42,6 +64,7 @@ const Admin = () => {
   const [users, setUsers] = useState([]);
   const [adminUser, setAdminUser] = useState(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const storedAdmin = localStorage.getItem("velouraz_admin");
@@ -97,21 +120,31 @@ const Admin = () => {
   };
 
   const renderHeader = () => (
-    <header className="flex items-center justify-between mb-8">
+    <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
           Admin Panel
         </h1>
-        <p className="mt-1 text-sm font-medium tracking-wide text-[#811331] uppercase">
+        <p className="mt-1 text-sm font-medium tracking-wide text-[#811331] uppercase flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#811331] animate-pulse" />
           {activeItem}
         </p>
       </div>
-      <div className="hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-full bg-white shadow-sm border border-slate-100">
-        <span className="h-2 w-2 rounded-full bg-emerald-500" />
-        <span className="text-xs font-medium text-slate-600">
-          Store status:{" "}
-          <span className="font-semibold text-slate-900">Operational</span>
-        </span>
+      <div className="flex items-center gap-3 self-end sm:self-auto">
+        <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-100">
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+          <span className="text-xs font-medium text-slate-600">
+            Store status:{" "}
+            <span className="font-semibold text-slate-900">Operational</span>
+          </span>
+        </div>
+        <button
+          onClick={() => setIsProductModalOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-[#811331] text-white rounded-full text-xs font-semibold shadow-lg shadow-[#811331]/20 hover:bg-[#650f27] transition-all active:scale-95"
+        >
+          <Plus size={14} />
+          <span>Add Product</span>
+        </button>
       </div>
     </header>
   );
@@ -176,10 +209,87 @@ const Admin = () => {
     }
   };
 
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-white/90 backdrop-blur-md border-r border-slate-100">
+      <div className="px-6 py-6 border-b border-slate-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-[#811331] text-white flex items-center justify-center text-sm font-bold shadow-xl shadow-[#811331]/20">
+              AD
+            </div>
+            <div>
+              <p className="text-sm font-bold tracking-tight text-slate-900">
+                Admin
+              </p>
+              <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Workspace</p>
+            </div>
+          </div>
+          <button 
+            className="lg:hidden p-2 text-slate-400 hover:text-slate-600"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <X size={20} />
+          </button>
+        </div>
+      </div>
+
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {sidebarItems.map((item) => {
+          const isActive = item.name === activeItem;
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.name}
+              type="button"
+              onClick={() => {
+                setActiveItem(item.name);
+                setIsSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                isActive
+                  ? "bg-[#811331] text-white shadow-lg shadow-[#811331]/20"
+                  : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+              }`}
+            >
+              <Icon size={18} className={isActive ? "text-white" : "text-slate-400 group-hover:text-[#811331]"} />
+              <span className="flex-1 text-left">{item.name}</span>
+              {isActive && (
+                <motion.div 
+                  layoutId="sidebar-active"
+                  className="h-1.5 w-1.5 rounded-full bg-white" 
+                />
+              )}
+            </button>
+          );
+        })}
+      </nav>
+
+      <div className="px-4 py-6 border-t border-slate-100 space-y-4">
+        <div className="px-4 py-3 rounded-xl bg-slate-50 border border-slate-100">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Session</p>
+          <p className="text-xs font-semibold text-slate-700 truncate" title={adminUser?.adminId}>
+            {adminUser?.adminId}
+          </p>
+        </div>
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-red-50 text-red-600 rounded-xl text-xs font-bold hover:bg-red-100 transition-all border border-red-100"
+        >
+          <LogOut size={14} />
+          Sign Out
+        </button>
+      </div>
+    </div>
+  );
+
   if (loadingAuth) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-900">
-        <div className="w-10 h-10 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-950">
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-12 h-12 border-4 border-white/10 border-t-[#811331] rounded-full"
+        />
       </div>
     );
   }
@@ -189,135 +299,173 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-slate-50 text-slate-900">
-      {/* Sidebar */}
-      <aside className="w-64 border-r border-slate-100 bg-white/80 backdrop-blur-sm flex flex-col">
-        <div className="px-6 py-5 border-b border-slate-100">
-          <div className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-xl bg-[#811331] text-white flex items-center justify-center text-sm font-semibold shadow-sm">
-              AD
-            </div>
-            <div>
-              <p className="text-sm font-semibold tracking-tight text-slate-900">
-                Admin
-              </p>
-              <p className="text-xs text-slate-500">Store Workspace</p>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen flex bg-slate-50 text-slate-900 font-sans selection:bg-[#811331]/10">
+      {/* Mobile Sidebar Overlay */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsSidebarOpen(false)}
+            className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden"
+          />
+        )}
+      </AnimatePresence>
 
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          {sidebarItems.map((item) => {
-            const isActive = item === activeItem;
-            return (
-              <button
-                key={item}
-                type="button"
-                onClick={() => setActiveItem(item)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
-                  ? "bg-[#811331]/10 text-[#811331]"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                  }`}
-              >
-                <span>{item}</span>
-                {isActive && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#811331]" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="px-4 py-4 border-t border-slate-100 flex flex-col gap-3">
-          <div className="text-xs text-slate-500">
-            <p className="font-medium text-slate-700">Session</p>
-            <p className="truncate" title={adminUser?.adminId}>{adminUser?.adminId}</p>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="w-full py-2 px-3 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium hover:bg-slate-200 transition-colors"
-          >
-            Sign Out
-          </button>
-        </div>
+      {/* Sidebar - Desktop */}
+      <aside className="hidden lg:flex w-72 flex-col sticky top-0 h-screen">
+        <SidebarContent />
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 px-6 py-6 md:px-10 md:py-8">
-        {renderHeader()}
-        {renderMainContent()}
-      </main>
+      {/* Sidebar - Mobile */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <motion.aside
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-y-0 left-0 z-50 w-72 lg:hidden shadow-2xl"
+          >
+            <SidebarContent />
+          </motion.aside>
+        )}
+      </AnimatePresence>
 
-      {isProductModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-              <div>
-                <h2 className="text-sm font-semibold text-slate-900">
-                  Add New Product
-                </h2>
-                <p className="text-xs text-slate-500">
-                  Fill in the details and upload images for this product.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsProductModalOpen(false)}
-                className="text-xs font-medium text-slate-500 hover:text-slate-900"
-              >
-                Close
-              </button>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Mobile Navbar */}
+        <nav className="lg:hidden flex items-center justify-between px-6 py-4 bg-white border-b border-slate-100 sticky top-0 z-30">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg bg-[#811331] text-white flex items-center justify-center text-xs font-bold shadow-lg shadow-[#811331]/20">
+              AD
             </div>
-            <div className="px-6 py-5">
-              <ProductForm
-                onSuccess={async () => {
-                  setIsProductModalOpen(false);
-                  await loadProducts();
-                }}
-              />
-            </div>
+            <span className="font-bold text-slate-900 text-sm tracking-tight">Admin</span>
           </div>
-        </div>
-      )}
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2.5 rounded-xl bg-slate-50 text-slate-600 border border-slate-100 hover:bg-slate-100 transition-all active:scale-95"
+          >
+            <Menu size={20} />
+          </button>
+        </nav>
 
-      {isEditModalOpen && editingProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-              <div>
-                <h2 className="text-sm font-semibold text-slate-900">
-                  Edit Product
-                </h2>
-                <p className="text-xs text-slate-500">
-                  Update product details and save changes.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsEditModalOpen(false)}
-                className="text-xs font-medium text-slate-500 hover:text-slate-900"
-              >
-                Close
-              </button>
-            </div>
-            <div className="px-6 py-5">
-              <EditProductForm
-                product={editingProduct}
-                onSuccess={async () => {
-                  setIsEditModalOpen(false);
-                  setEditingProduct(null);
-                  await loadProducts();
-                }}
-              />
-            </div>
+        <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
+          <div className="max-w-7xl mx-auto">
+            {renderHeader()}
+            <motion.div
+              key={activeItem}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {renderMainContent()}
+            </motion.div>
           </div>
-        </div>
-      )}
+        </main>
+      </div>
+
+      {/* Modals with Premium Animations */}
+      <AnimatePresence>
+        {isProductModalOpen && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsProductModalOpen(false)}
+              className="absolute inset-0 bg-slate-950/40 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative z-10 max-h-[90vh] overflow-hidden flex flex-col"
+            >
+              <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">
+                    Add New Product
+                  </h2>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Create a new entry in your jewelry collection.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsProductModalOpen(false)}
+                  className="p-2 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300 transition-all"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto px-8 py-8">
+                <ProductForm
+                  onSuccess={async () => {
+                    setIsProductModalOpen(false);
+                    await loadProducts();
+                  }}
+                />
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isEditModalOpen && editingProduct && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsEditModalOpen(false)}
+              className="absolute inset-0 bg-slate-950/40 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative z-10 max-h-[90vh] overflow-hidden flex flex-col"
+            >
+              <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div>
+                  <h2 className="text-lg font-bold text-slate-900">
+                    Edit Product
+                  </h2>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Modify details for <span className="text-[#811331] font-bold">{editingProduct.name}</span>
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="p-2 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-300 transition-all"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto px-8 py-8">
+                <EditProductForm
+                  product={editingProduct}
+                  onSuccess={async () => {
+                    setIsEditModalOpen(false);
+                    setEditingProduct(null);
+                    await loadProducts();
+                  }}
+                />
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export default Admin;
+  
 
 
 

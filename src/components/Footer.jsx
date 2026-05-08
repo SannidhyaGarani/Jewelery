@@ -15,7 +15,13 @@ const Footer = () => {
     },
     {
       title: "Services",
-      links: ["Private Concierge", "Bespoke Commissions", "Jewellery Care", "Shipping & Returns", "Book an Appointment"]
+      links: [
+        { name: "Private Concierge", href: "#" },
+        { name: "Bespoke Commissions", href: "#" },
+        { name: "Jewellery Care", href: "#" },
+        { name: "Shipping & Returns", href: "/return-policy" },
+        { name: "Book an Appointment", href: "#" }
+      ]
     }
   ];
 
@@ -62,9 +68,9 @@ const Footer = () => {
               </h4>
               <ul className="space-y-5">
                 {section.links.map((item) => (
-                  <li key={item}>
-                    <Link to="#" className="text-[12px] tracking-[0.2em] uppercase font-light text-white/60 hover:text-accent transition-all duration-500 hover:pl-2">
-                      {item}
+                  <li key={typeof item === 'string' ? item : item.name}>
+                    <Link to={typeof item === 'string' ? "#" : item.href} className="text-[12px] tracking-[0.2em] uppercase font-light text-white/60 hover:text-accent transition-all duration-500 hover:pl-2">
+                      {typeof item === 'string' ? item : item.name}
                     </Link>
                   </li>
                 ))}
@@ -118,6 +124,9 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div className="flex gap-8">
+            <Link to="/return-policy" className="text-[9px] tracking-[0.3em] uppercase text-white/40 hover:text-white transition-colors">
+              Return Policy
+            </Link>
             <Link to="/privacy-policy" className="text-[9px] tracking-[0.3em] uppercase text-white/40 hover:text-white transition-colors">
               Privacy Policy
             </Link>
