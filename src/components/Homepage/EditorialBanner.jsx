@@ -41,11 +41,11 @@ const EditorialBanner = () => {
             >
               <span 
                 style={{ fontFamily: 'var(--font-script)', fontWeight: 100 }} 
-                className="text-6xl md:text-8xl lg:text-9xl block mb-2 md:mb-6 text-[#640D14]/60"
+                className="text-6xl md:text-7xl lg:text-7xl block mb-2 md:mb-6 text-[#640D14]/60"
               >
                 From Mine, to Klein,
               </span>
-              <span className="text-3xl md:text-5xl lg:text-7xl block italic font-light leading-snug">
+              <span className="text-3xl md:text-5xl lg:text-6xl block italic font-light leading-snug">
                 to You: The Evolution of a Diamond Dynasty
               </span>
             </motion.h2>

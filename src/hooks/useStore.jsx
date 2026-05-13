@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from '../components/useAuth';
 import { db } from '../components/Firebase';
-import { doc, setDoc, collection, onSnapshot } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const StoreContext = createContext(null);
@@ -49,9 +49,14 @@ export const StoreProvider = ({ children }) => {
   }, [user]);
 
   const addToCart = async (product, qty = 1) => {
-    // Check if item already exists
-    const existing = cartItems.find(i => i.id === product.id);
+    // Guard against zero-stock
     const stockNum = Number(product.stock || 0);
+    if (stockNum <= 0) {
+      alert('This item is currently out of stock.');
+      return false;
+    }
+
+    const existing = cartItems.find(i => i.id === product.id);
     const maxAllowed = Math.min(10, stockNum);
     const currentQty = existing ? (existing.quantity || 1) : 0;
     const finalQty = Math.min(maxAllowed, currentQty + qty);
@@ -64,11 +69,12 @@ export const StoreProvider = ({ children }) => {
     const item = {
       id: product.id,
       name: product.name,
-      price: product.price,
+      price: Number(product.price) || 0,
+      original_price: Number(product.original_price) || 0,
       image: product.image || product.images?.[0] || "",
       addedAt: new Date().toISOString(),
       quantity: finalQty,
-      stock: product.stock || 0
+      stock: stockNum
     };
 
     if (user) {
@@ -84,7 +90,7 @@ export const StoreProvider = ({ children }) => {
       const index = localCart.findIndex(i => i.id === product.id);
       
       if (index > -1) {
-        localCart[index].quantity = finalQty;
+        localCart[index] = { ...localCart[index], ...item };
       } else {
         localCart.push(item);
       }
@@ -95,17 +101,39 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
+  const removeFromCart = async (productId) => {
+    if (user) {
+      try {
+        await deleteDoc(doc(db, "users", user.uid, "cart", productId));
+        return true;
+      } catch (error) {
+        console.error("Error removing from cart:", error);
+        return false;
+      }
+    } else {
+      let localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      localCart = localCart.filter(i => i.id !== productId);
+      localStorage.setItem('cart', JSON.stringify(localCart));
+      setCartItems([...localCart]);
+      return true;
+    }
+  };
+
   const updateCartQuantity = async (productId, newQty) => {
     const item = cartItems.find(i => i.id === productId);
     if (!item) return false;
     
+    // Decrement to 0 = remove the item
+    if (newQty < 1) {
+      return removeFromCart(productId);
+    }
+
     const stockNum = Number(item.stock || 0);
-    const maxAllowed = Math.min(10, stockNum);
+    const maxAllowed = Math.min(10, stockNum > 0 ? stockNum : newQty);
     if (newQty > maxAllowed) {
       alert(`Only ${stockNum} pieces are available in stock.`);
       return false;
     }
-    if (newQty < 1) return false;
 
     if (user) {
       try {
@@ -162,6 +190,7 @@ export const StoreProvider = ({ children }) => {
       wishlistCount: wishlistItems.length,
       addToCart, 
       updateCartQuantity,
+      removeFromCart,
       addToWishlist, 
       isInCart, 
       isInWishlist 

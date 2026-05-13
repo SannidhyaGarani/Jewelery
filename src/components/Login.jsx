@@ -27,70 +27,73 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFAF5] flex items-center justify-center px-6 py-32 relative overflow-hidden selection:bg-[#640D14] selection:text-white">
-      {/* Dynamic Background */}
+    <div className="min-h-screen bg-[#FDFAF5] flex items-center justify-center px-4 py-20 relative overflow-hidden selection:bg-[#640D14] selection:text-white">
+      {/* Refined Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#640D14]/5 rounded-full blur-[140px] animate-pulse" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#640D14]/3 rounded-full blur-[140px]" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#640D14]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#640D14]/3 rounded-full blur-[120px]" />
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-        className="w-full max-w-xl bg-white rounded-[48px] border border-[#640D14]/10 shadow-[0_40px_120px_rgba(44,26,14,0.1)] p-8 md:p-20 relative z-10"
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-[440px] bg-white rounded-[40px] border border-[#640D14]/10 shadow-[0_32px_80px_rgba(100,13,20,0.08)] p-8 md:p-12 relative z-10"
       >
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#640D14]/5 rounded-[24px] text-[#640D14] mb-10 shadow-sm border border-[#640D14]/10">
-            <Sparkles size={32} />
-          </div>
-          <h2 className="text-5xl md:text-7xl font-serif text-[#2C1A0E] tracking-tighter leading-none mb-6 font-bold uppercase">
-            Welcome <br />
-            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-[#640D14]/80 lowercase text-6xl md:text-9xl block mt-2">Back</span>
+        <div className="text-center mb-10">
+          <motion.div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            className="inline-flex items-center justify-center w-14 h-14 bg-[#640D14] rounded-2xl text-white mb-8 shadow-lg shadow-[#640D14]/20"
+          >
+            <Sparkles size={24} />
+          </motion.div>
+          <h2 className="text-4xl font-serif text-[#2C1A0E] tracking-tight leading-none mb-3 font-bold">
+            Welcome <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-[#640D14] lowercase text-5xl ml-1">Back</span>
           </h2>
-          <p className="text-[#5C3D1E]/40 font-sans text-[11px] tracking-[0.5em] uppercase font-black">The Atelier Awaits Your Presence</p>
+          <p className="text-[#5C3D1E]/40 font-sans text-[10px] tracking-[0.4em] uppercase font-bold">The Atelier Awaits</p>
         </div>
 
         {error && (
           <motion.div 
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="mb-10 p-5 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 text-red-600 text-sm font-bold shadow-sm"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            className="mb-8 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-xs font-bold"
           >
-            <AlertCircle size={20} />
+            <AlertCircle size={16} />
             {error}
           </motion.div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="space-y-3">
-            <label className="text-[11px] font-black uppercase tracking-[0.4em] text-[#5C3D1E]/30 ml-6">Email Address</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#5C3D1E]/40 ml-4">Email Credentials</label>
             <div className="relative group">
-              <Mail className="absolute left-7 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={22} />
+              <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={18} />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="excellence@velouraz.com"
-                className="w-full pl-16 pr-8 py-6 rounded-[24px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14]/40 outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 shadow-sm font-medium text-lg"
+                className="w-full pl-14 pr-6 py-4.5 rounded-[20px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14] outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 text-sm"
                 required
               />
             </div>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex justify-between items-center px-6">
-              <label className="text-[11px] font-black uppercase tracking-[0.4em] text-[#5C3D1E]/30">Secret Password</label>
-              <button type="button" className="text-[11px] font-black uppercase tracking-[0.3em] text-[#640D14]/60 hover:text-[#2C1A0E] transition-colors">Recovery</button>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center px-4">
+              <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#5C3D1E]/40">Secret Password</label>
+              <button type="button" className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#640D14]/60 hover:text-[#2C1A0E] transition-colors">Forgot?</button>
             </div>
             <div className="relative group">
-              <Lock className="absolute left-7 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={22} />
+              <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={18} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-16 pr-8 py-6 rounded-[24px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14]/40 outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 shadow-sm font-medium text-lg"
+                className="w-full pl-14 pr-6 py-4.5 rounded-[20px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14] outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 text-sm"
                 required
               />
             </div>
@@ -99,24 +102,24 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="group w-full py-6 rounded-[24px] bg-[#640D14] text-white font-black text-xs tracking-[0.5em] uppercase hover:bg-[#2C1A0E] transition-all transform active:scale-[0.98] shadow-2xl shadow-[#640D14]/20 flex items-center justify-center gap-4 mt-4"
+            className="group w-full py-4.5 rounded-[20px] bg-[#640D14] text-white font-bold text-[11px] tracking-[0.3em] uppercase hover:bg-[#2C1A0E] transition-all transform active:scale-[0.98] shadow-xl shadow-[#640D14]/10 flex items-center justify-center gap-3 mt-4"
           >
             {loading ? (
-              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
                 Enter Boutique
-                <ArrowRight size={20} strokeWidth={3} className="group-hover:translate-x-2 transition-transform" />
+                <ArrowRight size={16} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-16 text-center">
-          <p className="text-[11px] text-[#5C3D1E]/40 font-black tracking-widest uppercase">
+        <div className="mt-10 pt-8 border-t border-[#640D14]/5 text-center">
+          <p className="text-[10px] text-[#5C3D1E]/40 font-bold tracking-widest uppercase">
             New to the legacy?{" "}
-            <Link to="/signup" className="text-[#640D14] font-black hover:text-[#2C1A0E] ml-2 transition-colors border-b-2 border-[#640D14]/20 hover:border-[#2C1A0E]">
-              Initialize Membership
+            <Link to="/signup" className="text-[#640D14] font-black hover:text-[#2C1A0E] ml-1 transition-colors border-b border-[#640D14]/20 hover:border-[#2C1A0E]">
+              Apply Here
             </Link>
           </p>
         </div>
@@ -125,5 +128,5 @@ const Login = () => {
   );
 };
 
-
 export default Login;
+
