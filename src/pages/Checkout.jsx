@@ -88,7 +88,6 @@ const Checkout = () => {
     }
 
     const RAZORPAY_KEY_ID = "rzp_test_1DP5mmOlF5G5ag";
-    const RAZORPAY_SECRET = "7szD8Yk9xA1bcDEFghIJklmn";
 
     const options = {
       key: RAZORPAY_KEY_ID,
@@ -163,7 +162,7 @@ const Checkout = () => {
         contact: formData.phone || "695035916",
       },
       theme: {
-        color: "#C6A664",
+        color: "#640D14",
       },
     };
 
@@ -177,9 +176,9 @@ const Checkout = () => {
 
   if (cartCount === 0) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center p-6 pt-32">
-        <h1 className="text-4xl font-serif text-white mb-6">Your collection is empty</h1>
-        <Link to="/shop" className="px-10 py-4 bg-[#C6A664] text-black font-bold rounded-xl uppercase tracking-widest text-xs">
+      <div className="min-h-screen bg-[#FDFAF5] flex flex-col items-center justify-center p-6 pt-32">
+        <h1 className="text-4xl font-serif text-[#2C1A0E] mb-6">Your collection is empty</h1>
+        <Link to="/shop" className="px-10 py-4 bg-[#640D14] text-white font-bold rounded-xl uppercase tracking-widest text-xs shadow-xl">
           Return to Atelier
         </Link>
       </div>
@@ -187,107 +186,107 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-[#FDFAF5] pt-48 pb-20 px-6 text-[#2C1A0E]">
       <div className="max-w-[1200px] mx-auto">
-        <div className="mb-12">
-          <Link to="/cart" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 hover:text-[#C6A664] transition-colors mb-8">
-            <ArrowLeft size={14} />
-            Back to Selection
+        <div className="mb-16">
+          <Link to="/cart" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-[#5C3D1E]/40 hover:text-[#640D14] transition-all mb-10 group">
+            <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+            Selection
           </Link>
-          <h1 className="text-5xl md:text-7xl font-serif text-white tracking-tighter leading-none mb-4">
-            Finalize <span className="text-[#C6A664]">Acquisition</span>
+          <h1 className="text-5xl md:text-7xl font-serif text-[#2C1A0E] tracking-tighter leading-none mb-4">
+            Finalize <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-[#640D14]/80 text-6xl md:text-8xl block md:inline">Acquisition</span>
           </h1>
-          <p className="text-white/40 font-sans text-sm tracking-widest uppercase">Secure Checkout Process</p>
+          <p className="text-[#5C3D1E]/40 font-sans text-[10px] tracking-[0.4em] uppercase font-black">Secure Bespoke Checkout</p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12">
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
           {/* Form Section */}
-          <div className="lg:col-span-7 space-y-8">
-            <section className="bg-white/[0.02] backdrop-blur-xl rounded-[40px] border border-white/5 p-8 md:p-10">
-              <h2 className="text-2xl font-serif text-white mb-8 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#C6A664]/10 flex items-center justify-center text-[#C6A664]">
-                  <Truck size={20} />
+          <div className="lg:col-span-7 space-y-10">
+            <section className="bg-white rounded-[40px] border border-[#640D14]/10 p-10 md:p-14 shadow-sm">
+              <h2 className="text-3xl font-serif text-[#2C1A0E] mb-10 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#640D14]/5 flex items-center justify-center text-[#640D14] shadow-sm">
+                  <Truck size={24} />
                 </div>
                 Shipping & Contact
               </h2>
 
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Full Name</label>
+              <div className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-[#5C3D1E]/40 uppercase tracking-[0.3em]">Full Name</label>
                     <div className="relative">
-                      <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                      <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20" />
                       <input 
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white font-sans outline-none focus:border-[#C6A664]/50 transition-colors"
+                        className="w-full bg-[#FDFAF5] border border-[#640D14]/10 rounded-2xl py-4.5 pl-14 pr-6 text-[#2C1A0E] font-sans outline-none focus:border-[#640D14] transition-all shadow-sm placeholder:text-[#5C3D1E]/20"
                         placeholder="Jean-Pierre Velour"
                       />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Email Address</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-[#5C3D1E]/40 uppercase tracking-[0.3em]">Email Address</label>
                     <div className="relative">
-                      <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                      <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20" />
                       <input 
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white font-sans outline-none focus:border-[#C6A664]/50 transition-colors"
+                        className="w-full bg-[#FDFAF5] border border-[#640D14]/10 rounded-2xl py-4.5 pl-14 pr-6 text-[#2C1A0E] font-sans outline-none focus:border-[#640D14] transition-all shadow-sm placeholder:text-[#5C3D1E]/20"
                         placeholder="jean@velour.com"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Phone Number</label>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-[#5C3D1E]/40 uppercase tracking-[0.3em]">Phone Number</label>
                   <div className="relative">
-                    <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                    <Phone size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20" />
                     <input 
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white font-sans outline-none focus:border-[#C6A664]/50 transition-colors"
+                      className="w-full bg-[#FDFAF5] border border-[#640D14]/10 rounded-2xl py-4.5 pl-14 pr-6 text-[#2C1A0E] font-sans outline-none focus:border-[#640D14] transition-all shadow-sm placeholder:text-[#5C3D1E]/20"
                       placeholder="+91 99999 00000"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Shipping Address</label>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-[#5C3D1E]/40 uppercase tracking-[0.3em]">Shipping Address</label>
                   <div className="relative">
-                    <MapPin size={16} className="absolute left-4 top-4 text-white/20" />
+                    <MapPin size={18} className="absolute left-5 top-5 text-[#5C3D1E]/20" />
                     <textarea 
                       name="address"
                       value={formData.address}
                       onChange={handleInputChange}
                       rows={3}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white font-sans outline-none focus:border-[#C6A664]/50 transition-colors"
+                      className="w-full bg-[#FDFAF5] border border-[#640D14]/10 rounded-2xl py-4.5 pl-14 pr-6 text-[#2C1A0E] font-sans outline-none focus:border-[#640D14] transition-all shadow-sm resize-none placeholder:text-[#5C3D1E]/20"
                       placeholder="Suite 504, Parisian Boulevard..."
                     />
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">City</label>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-[#5C3D1E]/40 uppercase tracking-[0.3em]">City</label>
                     <input 
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 px-6 text-white font-sans outline-none focus:border-[#C6A664]/50 transition-colors"
+                      className="w-full bg-[#FDFAF5] border border-[#640D14]/10 rounded-2xl py-4.5 px-6 text-[#2C1A0E] font-sans outline-none focus:border-[#640D14] transition-all shadow-sm placeholder:text-[#5C3D1E]/20"
                       placeholder="Paris"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Pincode / Zip</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-[#5C3D1E]/40 uppercase tracking-[0.3em]">Pincode / Zip</label>
                     <input 
                       name="pincode"
                       value={formData.pincode}
                       onChange={handleInputChange}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 px-6 text-white font-sans outline-none focus:border-[#C6A664]/50 transition-colors"
+                      className="w-full bg-[#FDFAF5] border border-[#640D14]/10 rounded-2xl py-4.5 px-6 text-[#2C1A0E] font-sans outline-none focus:border-[#640D14] transition-all shadow-sm placeholder:text-[#5C3D1E]/20"
                       placeholder="75001"
                     />
                   </div>
@@ -298,79 +297,83 @@ const Checkout = () => {
 
           {/* Sidebar Section */}
           <aside className="lg:col-span-5">
-            <div className="bg-white/[0.02] backdrop-blur-xl rounded-[40px] border border-white/10 p-10 sticky top-32 overflow-hidden shadow-2xl">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#C6A664]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+            <div className="bg-white rounded-[40px] border border-[#640D14]/10 p-10 md:p-14 sticky top-40 shadow-sm overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#640D14]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
               
-              <h2 className="text-2xl font-serif text-white mb-8 relative z-10">Order Summary</h2>
+              <h2 className="text-3xl font-serif text-[#2C1A0E] mb-10 relative z-10">Order Summary</h2>
               
-              <div className="space-y-4 mb-8 relative z-10 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-6 mb-10 relative z-10 max-h-[400px] overflow-y-auto pr-4 scrollbar-hide">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center gap-4 py-2 border-b border-white/5 last:border-0">
-                    <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-black/40" />
-                    <div className="flex-1">
-                      <p className="text-sm font-serif text-white truncate">{item.name}</p>
-                      <div className="flex items-center gap-2">
-                        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Qty: {item.quantity || 1}</p>
+                  <div key={item.id} className="flex items-center gap-6 py-4 border-b border-[#640D14]/5 last:border-0">
+                    <div className="w-16 h-16 rounded-2xl bg-[#FDFAF5] border border-[#640D14]/5 overflow-hidden flex-shrink-0">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] font-serif text-[#2C1A0E] truncate font-bold">{item.name}</p>
+                      <div className="flex items-center gap-3 mt-1.5">
+                        <p className="text-[10px] font-black text-[#5C3D1E]/30 uppercase tracking-widest">Qty: {item.quantity || 1}</p>
                         {stockStatus[item.id] !== undefined && stockStatus[item.id] < (item.quantity || 1) && (
-                          <span className="text-[8px] font-bold text-red-500 uppercase tracking-widest bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">
+                          <span className="text-[9px] font-black text-red-600 uppercase tracking-widest bg-red-50 px-3 py-1 rounded-full border border-red-100 shadow-sm">
                             Only {stockStatus[item.id]} Avail.
                           </span>
                         )}
                       </div>
                     </div>
-                    <p className="text-sm font-sans font-bold text-[#C6A664]">₹{(Number(item.price) * (item.quantity || 1)).toLocaleString()}</p>
+                    <p className="text-[14px] font-sans font-black text-[#640D14] flex-shrink-0">₹{(Number(item.price) * (item.quantity || 1)).toLocaleString()}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="space-y-4 mb-10 relative z-10">
-                <div className="flex justify-between text-white/40 text-sm">
+              <div className="space-y-5 mb-12 relative z-10">
+                <div className="flex justify-between text-[#5C3D1E]/50 text-[12px] font-black uppercase tracking-widest">
                   <span>Subtotal</span>
-                  <span className="font-bold text-white">₹{total.toLocaleString()}</span>
+                  <span className="text-[#2C1A0E]">₹{total.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-white/40 text-sm">
+                <div className="flex justify-between text-[#5C3D1E]/50 text-[12px] font-black uppercase tracking-widest">
                   <span>Shipping</span>
-                  <span className="text-[#C6A664] font-bold">Complimentary</span>
+                  <span className="text-[#640D14]">Complimentary</span>
                 </div>
-                <div className="pt-6 border-t border-white/10 flex justify-between items-center">
-                  <span className="text-white font-serif text-xl">Total Due</span>
-                  <span className="text-3xl font-sans font-bold text-[#C6A664]">₹{total.toLocaleString()}</span>
+                <div className="pt-8 mt-4 border-t border-[#640D14]/10 flex justify-between items-center">
+                  <span className="text-[#2C1A0E] font-serif text-2xl">Total Due</span>
+                  <span className="text-4xl font-sans font-black text-[#640D14]">₹{total.toLocaleString()}</span>
                 </div>
               </div>
 
               <button 
                 onClick={handlePayment}
                 disabled={loading || isAnyOutOfStock}
-                className={`w-full py-6 rounded-2xl text-black font-bold text-xs tracking-[0.4em] uppercase transition-all transform active:scale-[0.98] relative z-10 flex items-center justify-center gap-3 ${
+                className={`w-full py-7 rounded-[32px] font-black text-[11px] tracking-[0.5em] uppercase transition-all transform active:scale-[0.98] relative z-10 flex items-center justify-center gap-4 shadow-xl ${
                   isAnyOutOfStock 
-                  ? 'bg-red-900/50 text-white cursor-not-allowed opacity-50' 
-                  : 'bg-[#C6A664] hover:bg-white'
+                  ? 'bg-[#2C1A0E]/10 text-[#2C1A0E]/40 cursor-not-allowed' 
+                  : 'bg-[#640D14] text-white hover:bg-[#2C1A0E]'
                 }`}
               >
                 {loading ? (
-                  <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                  <div className="w-6 h-6 border-[3px] border-white/20 border-t-white rounded-full animate-spin" />
                 ) : isAnyOutOfStock ? (
-                  "Adjust Quantities in Cart"
+                  "Adjust Selection"
                 ) : (
                   <>
-                    <CreditCard size={18} />
+                    <CreditCard size={20} strokeWidth={2} />
                     Complete Payment
                   </>
                 )}
               </button>
 
-              <div className="mt-8 pt-8 border-t border-white/5 flex flex-col gap-4 relative z-10">
-                <div className="flex items-center gap-4 text-white/30">
-                  <ShieldCheck size={18} className="text-[#C6A664]" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Secure Payment via Razorpay</span>
+              <div className="mt-10 pt-10 border-t border-[#640D14]/10 flex flex-col gap-5 relative z-10">
+                <div className="flex items-center gap-4 text-[#5C3D1E]/40">
+                  <ShieldCheck size={20} className="text-[#640D14]" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em]">Encrypted via Razorpay</span>
                 </div>
               </div>
             </div>
           </aside>
         </div>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `.scrollbar-hide::-webkit-scrollbar { display: none; }` }} />
     </div>
   );
 };
+
 
 export default Checkout;

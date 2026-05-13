@@ -104,8 +104,8 @@ const Cart = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C6A664]"></div>
+      <div className="min-h-screen bg-[#FDFAF5] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#640D14]"></div>
       </div>
     );
   }
@@ -114,28 +114,28 @@ const Cart = () => {
   const total = Math.max(0, subtotal - discount);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pt-24 sm:pt-32 pb-20 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#FDFAF5] pt-32 sm:pt-48 pb-20 px-4 sm:px-6">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
           
           {/* Main Cart Area */}
           <div className="flex-1">
-            <div className="mb-8 sm:mb-12">
-              <Link to="/shop" className="inline-flex items-center gap-2 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/30 hover:text-[#C6A664] transition-colors mb-6 sm:mb-8">
-                <ArrowLeft size={14} />
+            <div className="mb-8 sm:mb-16">
+              <Link to="/shop" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-[#5C3D1E]/40 hover:text-[#640D14] transition-all mb-8 group">
+                <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
                 Return to Gallery
               </Link>
               <motion.h1 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="text-4xl sm:text-6xl md:text-8xl font-serif text-white tracking-tighter leading-none mb-4 sm:mb-6"
+                className="text-5xl sm:text-7xl md:text-8xl font-serif text-[#2C1A0E] tracking-tighter leading-none mb-6"
               >
-                Votre <span className="text-[#C6A664]">Panier</span>
+                Votre <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-[#640D14]/80 text-6xl sm:text-8xl md:text-9xl block md:inline">Panier</span>
               </motion.h1>
-              <p className="text-white/40 font-sans text-xs sm:text-sm tracking-widest uppercase italic">Your exquisite selection — {items.length} pieces</p>
+              <p className="text-[#5C3D1E]/40 font-sans text-[11px] tracking-[0.4em] uppercase font-black italic">Your exquisite selection — {items.length} pieces</p>
             </div>
 
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-6 sm:space-y-8">
               <AnimatePresence mode="popLayout">
                 {items.map((item) => (
                   <motion.div 
@@ -144,56 +144,56 @@ const Cart = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     key={item.id}
-                    className="group relative bg-white/[0.02] backdrop-blur-xl rounded-[24px] sm:rounded-[40px] p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-10 transition-all duration-500 hover:bg-white/[0.04] border border-white/5"
+                    className="group relative bg-white rounded-[32px] sm:rounded-[48px] p-6 sm:p-10 flex flex-col sm:flex-row items-center gap-8 sm:gap-12 transition-all duration-700 hover:shadow-xl border border-[#640D14]/5"
                   >
-                    <div className="w-full sm:w-40 aspect-square sm:aspect-auto sm:h-40 rounded-[20px] sm:rounded-[32px] overflow-hidden bg-black/50 border border-white/5 flex-shrink-0">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="w-full sm:w-48 aspect-square sm:h-48 rounded-[24px] sm:rounded-[36px] overflow-hidden bg-[#FDFAF5] border border-[#640D14]/10 flex-shrink-0">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
                     </div>
                     
                     <div className="flex-1 text-center sm:text-left w-full">
-                      <div className="flex flex-col gap-1">
-                        <span className="text-[9px] font-bold text-[#C6A664] uppercase tracking-[0.2em] sm:tracking-[0.3em]">Atelier Edition</span>
-                        <h3 className="text-xl sm:text-2xl font-serif text-white">{item.name}</h3>
-                        <p className="text-[11px] sm:text-xs text-white/40 font-sans tracking-wide mt-2 leading-relaxed line-clamp-2 sm:line-clamp-none">Artisan-crafted masterpiece featuring premium stones and timeless detailing.</p>
+                      <div className="flex flex-col gap-2">
+                        <span className="text-[10px] font-black text-[#640D14] uppercase tracking-[0.4em]">Atelier Edition</span>
+                        <h3 className="text-2xl sm:text-3xl font-serif text-[#2C1A0E] font-bold">{item.name}</h3>
+                        <p className="text-[13px] sm:text-sm text-[#5C3D1E]/60 font-sans tracking-wide mt-3 leading-relaxed line-clamp-2 sm:line-clamp-none">Artisan-crafted masterpiece featuring premium stones and timeless detailing.</p>
                       </div>
 
                       {/* Quantity & Price Controls */}
-                      <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-                        <div className="flex flex-col gap-3 w-full sm:w-auto">
-                          <span className="text-[8px] font-bold text-white/20 uppercase tracking-[0.2em] text-center sm:text-left">Quantity</span>
+                      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-8">
+                        <div className="flex flex-col gap-4 w-full sm:w-auto">
+                          <span className="text-[9px] font-black text-[#5C3D1E]/20 uppercase tracking-[0.3em] text-center sm:text-left">Quantity</span>
                           <div className="flex items-center justify-center sm:justify-start">
-                            <div className="flex items-center border border-white/10 rounded-2xl overflow-hidden bg-white/5 p-1">
+                            <div className="flex items-center border border-[#640D14]/10 rounded-2xl overflow-hidden bg-[#FDFAF5] p-1.5 shadow-sm">
                               <button
                                 onClick={() => updateCartQuantity(item.id, (item.quantity || 1) - 1)}
-                                className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-xl transition-all active:scale-90"
+                                className="w-10 h-10 flex items-center justify-center text-[#2C1A0E] hover:bg-[#640D14]/5 rounded-xl transition-all active:scale-90"
                               >
-                                <Minus size={14} />
+                                <Minus size={16} />
                               </button>
-                              <span className="w-10 sm:w-12 text-center font-bold text-white text-sm">
+                              <span className="w-12 sm:w-14 text-center font-black text-[#2C1A0E] text-lg">
                                 {item.quantity || 1}
                               </span>
                               <button 
                                 onClick={() => updateCartQuantity(item.id, (item.quantity || 1) + 1)}
                                 disabled={(item.quantity || 1) >= Math.min(10, liveStocks[item.id] ?? item.stock ?? 1)}
-                                className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-xl transition-all active:scale-90 disabled:opacity-20 disabled:cursor-not-allowed"
+                                className="w-10 h-10 flex items-center justify-center text-[#2C1A0E] hover:bg-[#640D14]/5 rounded-xl transition-all active:scale-90 disabled:opacity-20 disabled:cursor-not-allowed"
                               >
-                                <Plus size={14} />
+                                <Plus size={16} />
                               </button>
                             </div>
                           </div>
                           {(item.quantity || 1) >= (liveStocks[item.id] ?? item.stock ?? 1) && (
-                            <span className="text-[8px] font-bold text-red-500 uppercase tracking-widest mt-1 text-center sm:text-left">
+                            <span className="text-[9px] font-black text-red-600 uppercase tracking-widest mt-2 text-center sm:text-left animate-pulse">
                               Max Stock Reached
                             </span>
                           )}
                         </div>
 
-                        <div className="flex flex-col gap-3 w-full sm:w-auto items-center sm:items-end">
-                          <span className="text-[8px] font-bold text-white/20 uppercase tracking-[0.2em]">Item Price</span>
-                          <div className="flex items-baseline gap-3">
-                            <span className="text-2xl font-sans font-bold text-white tracking-tight">₹{Number(item.price).toLocaleString()}</span>
+                        <div className="flex flex-col gap-4 w-full sm:w-auto items-center sm:items-end">
+                          <span className="text-[9px] font-black text-[#5C3D1E]/20 uppercase tracking-[0.3em]">Item Price</span>
+                          <div className="flex items-baseline gap-4">
+                            <span className="text-3xl font-sans font-black text-[#2C1A0E] tracking-tight">₹{Number(item.price).toLocaleString()}</span>
                             {item.original_price > item.price && (
-                              <span className="text-xs font-sans font-bold text-white/20 line-through decoration-red-500/50 decoration-2">₹{Number(item.original_price).toLocaleString()}</span>
+                              <span className="text-sm font-sans font-black text-[#5C3D1E]/20 line-through decoration-[#640D14]/30 decoration-2">₹{Number(item.original_price).toLocaleString()}</span>
                             )}
                           </div>
                         </div>
@@ -202,22 +202,22 @@ const Cart = () => {
 
                     <button 
                       onClick={() => removeItem(item.id)}
-                      className="absolute top-4 right-4 sm:static p-4 sm:p-5 rounded-2xl bg-white/5 text-white/20 hover:bg-red-500/10 hover:text-red-500 transition-all transform active:scale-95 border border-white/5 group/remove"
+                      className="absolute top-6 right-6 sm:static p-5 sm:p-6 rounded-2xl bg-[#640D14]/5 text-[#640D14]/30 hover:bg-red-50 hover:text-red-600 transition-all transform active:scale-95 border border-[#640D14]/10 group/remove shadow-sm"
                       title="Remove Item"
                     >
-                      <Trash2 size={18} className="sm:w-5 sm:h-5 transition-transform group-hover/remove:rotate-12" />
+                      <Trash2 size={20} className="sm:w-6 sm:h-6 transition-transform group-hover/remove:rotate-12" />
                     </button>
                   </motion.div>
                 ))}
               </AnimatePresence>
 
               {items.length === 0 && (
-                <div className="bg-white/[0.01] rounded-[40px] sm:rounded-[60px] border border-dashed border-white/10 p-12 sm:p-24 text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/5 rounded-[32px] flex items-center justify-center mx-auto mb-8 text-white/10">
-                    <ShoppingBag size={40} />
+                <div className="bg-white rounded-[40px] sm:rounded-[60px] border-2 border-dashed border-[#640D14]/10 p-16 sm:p-32 text-center">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 bg-[#640D14]/5 rounded-[40px] flex items-center justify-center mx-auto mb-10 text-[#640D14]/20">
+                    <ShoppingBag size={48} />
                   </div>
-                  <p className="text-white/20 font-serif text-xl sm:text-2xl italic">The sanctuary is currently unoccupied.</p>
-                  <Link to="/shop" className="inline-block mt-10 px-10 sm:px-12 py-4 sm:py-5 bg-[#C6A664] text-black rounded-2xl font-bold uppercase tracking-[0.2em] text-[10px] sm:text-xs hover:bg-white transition-all shadow-2xl shadow-[#C6A664]/10 active:scale-95">
+                  <p className="text-[#5C3D1E]/40 font-serif text-2xl sm:text-3xl italic">The sanctuary is currently unoccupied.</p>
+                  <Link to="/shop" className="inline-block mt-12 px-12 sm:px-16 py-5 sm:py-6 bg-[#640D14] text-white rounded-[24px] font-black uppercase tracking-[0.4em] text-[11px] sm:text-xs hover:bg-[#2C1A0E] transition-all shadow-xl active:scale-95">
                     Explore The Collection
                   </Link>
                 </div>
@@ -226,33 +226,33 @@ const Cart = () => {
           </div>
 
           {/* Summary Sidebar */}
-          <aside className="w-full lg:w-[420px] shrink-0">
-            <div className="bg-white/[0.02] backdrop-blur-2xl rounded-[32px] sm:rounded-[48px] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.4)] p-8 sm:p-10 sticky top-32 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#C6A664]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+          <aside className="w-full lg:w-[480px] shrink-0">
+            <div className="bg-white rounded-[48px] sm:rounded-[64px] border border-[#640D14]/10 shadow-2xl p-10 sm:p-14 sticky top-40 overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#640D14]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
               
-              <h2 className="text-2xl sm:text-3xl font-serif text-white mb-8 sm:mb-10 relative z-10">Acquisition Summary</h2>
+              <h2 className="text-3xl sm:text-4xl font-serif text-[#2C1A0E] mb-10 sm:mb-12 relative z-10">Acquisition Summary</h2>
               
-              <div className="space-y-5 sm:space-y-6 mb-8 relative z-10">
-                <div className="flex justify-between text-white/40 font-sans text-xs sm:text-sm tracking-wide">
+              <div className="space-y-6 sm:space-y-8 mb-10 relative z-10">
+                <div className="flex justify-between text-[#5C3D1E]/40 font-black text-[11px] sm:text-[12px] uppercase tracking-[0.3em]">
                   <span>Subtotal Value</span>
-                  <span className="font-bold text-white">₹{subtotal.toLocaleString()}</span>
+                  <span className="font-black text-[#2C1A0E]">₹{subtotal.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-white/40 font-sans text-xs sm:text-sm tracking-wide">
-                  <span>Elite Concierge Delivery</span>
-                  <span className="text-[#C6A664] font-bold">Complimentary</span>
+                <div className="flex justify-between text-[#5C3D1E]/40 font-black text-[11px] sm:text-[12px] uppercase tracking-[0.3em]">
+                  <span>Elite Concierge</span>
+                  <span className="text-[#640D14] font-black">Complimentary</span>
                 </div>
-                <div className="flex justify-between text-white/40 font-sans text-xs sm:text-sm tracking-wide">
+                <div className="flex justify-between text-[#5C3D1E]/40 font-black text-[11px] sm:text-[12px] uppercase tracking-[0.3em]">
                   <span>Duty & Taxes</span>
-                  <span className="font-bold text-white">₹0.00</span>
+                  <span className="font-black text-[#2C1A0E]">₹0.00</span>
                 </div>
 
                 {/* Coupon Input Area */}
-                <div className="pt-4 space-y-4">
+                <div className="pt-6 space-y-5">
                   <div className="relative">
                     <input 
                       type="text" 
                       placeholder="ENTER COUPON CODE" 
-                      className={`w-full bg-white/5 border ${couponError ? 'border-red-500/50' : 'border-white/10'} rounded-2xl px-6 py-4 text-[10px] font-bold tracking-[0.2em] text-white outline-none focus:border-[#C6A664] transition-all uppercase placeholder:text-white/10 pr-24`}
+                      className={`w-full bg-[#FDFAF5] border-2 ${couponError ? 'border-red-500/30' : 'border-[#640D14]/10'} rounded-[24px] px-8 py-5 text-[11px] font-black tracking-[0.3em] text-[#2C1A0E] outline-none focus:border-[#640D14] transition-all uppercase placeholder:text-[#5C3D1E]/20 pr-32`}
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
                       disabled={!!appliedCoupon}
@@ -260,14 +260,14 @@ const Cart = () => {
                     {!appliedCoupon ? (
                       <button 
                         onClick={handleApplyCoupon}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#C6A664] text-black px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-white transition-all shadow-lg active:scale-95"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#640D14] text-white px-6 py-3 rounded-[16px] text-[10px] font-black uppercase tracking-widest hover:bg-[#2C1A0E] transition-all shadow-lg active:scale-95"
                       >
                         Apply
                       </button>
                     ) : (
                       <button 
                         onClick={removeCoupon}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-500/10 text-red-500 px-4 py-2 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all active:scale-95"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-red-50 text-red-600 px-6 py-3 rounded-[16px] text-[10px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all active:scale-95"
                       >
                         Remove
                       </button>
@@ -280,9 +280,9 @@ const Cart = () => {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="flex items-center gap-2 text-[10px] font-bold text-emerald-500 uppercase tracking-widest bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/10"
+                        className="flex items-center gap-3 text-[11px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 p-5 rounded-[20px] border border-emerald-100 shadow-sm"
                       >
-                        <CheckCircle2 size={14} />
+                        <CheckCircle2 size={16} />
                         Coupon '{appliedCoupon}' Applied Successfully
                       </motion.div>
                     )}
@@ -291,9 +291,9 @@ const Cart = () => {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="flex items-center gap-2 text-[10px] font-bold text-red-500 uppercase tracking-widest bg-red-500/5 p-4 rounded-xl border border-red-500/10"
+                        className="flex items-center gap-3 text-[11px] font-black text-red-600 uppercase tracking-widest bg-red-50 p-5 rounded-[20px] border border-red-100 shadow-sm"
                       >
-                        <AlertCircle size={14} />
+                        <AlertCircle size={16} />
                         {couponError}
                       </motion.div>
                     )}
@@ -301,16 +301,16 @@ const Cart = () => {
                 </div>
 
                 {discount > 0 && (
-                  <div className="flex justify-between text-emerald-500 font-sans text-xs sm:text-sm tracking-wide bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/10">
-                    <span className="flex items-center gap-2"><Ticket size={14} /> Discount Value</span>
-                    <span className="font-bold">− ₹{discount.toLocaleString()}</span>
+                  <div className="flex justify-between text-emerald-600 font-black text-[12px] uppercase tracking-[0.2em] bg-emerald-50 p-5 rounded-[20px] border border-emerald-100">
+                    <span className="flex items-center gap-3"><Ticket size={16} /> Discount Value</span>
+                    <span className="font-black">− ₹{discount.toLocaleString()}</span>
                   </div>
                 )}
 
-                <div className="pt-8 border-t border-dashed border-white/10 flex justify-between items-end">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] sm:text-[10px] font-bold text-white/30 uppercase tracking-[0.3em] mb-2">Total Acquisition</span>
-                    <span className="text-4xl sm:text-5xl font-sans font-bold text-[#C6A664] tracking-tighter">₹{total.toLocaleString()}</span>
+                <div className="pt-10 border-t-2 border-dashed border-[#640D14]/10 flex justify-between items-end">
+                  <div className="flex flex-col gap-3">
+                    <span className="text-[11px] font-black text-[#5C3D1E]/30 uppercase tracking-[0.4em]">Total Acquisition</span>
+                    <span className="text-5xl sm:text-6xl font-sans font-black text-[#640D14] tracking-tighter">₹{total.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -318,25 +318,25 @@ const Cart = () => {
               <button 
                 onClick={() => navigate("/checkout")}
                 disabled={items.length === 0}
-                className="w-full py-5 sm:py-6 rounded-2xl bg-[#C6A664] text-black font-bold text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase hover:bg-white transition-all transform active:scale-[0.98] disabled:opacity-10 disabled:grayscale shadow-2xl shadow-[#C6A664]/10 mb-8 sm:mb-10 relative z-10"
+                className="w-full py-6 sm:py-7 rounded-[28px] bg-[#640D14] text-white font-black text-xs sm:text-sm tracking-[0.4em] uppercase hover:bg-[#2C1A0E] transition-all transform active:scale-[0.98] disabled:opacity-20 shadow-2xl shadow-[#640D14]/20 mb-10 sm:mb-12 relative z-10"
               >
                 Proceed to Checkout
               </button>
 
               {/* Trust Badges */}
-              <div className="grid grid-cols-1 gap-5 sm:gap-6 pt-8 sm:pt-10 border-t border-white/5 relative z-10">
+              <div className="grid grid-cols-1 gap-6 sm:gap-8 pt-10 border-t border-[#640D14]/5 relative z-10">
                 {[
                   { icon: ShieldCheck, text: "Vault-Secure Checkout", sub: "End-to-End Encryption" },
                   { icon: Truck, text: "Concierge Shipping", sub: "Global Express Network" },
                   { icon: RotateCcw, text: "House Return Policy", sub: "30-Day Evaluation" }
                 ].map((badge, i) => (
-                  <div key={i} className="flex items-center gap-4 sm:gap-5">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-[#C6A664]">
-                      <badge.icon size={20} className="sm:w-5 sm:h-5" />
+                  <div key={i} className="flex items-center gap-5 sm:gap-6">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-[20px] bg-[#640D14]/5 border border-[#640D14]/10 flex items-center justify-center text-[#640D14] shadow-sm">
+                      <badge.icon size={24} className="sm:w-6 sm:h-6" />
                     </div>
                     <div>
-                      <p className="text-xs sm:text-sm font-bold text-white leading-none">{badge.text}</p>
-                      <p className="text-[9px] sm:text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] mt-2">{badge.sub}</p>
+                      <p className="text-sm sm:text-base font-black text-[#2C1A0E] leading-none">{badge.text}</p>
+                      <p className="text-[10px] sm:text-[11px] font-black text-[#5C3D1E]/30 uppercase tracking-[0.3em] mt-2.5">{badge.sub}</p>
                     </div>
                   </div>
                 ))}
@@ -349,5 +349,6 @@ const Cart = () => {
     </div>
   );
 };
+
 
 export default Cart;

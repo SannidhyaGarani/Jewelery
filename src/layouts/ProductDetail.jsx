@@ -70,89 +70,89 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-6">
-        <div className="w-8 h-8 border-[1.5px] border-accent border-t-transparent rounded-full animate-spin" />
-        <p className="text-[9px] uppercase tracking-[0.4em] text-white/40">Revealing Masterpiece</p>
+      <div className="min-h-screen bg-[#FDFAF5] flex flex-col items-center justify-center gap-6">
+        <div className="w-10 h-10 border-[2px] border-[#640D14] border-t-transparent rounded-full animate-spin" />
+        <p className="text-[10px] uppercase tracking-[0.5em] text-[#640D14] font-bold">Revealing Masterpiece</p>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-8 text-center p-6">
-        <h2 className="font-serif text-3xl text-white/80 italic">Inventory unavailable.</h2>
-        <button onClick={() => navigate('/shop')} className="text-[10px] tracking-[0.3em] uppercase text-accent border-b border-accent/40 hover:border-accent pb-1 transition-colors">Return to Shop</button>
+      <div className="min-h-screen bg-[#FDFAF5] flex flex-col items-center justify-center gap-8 text-center p-6">
+        <h2 className="font-serif text-4xl text-[#2C1A0E]/80 italic">Inventory unavailable.</h2>
+        <button onClick={() => navigate('/shop')} className="text-[11px] tracking-[0.4em] uppercase text-[#640D14] border-b-2 border-[#640D14]/20 hover:border-[#640D14] pb-2 transition-all font-black">Return to Shop</button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pt-24 lg:pt-32 pb-32 lg:pb-20 font-sans relative text-white selection:bg-accent/30 selection:text-white">
+    <div className="min-h-screen bg-[#FDFAF5] pt-32 lg:pt-48 pb-32 lg:pb-20 font-sans relative text-[#2C1A0E] selection:bg-[#640D14]/10 selection:text-[#640D14]">
       
       {/* Cinematic lines - Subdued */}
-      <div className="fixed left-[5%] top-0 w-[1px] h-full bg-white/[0.02] hidden 2xl:block pointer-events-none" />
-      <div className="fixed right-[5%] top-0 w-[1px] h-full bg-white/[0.02] hidden 2xl:block pointer-events-none" />
+      <div className="fixed left-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden 2xl:block pointer-events-none" />
+      <div className="fixed right-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden 2xl:block pointer-events-none" />
 
-      <div className="max-w-[1300px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         
         {/* Navigation - Ultra Minimal */}
-        <div className="mb-8 lg:mb-12 flex justify-between items-center">
+        <div className="mb-10 lg:mb-16 flex justify-between items-center">
           <button 
             onClick={() => navigate(-1)}
-            className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.3em] font-medium text-white/40 hover:text-white transition-all"
+            className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-black text-[#5C3D1E]/40 hover:text-[#640D14] transition-all"
           >
-            <ArrowLeft size={14} strokeWidth={1.5} className="group-hover:-translate-x-1 transition-transform" />
-            Selection
+            <ArrowLeft size={16} strokeWidth={2} className="group-hover:-translate-x-2 transition-transform" />
+            Collection
           </button>
           
-          <div className="flex gap-5 items-center hidden sm:flex">
-             <button className="text-[9px] uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors">Prev</button>
-             <span className="w-6 h-[1px] bg-white/10"></span>
-             <button className="text-[9px] uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors">Next</button>
+          <div className="flex gap-8 items-center hidden sm:flex">
+             <button className="text-[10px] uppercase tracking-[0.4em] text-[#5C3D1E]/40 hover:text-[#640D14] transition-colors font-black">Prev</button>
+             <span className="w-10 h-[1px] bg-[#640D14]/10"></span>
+             <button className="text-[10px] uppercase tracking-[0.4em] text-[#5C3D1E]/40 hover:text-[#640D14] transition-colors font-black">Next</button>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
           
           {/* Left: Sticky Gallery (55%) */}
-          <div className="w-full lg:w-[55%] lg:sticky lg:top-28 space-y-4">
+          <div className="w-full lg:w-[55%] lg:sticky lg:top-32 space-y-6">
             <motion.div 
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] bg-[#0f0f0f] rounded-[24px] overflow-hidden border border-white/5 group"
+              className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] bg-white rounded-[40px] overflow-hidden border border-[#640D14]/10 group shadow-sm"
             >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-cover transition-transform duration-[3s] group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                className="w-full h-full object-cover transition-transform duration-[2.5s] group-hover:scale-110 opacity-95 group-hover:opacity-100"
               />
-              <div className="absolute top-5 left-5">
-                <div className="bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-[9px] tracking-[0.2em] font-medium text-white/90 uppercase">
+              <div className="absolute top-8 left-8">
+                <div className="bg-[#640D14]/90 backdrop-blur-md border border-white/20 px-6 py-2.5 rounded-full text-[10px] tracking-[0.3em] font-black text-white uppercase shadow-xl">
                   REF {product.id.slice(0, 6)}
                 </div>
               </div>
             </motion.div>
             
             {/* Thumbnails - Horizontally scrollable on mobile */}
-            <div className="flex lg:grid lg:grid-cols-4 gap-3 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+            <div className="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
                {[...Array(4)].map((_, i) => (
-                 <div key={i} className="flex-shrink-0 w-20 lg:w-full aspect-square bg-[#0f0f0f] rounded-xl border border-white/5 overflow-hidden cursor-pointer hover:border-accent/50 transition-colors duration-300 relative">
-                    <img src={product.image} alt="Gallery view" className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-opacity" />
+                 <div key={i} className="flex-shrink-0 w-24 lg:w-full aspect-square bg-white rounded-[24px] border border-[#640D14]/10 overflow-hidden cursor-pointer hover:border-[#640D14] transition-all duration-300 relative shadow-sm">
+                    <img src={product.image} alt="Gallery view" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-all duration-500 scale-110" />
                  </div>
                ))}
             </div>
           </div>
 
           {/* Right: Bespoke Details (45%) */}
-          <div className="w-full lg:w-[45%] flex flex-col pt-2 lg:pt-6">
+          <div className="w-full lg:w-[45%] flex flex-col pt-2 lg:pt-8">
             
-            <div className="space-y-8">
+            <div className="space-y-12">
               {/* Header Info */}
-              <div className="space-y-5">
-                <div className="flex items-center gap-3">
-                  <span className="h-[1px] w-8 bg-accent/40"></span>
-                  <span className="text-[9px] tracking-[0.4em] font-medium uppercase text-accent">
+              <div className="space-y-8">
+                <div className="flex items-center gap-4">
+                  <span className="h-[2px] w-12 bg-[#640D14]/30"></span>
+                  <span className="text-[10px] tracking-[0.5em] font-black uppercase text-[#640D14]">
                     {product.category || 'Atelier Exclusive'}
                   </span>
                 </div>
@@ -161,36 +161,36 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.1 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.05] tracking-tight"
+                  className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#2C1A0E] leading-[1.05] tracking-tight"
                 >
-                  <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl block mb-1 text-accent/90 -ml-2 lg:-ml-4">
+                  <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-6xl md:text-7xl lg:text-8xl block mb-2 text-[#640D14]/80 -ml-2 lg:-ml-6">
                     {product.name.split(' ')[0]}
                   </span>
                   <span className="relative z-10">{product.name.split(' ').slice(1).join(' ')}</span>
                 </motion.h1>
                 
-                <div className="flex items-center gap-4">
-                  <p className="text-2xl md:text-3xl font-serif text-white/90">
+                <div className="flex items-center gap-6">
+                  <p className="text-3xl md:text-4xl font-serif text-[#2C1A0E]">
                     ₹{product.price.toLocaleString()}.00
                   </p>
                   {product.original_price > product.price && (
-                    <p className="text-xl font-serif text-white/30 line-through">
+                    <p className="text-2xl font-serif text-[#5C3D1E]/30 line-through">
                       ₹{product.original_price.toLocaleString()}.00
                     </p>
                   )}
                 </div>
                 <div className="flex items-center gap-4">
                   {product.stock <= 0 ? (
-                    <span className="bg-red-600/10 text-red-500 border border-red-500/20 px-4 py-1.5 rounded-full text-[10px] tracking-[0.2em] font-bold uppercase">
+                    <span className="bg-[#640D14] text-white px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase shadow-lg">
                       Sold Out
                     </span>
                   ) : (
-                    <div className="flex items-center gap-2">
-                      <span className="bg-emerald-600/10 text-emerald-500 border border-emerald-500/20 px-4 py-1.5 rounded-full text-[10px] tracking-[0.2em] font-bold uppercase">
+                    <div className="flex items-center gap-4">
+                      <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase">
                         In Stock
                       </span>
                       {product.stock <= 5 && (
-                        <span className="text-[10px] text-amber-500 font-bold uppercase tracking-wider animate-pulse">
+                        <span className="text-[10px] text-amber-600 font-black uppercase tracking-widest animate-pulse">
                           Only {product.stock} Left
                         </span>
                       )}
@@ -200,15 +200,15 @@ const ProductDetail = () => {
               </div>
 
               {/* Description */}
-              <div className="pb-8 border-b border-white/10">
-                <p className="text-[13px] md:text-sm text-white/60 font-sans leading-relaxed">
+              <div className="pb-10 border-b border-[#640D14]/10">
+                <p className="text-[15px] md:text-base text-[#5C3D1E]/70 font-sans leading-relaxed">
                   {product.description || "An exceptional masterwork of artisanal ingenuity, meticulously handcrafted to embody the pinnacle of Velouraz's design philosophy and timeless elegance."}
                 </p>
               </div>
 
               {/* Editorial Tabs Selection */}
-              <div className="space-y-8">
-                <div className="flex gap-8 border-b border-white/5 pb-px overflow-x-auto scrollbar-hide">
+              <div className="space-y-10">
+                <div className="flex gap-10 border-b border-[#640D14]/10 pb-px overflow-x-auto scrollbar-hide">
                   {[
                     { id: 'details', label: 'Bespoke Details' },
                     { id: 'craft', label: 'Atelier Craft' },
@@ -218,17 +218,17 @@ const ProductDetail = () => {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`text-[9px] uppercase tracking-[0.3em] font-bold transition-all relative pb-3 whitespace-nowrap ${activeTab === tab.id ? 'text-accent' : 'text-white/30 hover:text-white/60'}`}
+                      className={`text-[10px] uppercase tracking-[0.4em] font-black transition-all relative pb-4 whitespace-nowrap ${activeTab === tab.id ? 'text-[#640D14]' : 'text-[#5C3D1E]/30 hover:text-[#640D14]/60'}`}
                     >
                       {tab.label}
                       {activeTab === tab.id && (
-                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-accent shadow-[0_0_10px_rgba(198,166,100,0.5)]" />
+                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#640D14] shadow-[0_4px_12px_rgba(100,13,20,0.2)]" />
                       )}
                     </button>
                   ))}
                 </div>
                 
-                <div className="min-h-[250px]">
+                <div className="min-h-[300px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeTab}
@@ -236,13 +236,13 @@ const ProductDetail = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="space-y-6"
+                      className="space-y-8"
                     >
                       {activeTab === 'details' && (
-                        <div className="space-y-8">
-                          <div className="space-y-4">
-                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Key Features</h4>
-                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                        <div className="space-y-10">
+                          <div className="space-y-6">
+                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Key Features</h4>
+                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
                               {[
                                 "Premium quality material for long-lasting shine",
                                 "Lightweight & comfortable for all-day wear",
@@ -250,31 +250,31 @@ const ProductDetail = () => {
                                 "Waterproof, Anti Tarnish",
                                 "Handcrafted with precision and care"
                               ].map((feature, i) => (
-                                <li key={i} className="flex items-center gap-3 text-[11px] text-white/50 tracking-wider">
-                                  <span className="w-1 h-1 rounded-full bg-accent/40" />
+                                <li key={i} className="flex items-center gap-4 text-[12px] text-[#5C3D1E]/60 tracking-wider font-medium">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#640D14]/40" />
                                   {feature}
                                 </li>
                               ))}
                             </ul>
                           </div>
-                          <div className="space-y-4 pt-4 border-t border-white/5">
-                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Detail & Dimensions</h4>
-                            <div className="grid grid-cols-2 gap-6">
-                              <div className="space-y-1">
-                                <p className="text-[8px] uppercase tracking-widest text-white/20">Length / Size</p>
-                                <p className="text-[11px] text-white/60 tracking-wider">{product.size_weight || "Standard Adjustable"}</p>
+                          <div className="space-y-6 pt-6 border-t border-[#640D14]/10">
+                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Detail & Dimensions</h4>
+                            <div className="grid grid-cols-2 gap-8">
+                              <div className="space-y-2">
+                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Length / Size</p>
+                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">{product.size_weight || "Standard Adjustable"}</p>
                               </div>
-                              <div className="space-y-1">
-                                <p className="text-[8px] uppercase tracking-widest text-white/20">Weight</p>
-                                <p className="text-[11px] text-white/60 tracking-wider">Lightweight / Comfort Fit</p>
+                              <div className="space-y-2">
+                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Weight</p>
+                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">Lightweight / Comfort Fit</p>
                               </div>
-                              <div className="space-y-1">
-                                <p className="text-[8px] uppercase tracking-widest text-white/20">Closure Type</p>
-                                <p className="text-[11px] text-white/60 tracking-wider">{product.material?.includes('hook') ? 'Signature Hook' : 'Secure Clasp'}</p>
+                              <div className="space-y-2">
+                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Closure Type</p>
+                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">{product.material?.includes('hook') ? 'Signature Hook' : 'Secure Clasp'}</p>
                               </div>
-                              <div className="space-y-1">
-                                <p className="text-[8px] uppercase tracking-widest text-white/20">Jewellery Type</p>
-                                <p className="text-[11px] text-white/60 tracking-wider">Demi Fine Masterpiece</p>
+                              <div className="space-y-2">
+                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Jewellery Type</p>
+                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">Demi Fine Masterpiece</p>
                               </div>
                             </div>
                           </div>
@@ -282,57 +282,57 @@ const ProductDetail = () => {
                       )}
 
                       {activeTab === 'craft' && (
-                        <div className="space-y-8">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-3">
-                              <Gem size={12} className="text-accent/60" />
-                              <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Advanced Metal Finishing</h4>
+                        <div className="space-y-10">
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-4">
+                              <Gem size={16} className="text-[#640D14]/60" />
+                              <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Advanced Metal Finishing</h4>
                             </div>
-                            <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase">
+                            <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-bold">
                               Each Velouraz piece undergoes a meticulous polishing process to achieve a smooth, high-lustre surface. We use advanced plating techniques — including gold, rose gold, and rhodium finishes — to enhance both appearance and longevity. This multi-layered finishing not only gives the jewellery its rich, radiant look but also adds a protective barrier to the metal beneath.
                             </p>
                           </div>
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-3">
-                              <Shield size={12} className="text-accent/60" />
-                              <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Signature Anti-Tarnish Technology</h4>
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-4">
+                              <Shield size={16} className="text-[#640D14]/60" />
+                              <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Signature Anti-Tarnish Technology</h4>
                             </div>
-                            <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase">
+                            <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-bold">
                               Our jewellery is treated with specialized anti-tarnish coatings designed to reduce oxidation and surface degradation. These protective layers help preserve the original finish, minimizing dullness and discoloration over time — even when exposed to humidity, air, and routine environmental factors.
                             </p>
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-white/5">
-                            <div className="space-y-3">
-                              <h5 className="text-[9px] uppercase tracking-widest text-white/30 font-bold">Skin-Safe & Wearable</h5>
-                              <p className="text-[10px] text-white/40 leading-relaxed italic">Designed to be skin-friendly and suitable for prolonged wear through lightweight construction and balanced design.</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-6 border-t border-[#640D14]/10">
+                            <div className="space-y-4">
+                              <h5 className="text-[10px] uppercase tracking-[0.3em] text-[#5C3D1E]/30 font-black">Skin-Safe & Wearable</h5>
+                              <p className="text-[11px] text-[#5C3D1E]/50 leading-relaxed italic font-medium">Designed to be skin-friendly and suitable for prolonged wear through lightweight construction and balanced design.</p>
                             </div>
-                            <div className="space-y-3">
-                              <h5 className="text-[9px] uppercase tracking-widest text-white/30 font-bold">Material Focus</h5>
-                              <p className="text-[10px] text-white/40 leading-relaxed italic">Crafted using high-quality metals such as sterling silver with premium plating, aligning with international demi-fine standards.</p>
+                            <div className="space-y-4">
+                              <h5 className="text-[10px] uppercase tracking-[0.3em] text-[#5C3D1E]/30 font-black">Material Focus</h5>
+                              <p className="text-[11px] text-[#5C3D1E]/50 leading-relaxed italic font-medium">Crafted using high-quality metals such as sterling silver with premium plating, aligning with international demi-fine standards.</p>
                             </div>
                           </div>
                         </div>
                       )}
 
                       {activeTab === 'styling' && (
-                        <div className="space-y-8">
-                          <div className="space-y-4">
-                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">The Style Tip</h4>
-                            <div className="bg-white/[0.02] border-l-2 border-accent p-6 rounded-r-2xl italic">
-                              <p className="text-[12px] text-white/70 leading-relaxed tracking-wide">
+                        <div className="space-y-10">
+                          <div className="space-y-6">
+                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">The Style Tip</h4>
+                            <div className="bg-[#640D14]/5 border-l-4 border-[#640D14] p-8 rounded-r-[32px] italic shadow-sm">
+                              <p className="text-[14px] text-[#2C1A0E] leading-relaxed tracking-wide font-medium">
                                 "Pair it with a minimal outfit, layered necklaces, or traditional wear for a chic look and statement style. Designed to elevate your style with timeless charm."
                               </p>
                             </div>
                           </div>
-                          <div className="space-y-4 pt-4">
-                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Perfect For</h4>
-                            <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase">
+                          <div className="space-y-6 pt-6">
+                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Perfect For</h4>
+                            <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-bold">
                               Every occasion—from thoughtful gifting to grand weddings, festive celebrations to effortless everyday elegance. Each piece makes every moment feel a little more special.
                             </p>
                           </div>
-                          <div className="space-y-4 pt-4 border-t border-white/5">
-                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/30">Seasonal & Limited Editions</h4>
-                            <p className="text-[11px] text-white/40 leading-relaxed tracking-wider italic">
+                          <div className="space-y-6 pt-6 border-t border-[#640D14]/10">
+                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#5C3D1E]/30">Seasonal & Limited Editions</h4>
+                            <p className="text-[12px] text-[#5C3D1E]/40 leading-relaxed tracking-wider italic font-medium">
                               Small-batch collections inspired by evolving global trends, ensuring exclusivity and freshness within the portfolio.
                             </p>
                           </div>
@@ -340,26 +340,26 @@ const ProductDetail = () => {
                       )}
 
                       {activeTab === 'care' && (
-                        <div className="space-y-8">
-                          <div className="space-y-6">
-                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent/80">Care Instructions</h4>
-                            <div className="space-y-4">
-                              <p className="text-[11px] text-white/50 leading-relaxed tracking-wider uppercase font-bold">
+                        <div className="space-y-10">
+                          <div className="space-y-8">
+                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Care Instructions</h4>
+                            <div className="space-y-6">
+                              <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-black">
                                 To preserve the beauty of your piece, avoid contact with water, perfumes, and harsh chemicals. Store it in a cool, dry place when not in use to maintain its shine and finish.
                               </p>
-                              <p className="text-[11px] text-white/40 leading-relaxed tracking-wider uppercase">
+                              <p className="text-[12px] text-[#5C3D1E]/40 leading-relaxed tracking-wider uppercase font-bold">
                                 With proper care, Velouraz jewellery is crafted to retain its brilliance and elegance over time. Thoughtfully made using high-quality base metals, refined polishing techniques, and advanced anti-tarnish technology.
                               </p>
                             </div>
                           </div>
-                          <div className="grid grid-cols-2 gap-4 pt-8 border-t border-white/5">
-                            <div className="flex items-center gap-3 text-white/20">
-                              <RotateCcw size={14} />
-                              <span className="text-[8px] uppercase tracking-[0.2em] font-bold">Wipe with soft cloth</span>
+                          <div className="grid grid-cols-2 gap-8 pt-10 border-t border-[#640D14]/10">
+                            <div className="flex items-center gap-4 text-[#5C3D1E]/30">
+                              <RotateCcw size={18} strokeWidth={2} />
+                              <span className="text-[9px] uppercase tracking-[0.3em] font-black">Wipe with soft cloth</span>
                             </div>
-                            <div className="flex items-center gap-3 text-white/20">
-                              <Shield size={14} />
-                              <span className="text-[8px] uppercase tracking-[0.2em] font-bold">Avoid Chemicals</span>
+                            <div className="flex items-center gap-4 text-[#5C3D1E]/30">
+                              <Shield size={18} strokeWidth={2} />
+                              <span className="text-[9px] uppercase tracking-[0.3em] font-black">Avoid Chemicals</span>
                             </div>
                           </div>
                         </div>
@@ -370,82 +370,82 @@ const ProductDetail = () => {
               </div>
 
               {/* Desktop Acquisition Actions (Hidden on Mobile) */}
-              <div className="hidden lg:flex flex-col gap-6 pt-4">
-                <div className="flex items-center gap-6">
-                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/40">Quantity</span>
-                  <div className="flex items-center border border-white/10 rounded-full overflow-hidden bg-white/5">
+              <div className="hidden lg:flex flex-col gap-8 pt-6">
+                <div className="flex items-center gap-8">
+                  <span className="text-[11px] uppercase tracking-[0.4em] font-black text-[#5C3D1E]/40">Quantity</span>
+                  <div className="flex items-center border border-[#640D14]/10 rounded-full overflow-hidden bg-white shadow-sm">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-5 py-2 text-white hover:bg-white/10 transition-colors font-bold"
+                      className="px-6 py-3 text-[#2C1A0E] hover:bg-[#640D14]/5 transition-colors font-black text-xl"
                     >
                       −
                     </button>
-                    <span className="px-6 py-2 font-bold text-white border-l border-r border-white/10 min-w-[60px] text-center">
+                    <span className="px-8 py-3 font-black text-[#2C1A0E] border-l border-r border-[#640D14]/10 min-w-[70px] text-center text-lg">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity(Math.min(Math.min(10, Number(product.stock)), quantity + 1))}
                       disabled={quantity >= Math.min(10, Number(product.stock))}
-                      className={`px-5 py-2 text-white hover:bg-white/10 transition-colors font-bold ${quantity >= Math.min(10, Number(product.stock)) ? 'opacity-20 cursor-not-allowed' : ''}`}
+                      className={`px-6 py-3 text-[#2C1A0E] hover:bg-[#640D14]/5 transition-colors font-black text-xl ${quantity >= Math.min(10, Number(product.stock)) ? 'opacity-20 cursor-not-allowed' : ''}`}
                     >
                       +
                     </button>
                   </div>
-                  <span className="text-[9px] text-white/20 uppercase tracking-widest">(Max 10)</span>
+                  <span className="text-[10px] text-[#5C3D1E]/20 uppercase tracking-[0.3em] font-black">(Max 10)</span>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex gap-6">
                   <button
                     onClick={handleAddToCart}
                     disabled={product.stock <= 0 || cartLoading}
-                    className={`flex-1 h-14 text-[10px] uppercase tracking-[0.3em] font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-3 ${
+                    className={`flex-1 h-16 text-[11px] uppercase tracking-[0.4em] font-black rounded-full transition-all duration-500 flex items-center justify-center gap-4 shadow-xl ${
                       product.stock <= 0
-                      ? 'bg-red-900/50 text-white cursor-not-allowed border border-red-500/30'
+                      ? 'bg-[#2C1A0E]/10 text-[#2C1A0E]/40 cursor-not-allowed border border-[#2C1A0E]/10'
                       : isInCart(product.id)
-                      ? 'bg-accent text-white'
-                      : 'bg-white text-black hover:bg-accent hover:text-white'
+                      ? 'bg-[#640D14] text-white'
+                      : 'bg-[#2C1A0E] text-white hover:bg-[#640D14]'
                     }`}
                   >
                     {cartLoading ? (
-                      <Loader2 size={16} className="animate-spin" />
+                      <Loader2 size={20} className="animate-spin text-white" />
                     ) : (
-                      <ShoppingBag size={16} strokeWidth={1.5} />
+                      <ShoppingBag size={20} strokeWidth={2} />
                     )}
                     {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'In Collection' : 'Acquire Selection'}
                   </button>
                   <button
                     onClick={handleAddToWishlist}
                     disabled={wishlistLoading}
-                    className={`w-14 h-14 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                    className={`w-16 h-16 rounded-full border-2 flex items-center justify-center transition-all duration-500 shadow-lg ${
                       isInWishlist(product.id)
-                      ? 'bg-accent border-accent text-white'
-                      : 'border-white/10 bg-[#111] text-white hover:text-accent hover:border-accent/40'
+                      ? 'bg-[#640D14] border-[#640D14] text-white'
+                      : 'border-[#640D14]/10 bg-white text-[#2C1A0E] hover:text-[#640D14] hover:border-[#640D14]'
                     }`}
                   >
                     {wishlistLoading ? (
-                      <Loader2 size={18} className="animate-spin" />
+                      <Loader2 size={22} className="animate-spin text-[#640D14]" />
                     ) : (
-                      <Heart size={18} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                      <Heart size={22} strokeWidth={2} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                     )}
                   </button>
                 </div>
               </div>
 
               {/* Atelier Contact Card */}
-              <div className="mt-8 p-5 lg:p-6 bg-[#111] rounded-[24px] border border-white/5 flex flex-col sm:flex-row items-start sm:items-center gap-5 group hover:border-accent/20 transition-all duration-500">
-                 <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-white/10">
-                    <img src="https://i.pravatar.cc/100?u=artisan" alt="Artisan" className="grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 w-full h-full object-cover" />
+              <div className="mt-10 p-8 lg:p-10 bg-white rounded-[40px] border border-[#640D14]/10 flex flex-col sm:flex-row items-start sm:items-center gap-8 group hover:border-[#640D14]/30 transition-all duration-700 shadow-sm">
+                 <div className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-[#640D14]/5">
+                    <img src="https://i.pravatar.cc/100?u=artisan" alt="Artisan" className="grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 w-full h-full object-cover" />
                  </div>
-                 <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-3">
-                      <h4 className="text-[10px] tracking-[0.2em] uppercase font-medium text-white/90">Privé Concierge</h4>
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                 <div className="flex-1 space-y-3">
+                    <div className="flex items-center gap-4">
+                      <h4 className="text-[11px] tracking-[0.3em] uppercase font-black text-[#2C1A0E]">Privé Concierge</h4>
+                      <span className="w-2 h-2 rounded-full bg-[#640D14] animate-pulse"></span>
                     </div>
-                    <p className="text-[10px] text-white/40 tracking-[0.1em] leading-normal italic">
+                    <p className="text-[11px] text-[#5C3D1E]/50 tracking-[0.15em] leading-normal italic font-medium">
                       Master artisans available for bespoke modifications.
                     </p>
                  </div>
-                 <button className="text-[9px] tracking-[0.2em] uppercase text-accent border-b border-accent/30 pb-1 hover:border-accent transition-all flex-shrink-0 mt-2 sm:mt-0">
+                 <button className="text-[10px] tracking-[0.3em] uppercase text-[#640D14] border-b-2 border-[#640D14]/20 pb-2 hover:border-[#640D14] transition-all flex-shrink-0 mt-4 sm:mt-0 font-black">
                     Consult
                  </button>
               </div>
@@ -455,45 +455,45 @@ const ProductDetail = () => {
       </div>
 
       {/* Mobile Fixed Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#0A0A0A]/80 backdrop-blur-xl border-t border-white/10 z-50 lg:hidden flex gap-3 pb-safe-area">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-white/95 backdrop-blur-2xl border-t border-[#640D14]/10 z-50 lg:hidden flex gap-4 pb-safe-area shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
           <button
             onClick={handleAddToCart}
             disabled={product.stock <= 0 || cartLoading}
-            className={`flex-1 h-12 text-[10px] uppercase tracking-[0.2em] font-bold rounded-full active:scale-95 transition-all flex items-center justify-center gap-2 ${
+            className={`flex-1 h-14 text-[11px] uppercase tracking-[0.3em] font-black rounded-full active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg ${
               product.stock <= 0
-              ? 'bg-red-900/50 text-white'
+              ? 'bg-[#2C1A0E]/10 text-[#2C1A0E]/40'
               : isInCart(product.id)
-              ? 'bg-accent text-white'
-              : 'bg-white text-black'
+              ? 'bg-[#640D14] text-white'
+              : 'bg-[#2C1A0E] text-white'
             }`}
           >
             {cartLoading ? (
-              <Loader2 size={14} className="animate-spin" />
+              <Loader2 size={16} className="animate-spin text-white" />
             ) : (
-              <ShoppingBag size={14} strokeWidth={2} />
+              <ShoppingBag size={16} strokeWidth={2} />
             )}
             {product.stock <= 0 ? 'Sold Out' : isInCart(product.id) ? 'In Collection' : 'Acquire'}
-         </button>
-         <button
+          </button>
+          <button
             onClick={handleAddToWishlist}
             disabled={wishlistLoading}
-            className={`w-12 h-12 rounded-full border flex items-center justify-center active:scale-95 transition-all ${
+            className={`w-14 h-14 rounded-full border-2 flex items-center justify-center active:scale-95 transition-all shadow-md ${
               isInWishlist(product.id)
-              ? 'bg-accent border-accent text-white'
-              : 'border-white/10 bg-white/5 text-white'
+              ? 'bg-[#640D14] border-[#640D14] text-white'
+              : 'border-[#640D14]/10 bg-white text-[#2C1A0E]'
             }`}
           >
             {wishlistLoading ? (
-              <Loader2 size={16} className="animate-spin" />
+              <Loader2 size={18} className="animate-spin text-[#640D14]" />
             ) : (
-              <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+              <Heart size={18} strokeWidth={2} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
             )}
-         </button>
+          </button>
       </div>
 
       {/* Safe area padding style for iOS bottom bar support */}
       <style dangerouslySetInnerHTML={{__html: `
-        .pb-safe-area { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+        .pb-safe-area { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
       `}} />
     </div>

@@ -27,69 +27,70 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6 py-32 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FDFAF5] flex items-center justify-center px-6 py-32 relative overflow-hidden selection:bg-[#640D14] selection:text-white">
       {/* Dynamic Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#C6A664]/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#640D14]/5 rounded-full blur-[140px] animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#640D14]/3 rounded-full blur-[140px]" />
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="w-full max-w-xl bg-white/[0.02] backdrop-blur-xl rounded-[48px] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] p-8 md:p-16 relative z-10"
+        transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+        className="w-full max-w-xl bg-white rounded-[48px] border border-[#640D14]/10 shadow-[0_40px_120px_rgba(44,26,14,0.1)] p-8 md:p-20 relative z-10"
       >
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#C6A664] rounded-2xl text-black mb-8 shadow-2xl shadow-[#C6A664]/20">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#640D14]/5 rounded-[24px] text-[#640D14] mb-10 shadow-sm border border-[#640D14]/10">
             <Sparkles size={32} />
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif text-white tracking-tight mb-4">
-            Welcome <span className="text-[#C6A664]">Back</span>
+          <h2 className="text-5xl md:text-7xl font-serif text-[#2C1A0E] tracking-tighter leading-none mb-6 font-bold uppercase">
+            Welcome <br />
+            <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-[#640D14]/80 lowercase text-6xl md:text-9xl block mt-2">Back</span>
           </h2>
-          <p className="text-white/40 font-sans text-sm tracking-widest uppercase">The Atelier Awaits Your Presence</p>
+          <p className="text-[#5C3D1E]/40 font-sans text-[11px] tracking-[0.5em] uppercase font-black">The Atelier Awaits Your Presence</p>
         </div>
 
         {error && (
           <motion.div 
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3 text-red-400 text-sm font-bold"
+            className="mb-10 p-5 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 text-red-600 text-sm font-bold shadow-sm"
           >
-            <AlertCircle size={18} />
+            <AlertCircle size={20} />
             {error}
           </motion.div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 ml-4">Email Address</label>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="space-y-3">
+            <label className="text-[11px] font-black uppercase tracking-[0.4em] text-[#5C3D1E]/30 ml-6">Email Address</label>
             <div className="relative group">
-              <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C6A664] transition-colors" size={20} />
+              <Mail className="absolute left-7 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={22} />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Excellence@velouraz.com"
-                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-[#C6A664]/50 outline-none transition-all font-sans text-white placeholder:text-white/10 shadow-inner"
+                placeholder="excellence@velouraz.com"
+                className="w-full pl-16 pr-8 py-6 rounded-[24px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14]/40 outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 shadow-sm font-medium text-lg"
                 required
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex justify-between items-center px-4">
-              <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Secret Password</label>
-              <button type="button" className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C6A664] hover:text-white transition-colors">Recovery</button>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center px-6">
+              <label className="text-[11px] font-black uppercase tracking-[0.4em] text-[#5C3D1E]/30">Secret Password</label>
+              <button type="button" className="text-[11px] font-black uppercase tracking-[0.3em] text-[#640D14]/60 hover:text-[#2C1A0E] transition-colors">Recovery</button>
             </div>
             <div className="relative group">
-              <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#C6A664] transition-colors" size={20} />
+              <Lock className="absolute left-7 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={22} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-[#C6A664]/50 outline-none transition-all font-sans text-white placeholder:text-white/10 shadow-inner"
+                className="w-full pl-16 pr-8 py-6 rounded-[24px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14]/40 outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 shadow-sm font-medium text-lg"
                 required
               />
             </div>
@@ -98,23 +99,23 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="group w-full py-5 rounded-2xl bg-[#C6A664] text-black font-bold text-sm tracking-[0.3em] uppercase hover:bg-white transition-all transform active:scale-[0.98] shadow-2xl shadow-[#C6A664]/10 flex items-center justify-center gap-3"
+            className="group w-full py-6 rounded-[24px] bg-[#640D14] text-white font-black text-xs tracking-[0.5em] uppercase hover:bg-[#2C1A0E] transition-all transform active:scale-[0.98] shadow-2xl shadow-[#640D14]/20 flex items-center justify-center gap-4 mt-4"
           >
             {loading ? (
-              <div className="w-6 h-6 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
                 Enter Boutique
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={20} strokeWidth={3} className="group-hover:translate-x-2 transition-transform" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-12 text-center">
-          <p className="text-xs text-white/30 font-medium tracking-wide">
+        <div className="mt-16 text-center">
+          <p className="text-[11px] text-[#5C3D1E]/40 font-black tracking-widest uppercase">
             New to the legacy?{" "}
-            <Link to="/signup" className="text-[#C6A664] font-bold hover:text-white ml-1 transition-colors underline-offset-4 hover:underline">
+            <Link to="/signup" className="text-[#640D14] font-black hover:text-[#2C1A0E] ml-2 transition-colors border-b-2 border-[#640D14]/20 hover:border-[#2C1A0E]">
               Initialize Membership
             </Link>
           </p>
@@ -123,5 +124,6 @@ const Login = () => {
     </div>
   );
 };
+
 
 export default Login;
