@@ -58,7 +58,7 @@ const BestSellers = () => {
   };
 
   return (
-    <section className="bg-[#FDFAF5] py-16 lg:py-24 relative overflow-hidden">
+    <section className="bg-[#F8F4EF] py-16 lg:py-24 relative overflow-hidden border-t border-[#D8CBBE]/20">
       <div className="max-w-[1800px] mx-auto px-4 sm:px-8 lg:px-16">
 
         {/* Header */}
@@ -67,16 +67,16 @@ const BestSellers = () => {
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-[9px] md:text-[10px] tracking-[0.4em] text-[#640D14] uppercase font-bold mb-4 block"
+              className="text-[9px] md:text-[10px] tracking-[0.4em] text-[#7A0E2E] uppercase font-bold mb-4 block"
             >
               Curated Selection
             </motion.span>
-            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#2C1A0E] leading-tight tracking-tight">
-              <span style={{ fontFamily: "var(--font-script)", fontWeight: 100 }} className="text-4xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0 text-[#640D14]/80">Jewels</span> Velouraz Loves
+            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#2A2623] leading-tight tracking-tight">
+              <span className="text-[#7A0E2E] italic font-light block md:inline mb-2 md:mb-0">Jewels</span> Velouraz Loves
             </h2>
           </div>
           <div className="flex items-center gap-8">
-            <p className="text-[10px] md:text-xs text-[#5C3D1E]/70 max-w-[200px] leading-relaxed uppercase font-bold tracking-widest">
+            <p className="text-[10px] md:text-xs text-[#7B6D63] max-w-[200px] leading-relaxed uppercase font-bold tracking-widest">
               Discover masterpieces hand-picked by our lead artisans.
             </p>
           </div>
@@ -99,7 +99,7 @@ const BestSellers = () => {
             {loading ? (
               <div className="flex gap-8">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="min-w-[300px] aspect-[4/5] bg-[#640D14]/5 animate-pulse rounded-xl" />
+                  <div key={i} className="min-w-[300px] aspect-[4/5] bg-[#7A0E2E]/5 animate-pulse rounded-2xl" />
                 ))}
               </div>
             ) : products.map((product) => (
@@ -112,27 +112,27 @@ const BestSellers = () => {
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   {/* Image Container */}
-                  <div className="relative aspect-[4/5] bg-[#F5EDD8] overflow-hidden rounded-xl transition-all duration-700 ease-out group-hover:shadow-[0_24px_60px_rgba(44,26,14,0.12)] border border-[#640D14]/10">
+                  <div className="relative aspect-[4/5] bg-[#F4EEE8] overflow-hidden rounded-2xl transition-all duration-700 ease-out group-hover:shadow-[0_30px_60px_rgba(122,14,46,0.1)] border border-[#D8CBBE]/30">
                     <motion.img
-                      whileHover={{ scale: 1.06 }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                      className="w-full h-full object-cover opacity-95 group-hover:opacity-100 transition-opacity duration-700"
                     />
 
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-[#2C1A0E]/0 group-hover:bg-[#2C1A0E]/10 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-[#2A2623]/0 group-hover:bg-[#2A2623]/5 transition-colors duration-500" />
 
-                    {/* Wishlist */}
+                    {/* Quick Actions */}
                     <div className="absolute top-6 right-6 flex flex-col gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
                       <button
                         onClick={(e) => handleAddToWishlist(e, product)}
                         disabled={wishlistLoadings[product.id]}
                         className={`w-11 h-11 rounded-full backdrop-blur-md flex items-center justify-center transition-all border ${
                           isInWishlist(product.id)
-                            ? 'bg-[#640D14] text-white border-[#640D14]'
-                            : 'bg-white/90 text-[#2C1A0E] hover:bg-[#640D14] hover:text-white border-[#640D14]/20'
+                            ? 'bg-[#7A0E2E] text-white border-[#7A0E2E]'
+                            : 'bg-white/90 text-[#2A2623] hover:bg-[#7A0E2E] hover:text-white border-white/20 shadow-lg'
                         }`}
                       >
                         {wishlistLoadings[product.id] ? (
@@ -144,16 +144,16 @@ const BestSellers = () => {
                     </div>
 
                     {/* Add to Cart */}
-                    <div className="absolute bottom-5 left-5 right-5 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                       <button
                         onClick={(e) => product.stock > 0 && handleAddToCart(e, product)}
                         disabled={product.stock <= 0 || cartLoadings[product.id]}
-                        className={`w-full py-3.5 text-[10px] tracking-[0.2em] font-bold uppercase flex items-center justify-center gap-2 transition-all rounded-lg ${
+                        className={`w-full py-4 text-[10px] tracking-[0.2em] font-bold uppercase flex items-center justify-center gap-3 transition-all rounded-xl shadow-xl ${
                           product.stock <= 0
-                            ? 'bg-red-50 text-red-400 cursor-not-allowed border border-red-200'
+                            ? 'bg-red-50 text-red-400 cursor-not-allowed border border-red-100'
                             : isInCart(product.id)
-                            ? 'bg-[#640D14] text-white'
-                            : 'bg-white/95 backdrop-blur-md text-[#2C1A0E] hover:bg-[#640D14] hover:text-white border border-[#640D14]/10'
+                            ? 'bg-[#7A0E2E] text-white'
+                            : 'bg-[#2A2623] text-white hover:bg-[#7A0E2E] border-none'
                         }`}
                       >
                         {cartLoadings[product.id] ? (
@@ -167,27 +167,27 @@ const BestSellers = () => {
 
                     {product.stock <= 0 && (
                       <div className="absolute top-6 left-6 z-10">
-                        <span className="bg-red-500 text-white text-[9px] tracking-[0.3em] font-black uppercase px-3 py-1 rounded-md shadow">
-                          Sold Out
+                        <span className="bg-[#7A0E2E] text-white text-[8px] tracking-[0.3em] font-bold uppercase px-3 py-1.5 rounded-full shadow-lg">
+                          Out of Stock
                         </span>
                       </div>
                     )}
                   </div>
 
                   {/* Product Info */}
-                  <div className="mt-6 lg:text-center text-left px-2">
-                    <h3 className="text-[11px] tracking-[0.3em] font-bold uppercase text-[#640D14]/70 mb-2">
+                  <div className="mt-8 text-center px-4">
+                    <h3 className="text-[10px] tracking-[0.3em] font-bold uppercase text-[#7B6D63] mb-2.5">
                       {product.brand || "Velouraz Atelier"}
                     </h3>
-                    <p className="font-serif text-xl text-[#2C1A0E] mb-1">
+                    <p className="font-serif text-xl md:text-2xl text-[#2A2623] mb-2 group-hover:text-[#7A0E2E] transition-colors duration-300">
                       {product.name}
                     </p>
-                    <div className="flex items-center lg:justify-center gap-3">
-                      <p className="text-sm font-sans text-[#5C3D1E]">
+                    <div className="flex items-center justify-center gap-4">
+                      <p className="text-base font-medium text-[#7A0E2E]">
                         ₹{Number(product.price || 0).toLocaleString()}
                       </p>
                       {product.original_price > product.price && (
-                        <p className="text-xs font-sans text-[#8A6D4B]/50 line-through">
+                        <p className="text-sm text-[#7B6D63]/50 line-through">
                           ₹{Number(product.original_price).toLocaleString()}
                         </p>
                       )}
@@ -199,18 +199,23 @@ const BestSellers = () => {
           </Swiper>
 
           {/* Progress Bar */}
-          <div className="mt-14 h-[1px] w-full bg-[#640D14]/10 relative">
-            <motion.div className="absolute top-0 left-0 h-full bg-[#640D14] w-1/4" />
+          <div className="mt-16 h-[2px] w-full bg-[#D8CBBE]/30 relative rounded-full">
+            <motion.div 
+              className="absolute top-0 left-0 h-full bg-[#7A0E2E] w-1/4 rounded-full"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: "circOut" }}
+            />
           </div>
         </div>
       </div>
 
       {/* Background Decorative */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 opacity-[0.03] pointer-events-none">
-        <span className="text-[300px] font-serif italic text-[#640D14]">V</span>
+      <div className="absolute -bottom-20 -right-20 opacity-[0.03] pointer-events-none select-none">
+        <span className="text-[400px] font-serif italic text-[#7A0E2E]">V</span>
       </div>
     </section>
-
   );
 };
 

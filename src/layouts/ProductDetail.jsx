@@ -70,57 +70,57 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FDFAF5] flex flex-col items-center justify-center gap-6">
-        <div className="w-10 h-10 border-[2px] border-[#640D14] border-t-transparent rounded-full animate-spin" />
-        <p className="text-[10px] uppercase tracking-[0.5em] text-[#640D14] font-bold">Revealing Masterpiece</p>
+      <div className="min-h-screen bg-[#F8F4EF] flex flex-col items-center justify-center gap-6">
+        <div className="w-10 h-10 border-[2px] border-[#7A0E2E] border-t-transparent rounded-full animate-spin" />
+        <p className="text-[10px] uppercase tracking-[0.5em] text-[#7A0E2E] font-bold">Revealing Masterpiece</p>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#FDFAF5] flex flex-col items-center justify-center gap-8 text-center p-6">
-        <h2 className="font-serif text-4xl text-[#2C1A0E]/80 italic">Inventory unavailable.</h2>
-        <button onClick={() => navigate('/shop')} className="text-[11px] tracking-[0.4em] uppercase text-[#640D14] border-b-2 border-[#640D14]/20 hover:border-[#640D14] pb-2 transition-all font-black">Return to Shop</button>
+      <div className="min-h-screen bg-[#F8F4EF] flex flex-col items-center justify-center gap-8 text-center p-6">
+        <h2 className="font-serif text-4xl text-[#2A2623]/80 italic">Inventory unavailable.</h2>
+        <button onClick={() => navigate('/shop')} className="text-[11px] tracking-[0.4em] uppercase text-[#7A0E2E] border-b-2 border-[#7A0E2E]/20 hover:border-[#7A0E2E] pb-2 transition-all font-bold">Return to Shop</button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFAF5] pt-32 lg:pt-48 pb-32 lg:pb-20 font-sans relative text-[#2C1A0E] selection:bg-[#640D14]/10 selection:text-[#640D14]">
+    <div className="min-h-screen bg-[#F8F4EF] pt-20 pb-32 font-sans relative text-[#2A2623] selection:bg-[#7A0E2E]/10 selection:text-[#7A0E2E]">
       
       {/* Cinematic lines - Subdued */}
-      <div className="fixed left-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden 2xl:block pointer-events-none" />
-      <div className="fixed right-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden 2xl:block pointer-events-none" />
+      <div className="fixed left-[5%] top-0 w-[1px] h-full bg-[#D8CBBE]/20 hidden 2xl:block pointer-events-none" />
+      <div className="fixed right-[5%] top-0 w-[1px] h-full bg-[#D8CBBE]/20 hidden 2xl:block pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         
         {/* Navigation - Ultra Minimal */}
-        <div className="mb-10 lg:mb-16 flex justify-between items-center">
+        <div className="mb-12 flex justify-between items-center border-b border-[#D8CBBE]/30 pb-8">
           <button 
             onClick={() => navigate(-1)}
-            className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-black text-[#5C3D1E]/40 hover:text-[#640D14] transition-all"
+            className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-bold text-[#7B6D63] hover:text-[#7A0E2E] transition-all"
           >
-            <ArrowLeft size={16} strokeWidth={2} className="group-hover:-translate-x-2 transition-transform" />
-            Collection
+            <ArrowLeft size={16} strokeWidth={2} className="group-hover:-translate-x-2 transition-transform duration-500" />
+            Return to Collection
           </button>
           
-          <div className="flex gap-8 items-center hidden sm:flex">
-             <button className="text-[10px] uppercase tracking-[0.4em] text-[#5C3D1E]/40 hover:text-[#640D14] transition-colors font-black">Prev</button>
-             <span className="w-10 h-[1px] bg-[#640D14]/10"></span>
-             <button className="text-[10px] uppercase tracking-[0.4em] text-[#5C3D1E]/40 hover:text-[#640D14] transition-colors font-black">Next</button>
+          <div className="flex gap-10 items-center hidden sm:flex">
+             <button className="text-[10px] uppercase tracking-[0.4em] text-[#7B6D63] hover:text-[#7A0E2E] transition-colors font-bold">Previous Piece</button>
+             <span className="w-12 h-[1px] bg-[#D8CBBE]/50"></span>
+             <button className="text-[10px] uppercase tracking-[0.4em] text-[#7B6D63] hover:text-[#7A0E2E] transition-colors font-bold">Next Piece</button>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
           
           {/* Left: Sticky Gallery (55%) */}
-          <div className="w-full lg:w-[55%] lg:sticky lg:top-32 space-y-6">
+          <div className="w-full lg:w-[55%] lg:sticky lg:top-32 space-y-8">
             <motion.div 
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] bg-white rounded-[40px] overflow-hidden border border-[#640D14]/10 group shadow-sm"
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative aspect-[4/5] bg-white rounded-[40px] overflow-hidden border border-[#D8CBBE]/30 group shadow-[0_30px_60px_rgba(0,0,0,0.03)]"
             >
               <img
                 src={product.image}
@@ -128,70 +128,71 @@ const ProductDetail = () => {
                 className="w-full h-full object-cover transition-transform duration-[2.5s] group-hover:scale-110 opacity-95 group-hover:opacity-100"
               />
               <div className="absolute top-8 left-8">
-                <div className="bg-[#640D14]/90 backdrop-blur-md border border-white/20 px-6 py-2.5 rounded-full text-[10px] tracking-[0.3em] font-black text-white uppercase shadow-xl">
-                  REF {product.id.slice(0, 6)}
+                <div className="bg-[#7A0E2E] backdrop-blur-md border border-white/20 px-6 py-3 rounded-full text-[9px] tracking-[0.4em] font-bold text-white uppercase shadow-2xl">
+                  ITEM REF: {product.id.slice(0, 8).toUpperCase()}
                 </div>
               </div>
             </motion.div>
             
-            {/* Thumbnails - Horizontally scrollable on mobile */}
-            <div className="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+            {/* Thumbnails */}
+            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
                {[...Array(4)].map((_, i) => (
-                 <div key={i} className="flex-shrink-0 w-24 lg:w-full aspect-square bg-white rounded-[24px] border border-[#640D14]/10 overflow-hidden cursor-pointer hover:border-[#640D14] transition-all duration-300 relative shadow-sm">
-                    <img src={product.image} alt="Gallery view" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-all duration-500 scale-110" />
+                 <div key={i} className="flex-shrink-0 w-24 aspect-square bg-white rounded-[24px] border border-[#D8CBBE]/30 overflow-hidden cursor-pointer hover:border-[#7A0E2E] transition-all duration-500 relative shadow-sm group">
+                    <img src={product.image} alt="Gallery view" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110" />
                  </div>
                ))}
             </div>
           </div>
 
           {/* Right: Bespoke Details (45%) */}
-          <div className="w-full lg:w-[45%] flex flex-col pt-2 lg:pt-8">
+          <div className="w-full lg:w-[45%] flex flex-col pt-4">
             
-            <div className="space-y-12">
+            <div className="space-y-16">
               {/* Header Info */}
-              <div className="space-y-8">
-                <div className="flex items-center gap-4">
-                  <span className="h-[2px] w-12 bg-[#640D14]/30"></span>
-                  <span className="text-[10px] tracking-[0.5em] font-black uppercase text-[#640D14]">
+              <div className="space-y-10">
+                <div className="flex items-center gap-6">
+                  <span className="h-[1px] w-16 bg-[#7A0E2E]"></span>
+                  <span className="text-[10px] tracking-[0.6em] font-bold uppercase text-[#7A0E2E]">
                     {product.category || 'Atelier Exclusive'}
                   </span>
                 </div>
                 
                 <motion.h1 
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#2C1A0E] leading-[1.05] tracking-tight"
+                  transition={{ duration: 1, delay: 0.2 }}
+                  className="text-5xl md:text-7xl font-serif text-[#2A2623] leading-[1] tracking-tighter"
                 >
-                  <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-6xl md:text-7xl lg:text-8xl block mb-2 text-[#640D14]/80 -ml-2 lg:-ml-6">
+                  <span className="text-[#7A0E2E] italic font-light block mb-2">
                     {product.name.split(' ')[0]}
                   </span>
-                  <span className="relative z-10">{product.name.split(' ').slice(1).join(' ')}</span>
+                  {product.name.split(' ').slice(1).join(' ')}
                 </motion.h1>
                 
-                <div className="flex items-center gap-6">
-                  <p className="text-3xl md:text-4xl font-serif text-[#2C1A0E]">
-                    ₹{product.price.toLocaleString()}.00
+                <div className="flex items-center gap-8">
+                  <p className="text-4xl font-serif text-[#2A2623]">
+                    ₹{Number(product.price).toLocaleString()}
                   </p>
                   {product.original_price > product.price && (
-                    <p className="text-2xl font-serif text-[#5C3D1E]/30 line-through">
-                      ₹{product.original_price.toLocaleString()}.00
+                    <p className="text-2xl font-serif text-[#7B6D63]/30 line-through">
+                      ₹{Number(product.original_price).toLocaleString()}
                     </p>
                   )}
                 </div>
-                <div className="flex items-center gap-4">
+
+                <div className="flex items-center gap-6">
                   {product.stock <= 0 ? (
-                    <span className="bg-[#640D14] text-white px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase shadow-lg">
+                    <span className="bg-[#7A0E2E] text-white px-8 py-3 rounded-full text-[10px] tracking-[0.4em] font-bold uppercase shadow-xl">
                       Sold Out
                     </span>
                   ) : (
-                    <div className="flex items-center gap-4">
-                      <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase">
-                        In Stock
+                    <div className="flex items-center gap-6">
+                      <span className="bg-emerald-50 text-emerald-600 border border-emerald-100 px-8 py-3 rounded-full text-[10px] tracking-[0.4em] font-bold uppercase">
+                        Available Piece
                       </span>
                       {product.stock <= 5 && (
-                        <span className="text-[10px] text-amber-600 font-black uppercase tracking-widest animate-pulse">
-                          Only {product.stock} Left
+                        <span className="text-[10px] text-amber-600 font-bold uppercase tracking-widest animate-pulse">
+                          Only {product.stock} Remaining
                         </span>
                       )}
                     </div>
@@ -200,168 +201,163 @@ const ProductDetail = () => {
               </div>
 
               {/* Description */}
-              <div className="pb-10 border-b border-[#640D14]/10">
-                <p className="text-[15px] md:text-base text-[#5C3D1E]/70 font-sans leading-relaxed">
+              <div className="pb-12 border-b border-[#D8CBBE]/30">
+                <p className="text-lg text-[#7B6D63] font-serif italic leading-relaxed">
                   {product.description || "An exceptional masterwork of artisanal ingenuity, meticulously handcrafted to embody the pinnacle of Velouraz's design philosophy and timeless elegance."}
                 </p>
               </div>
 
-              {/* Editorial Tabs Selection */}
-              <div className="space-y-10">
-                <div className="flex gap-10 border-b border-[#640D14]/10 pb-px overflow-x-auto scrollbar-hide">
+              {/* Acquisition Actions */}
+              <div className="space-y-12">
+                <div className="flex items-center gap-10">
+                  <span className="text-[11px] uppercase tracking-[0.4em] font-bold text-[#7B6D63]">Quantity</span>
+                  <div className="flex items-center border border-[#D8CBBE]/50 rounded-full bg-white/50 backdrop-blur-sm p-1">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-12 h-12 flex items-center justify-center text-[#2A2623] hover:text-[#7A0E2E] transition-colors text-xl font-light"
+                    >
+                      −
+                    </button>
+                    <span className="w-12 text-center font-bold text-[#2A2623] text-sm tracking-widest">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(Math.min(Math.min(10, Number(product.stock)), quantity + 1))}
+                      disabled={quantity >= Math.min(10, Number(product.stock))}
+                      className="w-12 h-12 flex items-center justify-center text-[#2A2623] hover:text-[#7A0E2E] transition-colors disabled:opacity-20 text-xl font-light"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={product.stock <= 0 || cartLoading}
+                    className={`flex-1 h-20 text-[11px] uppercase tracking-[0.5em] font-bold rounded-2xl transition-all duration-700 flex items-center justify-center gap-4 shadow-2xl ${
+                      product.stock <= 0
+                      ? 'bg-red-50 text-red-400 cursor-not-allowed border border-red-100'
+                      : isInCart(product.id)
+                      ? 'bg-[#7A0E2E] text-white'
+                      : 'bg-[#2A2623] text-white hover:bg-[#7A0E2E] shadow-[#2A2623]/20'
+                    }`}
+                  >
+                    {cartLoading ? (
+                      <Loader2 size={20} className="animate-spin" />
+                    ) : (
+                      <ShoppingBag size={20} />
+                    )}
+                    {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'Added to Cart' : 'Acquire Piece'}
+                  </button>
+                  <button
+                    onClick={handleAddToWishlist}
+                    disabled={wishlistLoading}
+                    className={`w-20 h-20 rounded-2xl border border-[#D8CBBE]/50 flex items-center justify-center transition-all duration-700 bg-white shadow-lg group ${
+                      isInWishlist(product.id)
+                      ? 'bg-[#7A0E2E] border-[#7A0E2E] text-white'
+                      : 'text-[#2A2623] hover:text-[#7A0E2E] hover:border-[#7A0E2E]'
+                    }`}
+                  >
+                    {wishlistLoading ? (
+                      <Loader2 size={22} className="animate-spin" />
+                    ) : (
+                      <Heart size={24} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Tabs Section */}
+              <div className="space-y-12">
+                <div className="flex gap-10 border-b border-[#D8CBBE]/30 overflow-x-auto scrollbar-hide">
                   {[
-                    { id: 'details', label: 'Bespoke Details' },
-                    { id: 'craft', label: 'Atelier Craft' },
-                    { id: 'styling', label: 'Heritage & Style' },
-                    { id: 'care', label: 'Longevity' }
+                    { id: 'details', label: 'Details' },
+                    { id: 'craft', label: 'Craftsmanship' },
+                    { id: 'styling', label: 'Style' },
+                    { id: 'care', label: 'Care' }
                   ].map((tab) => (
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`text-[10px] uppercase tracking-[0.4em] font-black transition-all relative pb-4 whitespace-nowrap ${activeTab === tab.id ? 'text-[#640D14]' : 'text-[#5C3D1E]/30 hover:text-[#640D14]/60'}`}
+                      className={`text-[10px] uppercase tracking-[0.4em] font-bold transition-all relative pb-6 whitespace-nowrap ${activeTab === tab.id ? 'text-[#7A0E2E]' : 'text-[#7B6D63]/40 hover:text-[#7A0E2E]'}`}
                     >
                       {tab.label}
                       {activeTab === tab.id && (
-                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#640D14] shadow-[0_4px_12px_rgba(100,13,20,0.2)]" />
+                        <motion.div layoutId="tabUnderline" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#7A0E2E]" />
                       )}
                     </button>
                   ))}
                 </div>
                 
-                <div className="min-h-[300px]">
+                <div className="min-h-[250px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeTab}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="space-y-8"
+                      transition={{ duration: 0.5 }}
+                      className="space-y-10"
                     >
                       {activeTab === 'details' && (
-                        <div className="space-y-10">
-                          <div className="space-y-6">
-                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Key Features</h4>
-                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
-                              {[
-                                "Premium quality material for long-lasting shine",
-                                "Lightweight & comfortable for all-day wear",
-                                "Skin-friendly & hypoallergenic",
-                                "Waterproof, Anti Tarnish",
-                                "Handcrafted with precision and care"
-                              ].map((feature, i) => (
-                                <li key={i} className="flex items-center gap-4 text-[12px] text-[#5C3D1E]/60 tracking-wider font-medium">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#640D14]/40" />
-                                  {feature}
-                                </li>
-                              ))}
-                            </ul>
+                        <div className="grid grid-cols-2 gap-x-12 gap-y-10">
+                          <div className="space-y-3">
+                            <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-[#7B6D63]/30">Reference</p>
+                            <p className="text-sm text-[#2A2623] font-medium tracking-wide uppercase">{product.id.slice(0, 12)}</p>
                           </div>
-                          <div className="space-y-6 pt-6 border-t border-[#640D14]/10">
-                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Detail & Dimensions</h4>
-                            <div className="grid grid-cols-2 gap-8">
-                              <div className="space-y-2">
-                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Length / Size</p>
-                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">{product.size_weight || "Standard Adjustable"}</p>
-                              </div>
-                              <div className="space-y-2">
-                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Weight</p>
-                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">Lightweight / Comfort Fit</p>
-                              </div>
-                              <div className="space-y-2">
-                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Closure Type</p>
-                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">{product.material?.includes('hook') ? 'Signature Hook' : 'Secure Clasp'}</p>
-                              </div>
-                              <div className="space-y-2">
-                                <p className="text-[9px] uppercase tracking-[0.3em] font-black text-[#5C3D1E]/20">Jewellery Type</p>
-                                <p className="text-[12px] text-[#5C3D1E]/60 tracking-wider font-bold">Demi Fine Masterpiece</p>
-                              </div>
-                            </div>
+                          <div className="space-y-3">
+                            <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-[#7B6D63]/30">Material</p>
+                            <p className="text-sm text-[#2A2623] font-medium tracking-wide uppercase">Demi-Fine / Gold Plated</p>
+                          </div>
+                          <div className="space-y-3">
+                            <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-[#7B6D63]/30">Size & Fit</p>
+                            <p className="text-sm text-[#2A2623] font-medium tracking-wide uppercase">{product.size_weight || "Adjustable Standard"}</p>
+                          </div>
+                          <div className="space-y-3">
+                            <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-[#7B6D63]/30">Atelier</p>
+                            <p className="text-sm text-[#2A2623] font-medium tracking-wide uppercase">Velouraz Studio</p>
                           </div>
                         </div>
                       )}
 
                       {activeTab === 'craft' && (
-                        <div className="space-y-10">
-                          <div className="space-y-6">
-                            <div className="flex items-center gap-4">
-                              <Gem size={16} className="text-[#640D14]/60" />
-                              <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Advanced Metal Finishing</h4>
-                            </div>
-                            <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-bold">
-                              Each Velouraz piece undergoes a meticulous polishing process to achieve a smooth, high-lustre surface. We use advanced plating techniques — including gold, rose gold, and rhodium finishes — to enhance both appearance and longevity. This multi-layered finishing not only gives the jewellery its rich, radiant look but also adds a protective barrier to the metal beneath.
-                            </p>
-                          </div>
-                          <div className="space-y-6">
-                            <div className="flex items-center gap-4">
-                              <Shield size={16} className="text-[#640D14]/60" />
-                              <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Signature Anti-Tarnish Technology</h4>
-                            </div>
-                            <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-bold">
-                              Our jewellery is treated with specialized anti-tarnish coatings designed to reduce oxidation and surface degradation. These protective layers help preserve the original finish, minimizing dullness and discoloration over time — even when exposed to humidity, air, and routine environmental factors.
-                            </p>
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-6 border-t border-[#640D14]/10">
-                            <div className="space-y-4">
-                              <h5 className="text-[10px] uppercase tracking-[0.3em] text-[#5C3D1E]/30 font-black">Skin-Safe & Wearable</h5>
-                              <p className="text-[11px] text-[#5C3D1E]/50 leading-relaxed italic font-medium">Designed to be skin-friendly and suitable for prolonged wear through lightweight construction and balanced design.</p>
-                            </div>
-                            <div className="space-y-4">
-                              <h5 className="text-[10px] uppercase tracking-[0.3em] text-[#5C3D1E]/30 font-black">Material Focus</h5>
-                              <p className="text-[11px] text-[#5C3D1E]/50 leading-relaxed italic font-medium">Crafted using high-quality metals such as sterling silver with premium plating, aligning with international demi-fine standards.</p>
-                            </div>
+                        <div className="space-y-8">
+                          <p className="text-sm text-[#7B6D63] leading-relaxed font-serif italic">
+                            Each Velouraz piece undergoes a meticulous polishing process to achieve a smooth, high-lustre surface. We use advanced plating techniques including gold, rose gold, and rhodium finishes to enhance both appearance and longevity.
+                          </p>
+                          <div className="flex items-center gap-4 text-[#7A0E2E]">
+                            <Sparkles size={16} />
+                            <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Signature Anti-Tarnish Finish</span>
                           </div>
                         </div>
                       )}
 
                       {activeTab === 'styling' && (
-                        <div className="space-y-10">
-                          <div className="space-y-6">
-                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">The Style Tip</h4>
-                            <div className="bg-[#640D14]/5 border-l-4 border-[#640D14] p-8 rounded-r-[32px] italic shadow-sm">
-                              <p className="text-[14px] text-[#2C1A0E] leading-relaxed tracking-wide font-medium">
-                                "Pair it with a minimal outfit, layered necklaces, or traditional wear for a chic look and statement style. Designed to elevate your style with timeless charm."
-                              </p>
-                            </div>
-                          </div>
-                          <div className="space-y-6 pt-6">
-                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Perfect For</h4>
-                            <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-bold">
-                              Every occasion—from thoughtful gifting to grand weddings, festive celebrations to effortless everyday elegance. Each piece makes every moment feel a little more special.
-                            </p>
-                          </div>
-                          <div className="space-y-6 pt-6 border-t border-[#640D14]/10">
-                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#5C3D1E]/30">Seasonal & Limited Editions</h4>
-                            <p className="text-[12px] text-[#5C3D1E]/40 leading-relaxed tracking-wider italic font-medium">
-                              Small-batch collections inspired by evolving global trends, ensuring exclusivity and freshness within the portfolio.
+                        <div className="space-y-8">
+                          <div className="p-8 bg-white rounded-[32px] border border-[#D8CBBE]/30 shadow-sm">
+                            <p className="text-base text-[#2A2623] font-serif italic leading-relaxed">
+                              "Pair it with a minimal outfit, layered necklaces, or traditional wear for a chic look and statement style. Designed to elevate your style with timeless charm."
                             </p>
                           </div>
                         </div>
                       )}
 
                       {activeTab === 'care' && (
-                        <div className="space-y-10">
-                          <div className="space-y-8">
-                            <h4 className="text-[11px] uppercase tracking-[0.4em] font-black text-[#640D14]/80">Care Instructions</h4>
-                            <div className="space-y-6">
-                              <p className="text-[12px] text-[#5C3D1E]/60 leading-relaxed tracking-wider uppercase font-black">
-                                To preserve the beauty of your piece, avoid contact with water, perfumes, and harsh chemicals. Store it in a cool, dry place when not in use to maintain its shine and finish.
-                              </p>
-                              <p className="text-[12px] text-[#5C3D1E]/40 leading-relaxed tracking-wider uppercase font-bold">
-                                With proper care, Velouraz jewellery is crafted to retain its brilliance and elegance over time. Thoughtfully made using high-quality base metals, refined polishing techniques, and advanced anti-tarnish technology.
-                              </p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-8 pt-10 border-t border-[#640D14]/10">
-                            <div className="flex items-center gap-4 text-[#5C3D1E]/30">
-                              <RotateCcw size={18} strokeWidth={2} />
-                              <span className="text-[9px] uppercase tracking-[0.3em] font-black">Wipe with soft cloth</span>
-                            </div>
-                            <div className="flex items-center gap-4 text-[#5C3D1E]/30">
-                              <Shield size={18} strokeWidth={2} />
-                              <span className="text-[9px] uppercase tracking-[0.3em] font-black">Avoid Chemicals</span>
-                            </div>
-                          </div>
+                        <div className="space-y-8">
+                          <ul className="space-y-4">
+                            {[
+                              "Avoid contact with water and perfumes",
+                              "Store in the provided luxury box",
+                              "Wipe with a soft, dry cloth after use",
+                              "Keep away from direct sunlight"
+                            ].map((item, i) => (
+                              <li key={i} className="flex items-center gap-4 text-xs text-[#7B6D63] tracking-widest uppercase font-bold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#7A0E2E]" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       )}
                     </motion.div>
@@ -369,129 +365,62 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              {/* Desktop Acquisition Actions (Hidden on Mobile) */}
-              <div className="hidden lg:flex flex-col gap-8 pt-6">
-                <div className="flex items-center gap-8">
-                  <span className="text-[11px] uppercase tracking-[0.4em] font-black text-[#5C3D1E]/40">Quantity</span>
-                  <div className="flex items-center border border-[#640D14]/10 rounded-full overflow-hidden bg-white shadow-sm">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-6 py-3 text-[#2C1A0E] hover:bg-[#640D14]/5 transition-colors font-black text-xl"
-                    >
-                      −
-                    </button>
-                    <span className="px-8 py-3 font-black text-[#2C1A0E] border-l border-r border-[#640D14]/10 min-w-[70px] text-center text-lg">
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={() => setQuantity(Math.min(Math.min(10, Number(product.stock)), quantity + 1))}
-                      disabled={quantity >= Math.min(10, Number(product.stock))}
-                      className={`px-6 py-3 text-[#2C1A0E] hover:bg-[#640D14]/5 transition-colors font-black text-xl ${quantity >= Math.min(10, Number(product.stock)) ? 'opacity-20 cursor-not-allowed' : ''}`}
-                    >
-                      +
-                    </button>
+              {/* Trust Badges */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-[#D8CBBE]/30">
+                {[
+                  { icon: Shield, label: "Vault Secure" },
+                  { icon: Truck, label: "Express Shipping" },
+                  { icon: RotateCcw, label: "Hassle Free" },
+                  { icon: Gem, label: "Premium Quality" }
+                ].map((item, i) => (
+                  <div key={i} className="flex flex-col items-center gap-3 text-center">
+                    <item.icon size={20} className="text-[#7A0E2E]/40" strokeWidth={1} />
+                    <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-[#7B6D63]">{item.label}</span>
                   </div>
-                  <span className="text-[10px] text-[#5C3D1E]/20 uppercase tracking-[0.3em] font-black">(Max 10)</span>
-                </div>
-
-                <div className="flex gap-6">
-                  <button
-                    onClick={handleAddToCart}
-                    disabled={product.stock <= 0 || cartLoading}
-                    className={`flex-1 h-16 text-[11px] uppercase tracking-[0.4em] font-black rounded-full transition-all duration-500 flex items-center justify-center gap-4 shadow-xl ${
-                      product.stock <= 0
-                      ? 'bg-[#2C1A0E]/10 text-[#2C1A0E]/40 cursor-not-allowed border border-[#2C1A0E]/10'
-                      : isInCart(product.id)
-                      ? 'bg-[#640D14] text-white'
-                      : 'bg-[#2C1A0E] text-white hover:bg-[#640D14]'
-                    }`}
-                  >
-                    {cartLoading ? (
-                      <Loader2 size={20} className="animate-spin text-white" />
-                    ) : (
-                      <ShoppingBag size={20} strokeWidth={2} />
-                    )}
-                    {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'In Collection' : 'Acquire Selection'}
-                  </button>
-                  <button
-                    onClick={handleAddToWishlist}
-                    disabled={wishlistLoading}
-                    className={`w-16 h-16 rounded-full border-2 flex items-center justify-center transition-all duration-500 shadow-lg ${
-                      isInWishlist(product.id)
-                      ? 'bg-[#640D14] border-[#640D14] text-white'
-                      : 'border-[#640D14]/10 bg-white text-[#2C1A0E] hover:text-[#640D14] hover:border-[#640D14]'
-                    }`}
-                  >
-                    {wishlistLoading ? (
-                      <Loader2 size={22} className="animate-spin text-[#640D14]" />
-                    ) : (
-                      <Heart size={22} strokeWidth={2} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
-                    )}
-                  </button>
-                </div>
+                ))}
               </div>
 
-              {/* Atelier Contact Card */}
-              <div className="mt-10 p-8 lg:p-10 bg-white rounded-[40px] border border-[#640D14]/10 flex flex-col sm:flex-row items-start sm:items-center gap-8 group hover:border-[#640D14]/30 transition-all duration-700 shadow-sm">
-                 <div className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-[#640D14]/5">
-                    <img src="https://i.pravatar.cc/100?u=artisan" alt="Artisan" className="grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 w-full h-full object-cover" />
-                 </div>
-                 <div className="flex-1 space-y-3">
-                    <div className="flex items-center gap-4">
-                      <h4 className="text-[11px] tracking-[0.3em] uppercase font-black text-[#2C1A0E]">Privé Concierge</h4>
-                      <span className="w-2 h-2 rounded-full bg-[#640D14] animate-pulse"></span>
-                    </div>
-                    <p className="text-[11px] text-[#5C3D1E]/50 tracking-[0.15em] leading-normal italic font-medium">
-                      Master artisans available for bespoke modifications.
-                    </p>
-                 </div>
-                 <button className="text-[10px] tracking-[0.3em] uppercase text-[#640D14] border-b-2 border-[#640D14]/20 pb-2 hover:border-[#640D14] transition-all flex-shrink-0 mt-4 sm:mt-0 font-black">
-                    Consult
-                 </button>
-              </div>
             </div>
           </div>
         </div>
       </div>
-
       {/* Mobile Fixed Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 p-5 bg-white/95 backdrop-blur-2xl border-t border-[#640D14]/10 z-50 lg:hidden flex gap-4 pb-safe-area shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+      <div className="fixed bottom-0 left-0 right-0 p-5 bg-white/95 backdrop-blur-2xl border-t border-[#D8CBBE]/30 z-50 lg:hidden flex gap-4 pb-safe-area shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
           <button
             onClick={handleAddToCart}
             disabled={product.stock <= 0 || cartLoading}
-            className={`flex-1 h-14 text-[11px] uppercase tracking-[0.3em] font-black rounded-full active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg ${
+            className={`flex-1 h-14 text-[10px] uppercase tracking-[0.3em] font-bold rounded-xl active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg ${
               product.stock <= 0
-              ? 'bg-[#2C1A0E]/10 text-[#2C1A0E]/40'
+              ? 'bg-red-50 text-red-400'
               : isInCart(product.id)
-              ? 'bg-[#640D14] text-white'
-              : 'bg-[#2C1A0E] text-white'
+              ? 'bg-[#7A0E2E] text-white'
+              : 'bg-[#2A2623] text-white'
             }`}
           >
             {cartLoading ? (
-              <Loader2 size={16} className="animate-spin text-white" />
+              <Loader2 size={16} className="animate-spin" />
             ) : (
-              <ShoppingBag size={16} strokeWidth={2} />
+              <ShoppingBag size={16} />
             )}
-            {product.stock <= 0 ? 'Sold Out' : isInCart(product.id) ? 'In Collection' : 'Acquire'}
+            {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'In Cart' : 'Acquire'}
           </button>
           <button
             onClick={handleAddToWishlist}
             disabled={wishlistLoading}
-            className={`w-14 h-14 rounded-full border-2 flex items-center justify-center active:scale-95 transition-all shadow-md ${
+            className={`w-14 h-14 rounded-xl border border-[#D8CBBE]/50 flex items-center justify-center active:scale-95 transition-all bg-white shadow-md ${
               isInWishlist(product.id)
-              ? 'bg-[#640D14] border-[#640D14] text-white'
-              : 'border-[#640D14]/10 bg-white text-[#2C1A0E]'
+              ? 'bg-[#7A0E2E] border-[#7A0E2E] text-white'
+              : 'text-[#2A2623]'
             }`}
           >
             {wishlistLoading ? (
-              <Loader2 size={18} className="animate-spin text-[#640D14]" />
+              <Loader2 size={18} className="animate-spin" />
             ) : (
-              <Heart size={18} strokeWidth={2} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
+              <Heart size={18} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
             )}
           </button>
       </div>
 
-      {/* Safe area padding style for iOS bottom bar support */}
       <style dangerouslySetInnerHTML={{__html: `
         .pb-safe-area { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
         .scrollbar-hide::-webkit-scrollbar { display: none; }

@@ -1,157 +1,169 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, FreeMode, Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
+import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/free-mode';
 
-const articles = [
+const worldEdits = [
   {
     id: 1,
-    tags: ['JEWELLERY', 'EVENTS'],
-    title: "Jewellery Geneva 2026: Inside Geneva's Boutique Jewellery Show",
-    author: "BY KATERINA PEREZ",
-    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=800",
-    isClub: false,
+    region: "India",
+    subtext: "Royal Heritage",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=600",
+    link: "/world-edit/india"
   },
   {
     id: 2,
-    tags: ['KP BLOG', 'PERSONAL BLOG'],
-    title: "Heart or Head: The Ultimate Test for Gem Lovers",
-    author: "BY VELOURAZ",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop",
-    isClub: true,
+    region: "Korea",
+    subtext: "Minimal Elegance",
+    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=600",
+    link: "/world-edit/korea"
   },
   {
     id: 3,
-    tags: ['GEMSTONES', 'COLOURED GEMS'],
-    title: "Paraiba Tourmaline: The Making of a Modern Blue-Chip Gemstone",
-    author: "BY KATERINA PEREZ",
-    image: "https://images.unsplash.com/photo-1605100804567-1ffe942b5cd6?w=600&auto=format&fit=crop&q=60",
-    isClub: true,
+    region: "Turkey",
+    subtext: "Timeless Beauty",
+    image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=600",
+    link: "/world-edit/turkey"
   },
   {
     id: 4,
-    tags: ['TRENDS', 'FASHION'],
-    title: "The Renaissance of Yellow Gold in High Jewellery",
-    author: "BY VELOURAZ",
-    image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=800",
-    isClub: false,
+    region: "Arabia",
+    subtext: "Golden Opulence",
+    image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=600",
+    link: "/world-edit/arabia"
   },
   {
     id: 5,
-    tags: ['ARTISANS', 'MASTERY'],
-    title: "The Art of Invisible Setting: A Masterclass",
-    author: "BY KATERINA PEREZ",
-    image: "https://images.unsplash.com/photo-1608508644127-ba99d7732fee?w=600&auto=format&fit=crop&q=60",
-    isClub: true,
+    region: "Europe",
+    subtext: "Classic Glamour",
+    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=600",
+    link: "/world-edit/europe"
   }
 ];
 
-const FeaturedArticles = () => {
+const WorldEdit = () => {
   return (
-    <section className="bg-[#F5EDD8] py-16 lg:py-24 font-sans border-t border-[#640D14]/10 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
+    <section className="bg-[#F8F4EF] py-20 lg:py-32 overflow-hidden relative border-t border-[#D8CBBE]/30">
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-10">
+        
+        <div className="flex flex-col lg:flex-row items-end justify-between mb-16 gap-8">
+          <div className="space-y-4 max-w-xl">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-[10px] md:text-[12px] tracking-[0.4em] font-bold text-[#7B6D63] uppercase block"
+            >
+              WORLD EDIT
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-serif text-[#2A2623] leading-tight"
+            >
+              Beauty <span className="text-[#7A0E2E] italic">Beyond Borders</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-[#7B6D63] font-serif text-sm md:text-base leading-relaxed"
+            >
+              Explore jewellery inspired by the world's most celebrated cultures. 
+              Handpicked. Curated. Authentic.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <Link 
+                to="/world-edit" 
+                className="bg-[#7A0E2E] text-white px-8 py-3.5 text-[10px] tracking-[0.2em] font-bold uppercase hover:bg-[#5E0B24] transition-all flex items-center gap-2 w-fit shadow-lg"
+              >
+                Explore World Edits
+              </Link>
+            </motion.div>
+          </div>
 
-        {/* Section Header */}
-        <div className="lg:text-center text-left mb-16 px-4">
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-7xl text-[#2C1A0E] tracking-tighter leading-tight mb-4">
-            <span style={{ fontFamily: "var(--font-script)", fontWeight: 100 }} className="text-6xl md:text-7xl lg:text-8xl block md:inline mb-2 md:mb-0 text-[#640D14]/70">
-              Latest
-            </span> Stories
-          </h2>
-          <p className="text-[10px] md:text-xs font-sans text-[#640D14]/50 tracking-[0.4em] uppercase font-bold max-w-xl mx-auto">
-            Select and read: from public articles to club exclusives.
-          </p>
+          {/* Custom Navigation */}
+          <div className="flex items-center gap-4 hidden lg:flex">
+            <button className="world-prev w-12 h-12 rounded-full border border-[#D8CBBE] flex items-center justify-center text-[#2A2623] hover:bg-[#7A0E2E] hover:text-white hover:border-[#7A0E2E] transition-all">
+              <ChevronLeft size={20} />
+            </button>
+            <button className="world-next w-12 h-12 rounded-full border border-[#D8CBBE] flex items-center justify-center text-[#2A2623] hover:bg-[#7A0E2E] hover:text-white hover:border-[#7A0E2E] transition-all">
+              <ChevronRight size={20} />
+            </button>
+          </div>
         </div>
 
-        {/* Article Slider */}
-        <div className="relative group/slider">
+        {/* Swiper Slider */}
+        <div className="relative">
           <Swiper
-            modules={[Pagination, FreeMode, Navigation]}
-            spaceBetween={24}
+            modules={[Navigation, Pagination]}
+            spaceBetween={20}
             slidesPerView={1.2}
-            freeMode={true}
+            navigation={{
+              prevEl: '.world-prev',
+              nextEl: '.world-next',
+            }}
             pagination={{
               clickable: true,
-              bulletClass: 'swiper-pagination-bullet !bg-[#640D14]/20',
-              bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#640D14]',
+              el: '.world-pagination',
             }}
             breakpoints={{
               640: { slidesPerView: 2.2 },
-              1024: { slidesPerView: 3 },
+              1024: { slidesPerView: 4.2 },
             }}
-            className="!pb-20"
+            className="!overflow-visible"
           >
-            {articles.map((article, index) => (
-              <SwiperSlide key={article.id}>
+            {worldEdits.map((item, index) => (
+              <SwiperSlide key={item.id}>
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className="group cursor-pointer flex flex-col h-full"
+                  transition={{ delay: index * 0.1 }}
+                  className="group relative h-[450px] overflow-hidden rounded-2xl cursor-pointer"
                 >
-                  <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-6 border border-[#640D14]/10 bg-[#F5EDD8] shadow-[0_8px_30px_rgba(44,26,14,0.06)]">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover opacity-90 transition-transform duration-[1.5s] ease-out group-hover:scale-108 group-hover:opacity-100"
-                    />
-
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C1A0E]/30 via-transparent to-transparent opacity-30 group-hover:opacity-50 transition-opacity" />
-
-                    {article.isClub && (
-                      <div className="absolute top-5 left-5 bg-[#640D14]/15 backdrop-blur-md border border-[#640D14]/30 text-[#640D14] text-[9px] font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
-                        CLUB EXCLUSIVE
-                      </div>
-                    )}
-
-                    <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                      <button className="w-full bg-white/90 backdrop-blur-xl border border-[#640D14]/10 py-3.5 text-[10px] tracking-[0.3em] font-bold uppercase text-[#2C1A0E] flex items-center justify-center gap-2 rounded-xl hover:bg-[#640D14] hover:text-white hover:border-[#640D14] transition-all duration-300">
-                        Read Story <ArrowUpRight size={14} />
-                      </button>
-                    </div>
-
-                    <button className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-[#640D14]/10 flex items-center justify-center text-[#2C1A0E] hover:bg-[#640D14] hover:text-white hover:border-[#640D14] transition-colors duration-300 group/heart">
-                      <Heart size={15} strokeWidth={1.5} className="group-hover/heart:fill-white" />
-                    </button>
-                  </div>
-
-                  <div className="space-y-3 px-2 flex-grow flex flex-col">
-                    <div className="flex gap-4">
-                      {article.tags.map(tag => (
-                        <span key={tag} className="text-[9px] tracking-[0.3em] font-bold uppercase text-[#640D14]/60 group-hover:text-[#640D14] transition-colors">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <h3 className="font-serif text-xl lg:text-2xl text-[#2C1A0E] group-hover:text-[#640D14] transition-colors duration-500 leading-tight">
-                      {article.title}
-                    </h3>
-
-                    <div className="mt-auto pt-5 flex items-center gap-4">
-                      <div className="h-[1px] w-8 bg-[#640D14]/20"></div>
-                      <p className="text-[9px] tracking-[0.3em] uppercase font-bold text-[#640D14]/40 group-hover:text-[#640D14]/60 transition-colors">
-                        {article.author}
-                      </p>
+                  <img 
+                    src={item.image} 
+                    alt={item.region} 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  
+                  <div className="absolute bottom-8 left-8 right-8 space-y-1">
+                    <h3 className="text-2xl font-serif text-white">{item.region}</h3>
+                    <p className="text-[10px] tracking-[0.2em] font-bold text-white/70 uppercase">{item.subtext}</p>
+                    
+                    <div className="pt-4 overflow-hidden h-0 group-hover:h-8 transition-all duration-500">
+                      <Link to={item.link} className="flex items-center gap-2 text-[9px] tracking-[0.2em] font-bold text-white uppercase">
+                        View Collection <ArrowRight size={12} />
+                      </Link>
                     </div>
                   </div>
                 </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>
+          
+          {/* Mobile Pagination */}
+          <div className="world-pagination mt-10 flex justify-center lg:hidden" />
         </div>
-
       </div>
     </section>
   );
 };
 
-export default FeaturedArticles;
+export default WorldEdit;

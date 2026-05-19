@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -10,133 +10,117 @@ import 'swiper/css/pagination';
 
 const reviews = [
   {
-    name: "Eleanor Vance",
-    location: "London, UK",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop",
-    quote: "The craftsmanship on the Solitaire Necklace is breathtaking. It holds a brilliant sparkle that rivals my fine jewelry pieces. Truly timeless elegance.",
+    name: "Priya S.",
+    quote: "The quality is exceptional and designs are so unique. Velouraz is my go-to for every occasion!",
+    rating: 5
   },
   {
-    name: "Isabelle Moreau",
-    location: "Paris, France",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop",
-    quote: "I was hesitant about artificial jewelry, but Velouraz redefined my expectations. The plating is exquisite and doesn't irritate my sensitive skin. Magnifique!",
+    name: "Ananya R.",
+    quote: "Stunning pieces and super fast delivery. I felt the luxury in the packaging too!",
+    rating: 5
   },
   {
-    name: "Sofia Rossi",
-    location: "Milan, Italy",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
-    quote: "Purchased the Champagne Gold Hoops. The weight and finish feel so premium. Customer service was flawless—global shipping was incredibly fast and secure.",
+    name: "Neha K.",
+    quote: "Finally found a brand that brings global styles with so much elegance and quality.",
+    rating: 5
   },
   {
-    name: "Ava Chen",
-    location: "New York, USA",
-    image: "https://images.unsplash.com/photo-1531123897727-8f129e16fd3c?q=80&w=400&auto=format&fit=crop",
-    quote: "Absolutely stunning pieces! I bought the Emerald Cut Ring and it's my new everyday staple. The attention to detail is remarkable.",
+    name: "Meera J.",
+    quote: "Exquisite craftsmanship! The pieces are even more beautiful in person than in pictures.",
+    rating: 5
   }
 ];
 
 const Testimonials = () => {
   return (
-    <section className="bg-[#F5EDD8] py-12 lg:py-24 px-4 sm:px-8 lg:px-16 font-sans relative overflow-hidden border-t border-[#640D14]/10">
-      {/* Decorative vertical lines */}
-      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden lg:block" />
-      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden lg:block" />
-
-      <div className="max-w-[1800px] mx-auto relative z-10">
-
+    <section className="bg-[#7A0E2E] py-20 lg:py-32 overflow-hidden relative">
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-10">
+        
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row justify-between lg:items-end mb-16 md:mb-24 border-b border-[#640D14]/10 pb-12 md:pb-16 gap-6">
-          <div className="space-y-6">
-            <motion.span
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-[#640D14]/60 text-[9px] md:text-[10px] tracking-[0.6em] uppercase block font-bold"
-            >
-              Client Chronicles
-            </motion.span>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#2C1A0E] tracking-tight leading-tight"
-            >
-              <span style={{ fontFamily: "var(--font-script)", fontWeight: 100 }} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0 text-[#640D14]/60">Client</span> Testimonials
-            </motion.h2>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+        <div className="text-center mb-16 space-y-4">
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-sm"
+            className="text-[10px] md:text-[12px] tracking-[0.4em] font-bold text-white/70 uppercase block"
           >
-            <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5C3D1E]/60 leading-relaxed font-bold">
-              Discover the experiences of our global clientele who have embraced the Velouraz vision.
-            </p>
-          </motion.div>
+            LOVED BY 1000+ CUSTOMERS
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-serif text-white"
+          >
+            Real Stories. <span className="text-white/70 italic">Real Love.</span>
+          </motion.h2>
         </div>
 
-        {/* Testimonials Swiper */}
+        {/* Testimonials Carousel */}
         <div className="relative">
           <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={32}
-            slidesPerView={1.1}
-            autoplay={{ delay: 6000, disableOnInteraction: false }}
-            pagination={{ clickable: true, el: '.custom-pagination-testimonials' }}
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1.2}
+            navigation={{
+              prevEl: '.testi-prev',
+              nextEl: '.testi-next',
+            }}
+            pagination={{
+              clickable: true,
+              el: '.testi-pagination',
+            }}
             breakpoints={{
               768: { slidesPerView: 2.2 },
-              1280: { slidesPerView: 3.2 },
+              1024: { slidesPerView: 3 },
             }}
-            className="pb-16"
+            className="!overflow-visible"
           >
             {reviews.map((review, index) => (
               <SwiperSlide key={index}>
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className="group h-full"
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-[#F8F4EF] p-10 lg:p-12 rounded-3xl h-full flex flex-col justify-between shadow-2xl min-h-[300px]"
                 >
-                  <div className="h-full bg-white p-10 border border-[#640D14]/10 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(44,26,14,0.08)] hover:border-[#640D14]/30 relative overflow-hidden rounded-2xl">
-                    <Quote size={40} strokeWidth={0.5} className="text-[#640D14]/20 mb-8" />
-
-                    <p className="text-[#2C1A0E]/80 font-serif text-lg md:text-xl leading-relaxed mb-10 italic">
-                      "{review.quote}"
-                    </p>
-
-                    <div className="flex items-center gap-5 pt-8 border-t border-[#640D14]/10">
-                      <div className="w-14 h-14 rounded-full overflow-hidden border border-[#640D14]/20">
-                        <img
-                          src={review.image}
-                          alt={review.name}
-                          className="w-full h-full object-cover opacity-90 group-hover:scale-110 group-hover:opacity-100 transition-all duration-500"
-                        />
-                      </div>
-                      <div>
-                        <h4 className="font-serif text-lg text-[#2C1A0E] group-hover:text-[#640D14] transition-colors">{review.name}</h4>
-                        <p className="text-[10px] tracking-[0.2em] uppercase text-[#640D14]/50 mt-1">{review.location}</p>
-                      </div>
+                  <p className="text-[#7B6D63] font-serif text-lg lg:text-xl leading-relaxed italic">
+                    "{review.quote}"
+                  </p>
+                  
+                  <div className="mt-8 space-y-3">
+                    <div className="flex gap-1">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} size={14} className="fill-[#7A0E2E] text-[#7A0E2E]" />
+                      ))}
                     </div>
-
-                    {/* Bottom accent */}
-                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#640D14] group-hover:w-full transition-all duration-700" />
+                    <h4 className="text-sm font-bold text-[#2A2623] uppercase tracking-widest">— {review.name}</h4>
                   </div>
                 </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>
 
-          <div className="custom-pagination-testimonials flex justify-center mt-8 gap-3"></div>
+          {/* Navigation Arrows */}
+          <button className="testi-prev absolute top-1/2 -left-4 lg:-left-12 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-[#7A0E2E] transition-all z-10 hidden md:flex">
+            <ChevronLeft size={24} />
+          </button>
+          <button className="testi-next absolute top-1/2 -right-4 lg:-right-12 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-[#7A0E2E] transition-all z-10 hidden md:flex">
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Pagination dots */}
+          <div className="testi-pagination mt-12 flex justify-center" />
         </div>
       </div>
+
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full -ml-32 -mb-32 blur-3xl" />
     </section>
   );
 };
-
 
 export default Testimonials;

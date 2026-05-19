@@ -1,202 +1,146 @@
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-
-const sliderData = [
-    {
-        id: 1,
-        tags: ['GEMSTONES', 'PEARLS'],
-        title: "Pearl Biography: A Bahraini Diver's Journey",
-        description: "In 2013, a newspaper published an article about Ahmed Mattar. No one could have predicted that diver would one day own a brand that captures the essence of the Arabian Gulf.",
-        image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=1600",
-    },
-    {
-        id: 2,
-        tags: ['HIGH JEWELLERY', 'EVENTS'],
-        title: "Geneva Show: Masterpieces of Tomorrow",
-        description: "The annual high jewellery showcase returns to Geneva, bringing together the world's most prestigious maisons. Discover the highlights of this year's most anticipated luxury event.",
-        image: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=1600",
-    },
-    {
-        id: 3,
-        tags: ['ARTISANSHIP', 'HERITAGE'],
-        title: "The Atelier: Where Time Stands Still",
-        description: "Step inside our private workshop where master goldsmiths breathe life into cold metal. Every Velouraz piece is a symphony of patience and centuries-old technical mastery.",
-        image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1600&auto=format&fit=crop",
-    },
-    {
-        id: 4,
-        tags: ['COLLECTIONS', 'NOUVEAU'],
-        title: "Celestial Echoes: The 2026 Collection",
-        description: "Inspired by the architectural geometry of the night sky, our latest series explores the delicate balance between structural strength and ethereal weightlessness.",
-        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=1600",
-    }
-];
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Truck, ShieldCheck, RefreshCw, Star, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [direction, setDirection] = useState(0); // -1 for prev, 1 for next
+  return (
+    <section className="relative w-full bg-[#F8F4EF] overflow-hidden">
+      {/* Main Hero Content */}
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-10 flex flex-col lg:flex-row items-center min-h-[600px] lg:min-h-[800px] pt-10 lg:pt-0">
+        
+        {/* Left: Text Content */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-start z-10 space-y-6 lg:space-y-8 py-10 lg:py-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-4"
+          >
+            <span className="text-[10px] md:text-[12px] tracking-[0.4em] font-bold text-[#7B6D63] uppercase block">
+              CURATED. INSPIRED. TIMELESS.
+            </span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-[#2A2623] leading-[1.1] md:leading-[1.05]">
+              Jewellery that <br />
+              <span className="text-[#7A0E2E] italic">Travels the World</span>
+            </h1>
+            <p className="text-[14px] md:text-[16px] text-[#7B6D63] font-serif max-w-md leading-relaxed">
+              Handpicked designs from iconic cultures, crafted for the modern you. 
+              Discover pieces that tell a story of heritage and elegance.
+            </p>
+          </motion.div>
 
-    // Auto-scroll logic
-    useEffect(() => {
-        const timer = setInterval(() => {
-            nextSlide();
-        }, 10000);
-        return () => clearInterval(timer);
-    }, [currentIndex]);
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <Link 
+              to="/shop" 
+              className="bg-[#7A0E2E] text-[#FFFDF9] px-10 py-4 text-[11px] tracking-[0.2em] font-bold uppercase hover:bg-[#5E0B24] transition-all duration-500 shadow-xl flex items-center gap-3 group"
+            >
+              Explore Collections
+              <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-500" />
+            </Link>
+          </motion.div>
+        </div>
 
-    const slideVariants = {
-        initial: (direction) => ({
-            x: direction > 0 ? '20%' : '-20%',
-            opacity: 0,
-            scale: 1.1
-        }),
-        animate: {
-            x: 0,
-            opacity: 1,
-            scale: 1,
-            transition: {
-                duration: 1.2,
-                ease: [0.16, 1, 0.3, 1]
-            }
-        },
-        exit: (direction) => ({
-            x: direction > 0 ? '-10%' : '10%',
-            opacity: 0,
-            transition: {
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1]
-            }
-        })
-    };
+        {/* Right: Image Content */}
+        <div className="w-full lg:w-1/2 relative h-[400px] md:h-[600px] lg:h-[800px]">
+          <motion.div
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&q=80&w=1200" 
+              alt="Luxury Jewellery Model" 
+              className="w-full h-full object-cover object-[center_20%] lg:object-center"
+            />
+            {/* Subtle Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#F8F4EF] via-transparent to-transparent lg:block hidden" />
+          </motion.div>
 
-    const nextSlide = () => {
-        setDirection(1);
-        setCurrentIndex((prev) => (prev + 1) % sliderData.length);
-    };
+          {/* Floating Element for Premium Feel */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="absolute bottom-10 right-4 lg:right-10 bg-white/10 backdrop-blur-md border border-white/20 p-4 lg:p-6 rounded-2xl hidden md:block"
+          >
+            <p className="text-[9px] tracking-[0.3em] font-bold text-[#7A0E2E] uppercase mb-1">Featured Piece</p>
+            <p className="text-sm font-serif text-[#2A2623] italic">The Heritage Choker</p>
+          </motion.div>
+        </div>
+      </div>
 
-    const prevSlide = () => {
-        setDirection(-1);
-        setCurrentIndex((prev) => (prev === 0 ? sliderData.length - 1 : prev - 1));
-    };
-
-    const currentSlide = sliderData[currentIndex];
-
-    return (
-        <section className="relative w-full bg-[#FCFCFC] pt-24 pb-8 lg:pt-32 lg:pb-16 overflow-hidden">
-            <div className="max-w-[1600px] mx-auto px-4 lg:px-12">
-
-                {/* Header Pills - Refined Styling */}
-
-
-                <div className="relative group">
-                    <div className="flex flex-col lg:flex-row items-center bg-white rounded-[32px] overflow-hidden border border-neutral-100 shadow-[0_20px_50px_rgba(0,0,0,0.02)]">
-
-                        {/* Left: Content Area (45%) */}
-                        <div className="w-full lg:w-[45%] p-6 lg:p-20 flex flex-col justify-between min-h-[500px] lg:min-h-[700px] z-20 bg-white">
-
-                            <AnimatePresence mode="wait" custom={direction}>
-                                <motion.div
-                                    key={currentSlide.id}
-                                    custom={direction}
-                                    variants={slideVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    className="flex flex-col space-y-8"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <span className="h-[1px] w-8 bg-[#640D14]/30"></span>
-                                        <div className="flex gap-4">
-                                            {currentSlide.tags.map(tag => (
-                                                <span key={tag} className="text-[9px] tracking-[0.3em] font-bold uppercase text-[#640D14]/70">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <h2 className="font-serif text-5xl lg:text-7xl leading-[1.05] text-neutral-900 tracking-tight">
-                                        <span style={{ fontFamily: "var(--font-script)", fontWeight: 100 }} className="text-6xl lg:text-8xl text-[#640D14]">
-                                            {currentSlide.title.split(' ')[0]}
-                                        </span>{" "}
-                                        {currentSlide.title.split(' ').slice(1).join(' ')}
-                                    </h2>
-
-                                    <p className="text-base lg:text-lg font-sans text-neutral-500 leading-relaxed max-w-md">
-                                        {currentSlide.description}
-                                    </p>
-
-                                    <motion.button
-                                        whileHover={{ x: 10, color: '#640D14' }}
-                                        className="flex items-center gap-4 text-[11px] tracking-[0.3em] uppercase font-bold text-neutral-900 pt-4 hover:text-[#640D14] transition-colors"
-                                    >
-                                        Explore Story <ArrowRight size={16} strokeWidth={1.5} className="text-[#640D14]" />
-                                    </motion.button>
-                                </motion.div>
-                            </AnimatePresence>
-
-                            {/* Fractional Pagination & Controls */}
-                            <div className="flex items-center gap-12 mt-12">
-                                <div className="flex items-center gap-4">
-                                    <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center hover:bg-[#640D14] hover:text-white transition-all duration-500 group">
-                                        <ChevronLeft size={20} strokeWidth={1} className="text-[#640D14] group-hover:text-white transition-colors" />
-                                    </button>
-                                    <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center hover:bg-[#640D14] hover:text-white transition-all duration-500 group">
-                                        <ChevronRight size={20} strokeWidth={1} className="text-[#640D14] group-hover:text-white transition-colors" />
-                                    </button>
-                                </div>
-                                <div className="flex items-baseline gap-2 font-serif">
-                                    <span className="text-2xl text-[#640D14]">0{currentIndex + 1}</span>
-                                    <span className="text-neutral-300">/</span>
-                                    <span className="text-sm text-neutral-400">0{sliderData.length}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right: Image Area (55%) */}
-                        <div className="w-full lg:w-[55%] relative h-[500px] lg:h-[700px] overflow-hidden">
-                            <AnimatePresence mode="wait" custom={direction}>
-                                <motion.div
-                                    key={currentSlide.id}
-                                    custom={direction}
-                                    initial={{ scale: 1.2, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.9, opacity: 0 }}
-                                    transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-                                    className="absolute inset-0"
-                                >
-                                    <div className="absolute inset-0 bg-neutral-900/5 z-10" /> {/* Subtle Overlay */}
-                                    <img
-                                        src={currentSlide.image}
-                                        alt={currentSlide.title}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
-
-                            {/* Floating Decorative Element */}
-                            <div className="absolute bottom-10 right-10 z-20 hidden lg:block">
-                                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl text-white max-w-[200px]">
-                                    <p className="text-[8px] tracking-[0.2em] uppercase text-[#640D14] mb-2 font-bold">Featured Collection</p>
-                                    <p className="text-xs font-serif leading-tight">The 2026 High Jewelry Series</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+      {/* USP Bar */}
+      <div className="w-full bg-[#F4EEE8] border-t border-[#D8CBBE]/30">
+        <div className="max-w-[1440px] mx-auto px-4 lg:px-10 py-10 lg:py-14">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-4">
+            
+            {/* Free Shipping */}
+            <div className="flex flex-col items-center text-center space-y-3 group">
+              <div className="p-3 bg-white rounded-full text-[#7A0E2E] shadow-sm group-hover:bg-[#7A0E2E] group-hover:text-white transition-all duration-500">
+                <Truck size={22} strokeWidth={1.5} />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[11px] tracking-[0.1em] font-bold text-[#2A2623] uppercase">Free Shipping</h4>
+                <p className="text-[10px] text-[#7B6D63] font-serif">Across India</p>
+              </div>
             </div>
 
-            {/* Background Decorative Text */}
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 origin-left hidden xl:block">
-                <span className="text-[120px] font-serif text-[#640D14]/[0.03] whitespace-nowrap pointer-events-none uppercase">
-                    Excellence • Artistry
-                </span>
+            {/* Premium Quality */}
+            <div className="flex flex-col items-center text-center space-y-3 group">
+              <div className="p-3 bg-white rounded-full text-[#7A0E2E] shadow-sm group-hover:bg-[#7A0E2E] group-hover:text-white transition-all duration-500">
+                <Star size={22} strokeWidth={1.5} />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[11px] tracking-[0.1em] font-bold text-[#2A2623] uppercase">Premium Quality</h4>
+                <p className="text-[10px] text-[#7B6D63] font-serif">Crafted to last</p>
+              </div>
             </div>
-        </section>
-    );
+
+            {/* Secure Packaging */}
+            <div className="flex flex-col items-center text-center space-y-3 group">
+              <div className="p-3 bg-white rounded-full text-[#7A0E2E] shadow-sm group-hover:bg-[#7A0E2E] group-hover:text-white transition-all duration-500">
+                <ShieldCheck size={22} strokeWidth={1.5} />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[11px] tracking-[0.1em] font-bold text-[#2A2623] uppercase">Secure Packaging</h4>
+                <p className="text-[10px] text-[#7B6D63] font-serif">Perfectly packed</p>
+              </div>
+            </div>
+
+            {/* Easy Returns */}
+            <div className="flex flex-col items-center text-center space-y-3 group">
+              <div className="p-3 bg-white rounded-full text-[#7A0E2E] shadow-sm group-hover:bg-[#7A0E2E] group-hover:text-white transition-all duration-500">
+                <RefreshCw size={22} strokeWidth={1.5} />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[11px] tracking-[0.1em] font-bold text-[#2A2623] uppercase">Easy Returns</h4>
+                <p className="text-[10px] text-[#7B6D63] font-serif">Hassle-free</p>
+              </div>
+            </div>
+
+            {/* 100% Secure Payments */}
+            <div className="flex flex-col items-center text-center space-y-3 lg:col-span-1 md:col-span-3 group">
+              <div className="p-3 bg-white rounded-full text-[#7A0E2E] shadow-sm group-hover:bg-[#7A0E2E] group-hover:text-white transition-all duration-500">
+                <Lock size={22} strokeWidth={1.5} />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-[11px] tracking-[0.1em] font-bold text-[#2A2623] uppercase">100% Secure Payments</h4>
+                <p className="text-[10px] text-[#7B6D63] font-serif">Shop with confidence</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;

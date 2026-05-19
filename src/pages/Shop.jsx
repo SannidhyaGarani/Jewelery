@@ -88,22 +88,22 @@ const Shop = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#FDFAF5] pt-48 pb-32 font-sans relative overflow-hidden text-[#2C1A0E]">
+    <div className="min-h-screen bg-[#F8F4EF] pt-20 pb-32 font-sans relative overflow-hidden text-[#2A2623]">
       {/* Decorative vertical lines */}
-      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden lg:block" />
-      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#640D14]/5 hidden lg:block" />
+      <div className="absolute left-[5%] top-0 w-[1px] h-full bg-[#D8CBBE]/20 hidden lg:block" />
+      <div className="absolute right-[5%] top-0 w-[1px] h-full bg-[#D8CBBE]/20 hidden lg:block" />
       
       {selectedProduct && <QuickView product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
 
       <div className="max-w-[1800px] mx-auto px-6 lg:px-16 relative z-10">
         
         {/* Editorial Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-[#640D14]/10 pb-16">
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-24 border-b border-[#D8CBBE]/30 pb-16">
           <div className="space-y-6 text-center lg:text-left w-full lg:w-auto">
             <motion.span 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="block text-[10px] tracking-[0.6em] uppercase text-[#5C3D1E]/40 font-bold"
+              className="block text-[10px] tracking-[0.6em] uppercase text-[#7B6D63] font-bold"
             >
               Exquisite Selection
             </motion.span>
@@ -111,9 +111,9 @@ const Shop = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#2C1A0E] leading-tight tracking-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#2A2623] leading-tight tracking-tight"
             >
-              <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-5xl md:text-6xl lg:text-7xl block md:inline mb-2 md:mb-0 text-[#640D14]/80">The</span> Inventory
+              <span className="text-[#7A0E2E] italic font-light block md:inline mb-2 md:mb-0">The</span> Inventory
             </motion.h1>
           </div>
           
@@ -125,7 +125,7 @@ const Shop = () => {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={`text-[9px] tracking-[0.3em] uppercase transition-all duration-300 relative pb-2 flex-shrink-0 font-bold ${
-                      selectedCategory === cat ? 'text-[#640D14] border-b-2 border-[#640D14]' : 'text-[#5C3D1E]/40 hover:text-[#640D14]'
+                      selectedCategory === cat ? 'text-[#7A0E2E] border-b-2 border-[#7A0E2E]' : 'text-[#7B6D63]/50 hover:text-[#7A0E2E]'
                     }`}
                   >
                     {cat}
@@ -135,11 +135,11 @@ const Shop = () => {
              
              {/* Search */}
              <div className="relative group w-full lg:w-auto">
-                <Search className="absolute right-0 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={14} />
+                <Search className="absolute right-0 top-1/2 -translate-y-1/2 text-[#7B6D63]/30 group-focus-within:text-[#7A0E2E] transition-colors" size={14} />
                 <input 
                    type="text" 
                    placeholder="SEARCH COLLECTION" 
-                   className="bg-transparent border-b border-[#640D14]/20 pr-8 py-2 text-[10px] tracking-[0.3em] uppercase text-[#2C1A0E] outline-none focus:border-[#640D14] transition-all w-full lg:w-48 font-bold placeholder:text-[#5C3D1E]/20"
+                   className="bg-transparent border-b border-[#D8CBBE]/50 pr-8 py-2 text-[10px] tracking-[0.3em] uppercase text-[#2A2623] outline-none focus:border-[#7A0E2E] transition-all w-full lg:w-48 font-bold placeholder:text-[#7B6D63]/30"
                    value={searchTerm}
                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -150,7 +150,7 @@ const Shop = () => {
         {/* Product Grid */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-24">
-            {[...Array(8)].map((_, i) => <div key={i} className="aspect-[3/4] bg-[#F5EDD8]/40 animate-pulse rounded-2xl border border-[#640D14]/5" />)}
+            {[...Array(8)].map((_, i) => <div key={i} className="aspect-[3/4] bg-[#7A0E2E]/5 animate-pulse rounded-2xl border border-[#D8CBBE]/20" />)}
           </div>
         ) : sortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-24">
@@ -164,77 +164,79 @@ const Shop = () => {
                 className="group cursor-pointer relative"
                 onClick={() => navigate(`/product/${product.id}`)}
               >
-                <div className="aspect-[3/4] overflow-hidden bg-white mb-8 relative luxury-card border border-[#640D14]/10 rounded-[32px] shadow-sm overflow-hidden">
+                <div className="aspect-[3/4] overflow-hidden bg-[#F4EEE8] mb-8 relative border border-[#D8CBBE]/30 rounded-2xl transition-all duration-700 ease-out group-hover:shadow-[0_30px_60px_rgba(122,14,46,0.1)]">
                   <img 
                     src={product.image || product.images?.[0]} 
                     alt={product.name} 
                     className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110 opacity-95 group-hover:opacity-100"
                   />
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-[#2A2623]/0 group-hover:bg-[#2A2623]/5 transition-colors duration-500" />
                   
                   {/* Subtle actions */}
-                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col gap-4 z-20">
+                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0 flex flex-col gap-4 z-20">
                      <button 
                        onClick={(e) => handleAddToWishlist(e, product)} 
                        disabled={wishlistLoadings[product.id]}
-                       className={`w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center transition-all border ${
+                       className={`w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all border ${
                          isInWishlist(product.id) 
-                         ? 'bg-[#640D14] text-white border-[#640D14]' 
-                         : 'bg-white/80 text-[#2C1A0E] hover:text-[#640D14] border-[#640D14]/10 hover:border-[#640D14]'
+                         ? 'bg-[#7A0E2E] text-white border-[#7A0E2E]' 
+                         : 'bg-white/90 text-[#2A2623] hover:bg-[#7A0E2E] hover:text-white border-white/20 shadow-lg'
                        }`}
                      >
                         {wishlistLoadings[product.id] ? (
-                          <Loader2 size={14} className="animate-spin text-[#640D14]" />
+                          <Loader2 size={14} className="animate-spin" />
                         ) : (
                           <Heart size={16} strokeWidth={1.5} fill={isInWishlist(product.id) ? "currentColor" : "none"} />
                         )}
                      </button>
-                     <button onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }} className="w-9 h-9 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-[#2C1A0E] hover:text-[#640D14] transition-all border border-[#640D14]/10 hover:border-[#640D14]">
+                     <button onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }} className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-[#2A2623] hover:bg-[#7A0E2E] hover:text-white transition-all border border-white/20 shadow-lg">
                         <Eye size={16} strokeWidth={1.5} />
                      </button>
                   </div>
 
                   {/* Add to Cart Overlay Button */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-white via-white/80 to-transparent z-20">
+                  <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 z-20">
                      <button 
                        onClick={(e) => product.stock > 0 && handleAddToCart(e, product)}
                        disabled={product.stock <= 0 || cartLoadings[product.id]}
-                       className={`w-full py-4 rounded-full text-[9px] tracking-[0.3em] font-black uppercase transition-all flex items-center justify-center gap-2 shadow-xl ${
+                       className={`w-full py-4 text-[10px] tracking-[0.2em] font-bold uppercase flex items-center justify-center gap-3 transition-all rounded-xl shadow-xl ${
                          product.stock <= 0
-                         ? 'bg-[#2C1A0E]/10 text-[#2C1A0E]/40 cursor-not-allowed border border-[#2C1A0E]/10'
+                         ? 'bg-red-50 text-red-400 cursor-not-allowed border border-red-100'
                          : isInCart(product.id) 
-                         ? 'bg-[#640D14] text-white' 
-                         : 'bg-white text-[#2C1A0E] border border-[#640D14]/20 hover:bg-[#640D14] hover:text-white hover:border-[#640D14]'
+                         ? 'bg-[#7A0E2E] text-white' 
+                         : 'bg-[#2A2623] text-white hover:bg-[#7A0E2E] border-none'
                        }`}
                      >
-                        {cartLoadings[product.id] && <Loader2 size={12} className="animate-spin" />}
-                        {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'Added to Cart' : 'Quick Add'}
+                        {cartLoadings[product.id] ? (
+                          <Loader2 size={12} className="animate-spin" />
+                        ) : (
+                          <ShoppingBag size={14} />
+                        )}
+                        {product.stock <= 0 ? 'Out of Stock' : isInCart(product.id) ? 'Added to Cart' : 'Acquire Piece'}
                      </button>
                   </div>
                   {product.stock <= 0 && (
                     <div className="absolute top-6 left-6 z-10">
-                      <span className="bg-[#640D14] text-white text-[8px] tracking-[0.2em] font-black uppercase px-3 py-1.5 rounded-full shadow-xl">
+                      <span className="bg-[#7A0E2E] text-white text-[8px] tracking-[0.3em] font-bold uppercase px-3 py-1.5 rounded-full shadow-lg">
                         Sold Out
                       </span>
                     </div>
                   )}
                 </div>
 
-                <div className="space-y-4 px-2">
-                  <div className="flex justify-between items-start">
-                     <h3 className="font-serif text-xl tracking-wide text-[#2C1A0E] group-hover:text-[#640D14] transition-colors">{product.name}</h3>
+                <div className="space-y-4 px-2 text-center">
+                  <div className="flex flex-col items-center gap-1">
+                     <p className="text-[10px] tracking-[0.3em] font-bold uppercase text-[#7B6D63] mb-1">{product.brand || "Velouraz Atelier"}</p>
+                     <h3 className="font-serif text-xl text-[#2A2623] group-hover:text-[#7A0E2E] transition-colors duration-300">{product.name}</h3>
                   </div>
-                  <div className="flex justify-between items-center">
-                     <p className="text-[10px] tracking-[0.2em] uppercase text-[#5C3D1E]/40 font-bold">{product.category}</p>
-                     <div className="flex items-center gap-3">
-                        <p className="font-serif text-lg text-[#640D14]">₹{Number(product.price).toLocaleString()}</p>
-                        {product.original_price > product.price && (
-                           <p className="text-xs text-[#5C3D1E]/30 line-through">₹{Number(product.original_price).toLocaleString()}</p>
-                        )}
-                     </div>
+                  <div className="flex justify-center items-center gap-4">
+                     <p className="text-base font-medium text-[#7A0E2E]">₹{Number(product.price).toLocaleString()}</p>
+                     {product.original_price > product.price && (
+                        <p className="text-sm text-[#7B6D63]/50 line-through">₹{Number(product.original_price).toLocaleString()}</p>
+                     )}
                   </div>
-                  <div className="pt-4 opacity-0 group-hover:opacity-100 transition-all duration-500 border-t border-[#640D14]/10">
-                     <button className="text-[9px] tracking-[0.4em] uppercase text-[#640D14] flex items-center gap-3 font-bold group/btn">
+                  <div className="pt-4 opacity-0 group-hover:opacity-100 transition-all duration-500 border-t border-[#D8CBBE]/30">
+                     <button className="text-[9px] tracking-[0.4em] uppercase text-[#7A0E2E] flex items-center gap-3 font-bold group/btn mx-auto">
                         View Details <ArrowRight size={14} className="group-hover/btn:translate-x-2 transition-transform duration-500" />
                      </button>
                   </div>
@@ -243,9 +245,9 @@ const Shop = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-40 border border-[#640D14]/10 bg-[#F5EDD8]/20 rounded-[40px]">
-             <p className="font-serif text-3xl italic text-[#5C3D1E]/30 mb-8">No pieces found matching your criteria</p>
-             <button onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }} className="text-[11px] tracking-[0.4em] uppercase text-[#640D14] border-b-2 border-[#640D14] pb-2 font-bold">View All Pieces</button>
+          <div className="text-center py-40 border border-[#D8CBBE]/30 bg-[#F4EEE8]/40 rounded-[40px]">
+             <p className="font-serif text-3xl italic text-[#7B6D63]/30 mb-8">No pieces found matching your criteria</p>
+             <button onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }} className="text-[11px] tracking-[0.4em] uppercase text-[#7A0E2E] border-b-2 border-[#7A0E2E] pb-2 font-bold">View All Pieces</button>
           </div>
         )}
       </div>

@@ -28,117 +28,117 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFAF5] flex items-center justify-center px-4 py-20 relative overflow-hidden selection:bg-[#640D14] selection:text-white">
+    <div className="min-h-screen bg-[#F8F4EF] flex items-center justify-center px-4 py-20 relative overflow-hidden selection:bg-[#7A0E2E] selection:text-white">
       {/* Refined Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#640D14]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#640D14]/3 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#7A0E2E]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#7A0E2E]/3 rounded-full blur-[120px]" />
       </div>
 
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-[480px] bg-white rounded-[40px] border border-[#640D14]/10 shadow-[0_32px_80px_rgba(100,13,20,0.08)] p-8 md:p-12 relative z-10"
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-[500px] bg-white/40 backdrop-blur-xl rounded-[48px] border border-[#D8CBBE]/30 shadow-[0_32px_80px_rgba(122,14,46,0.08)] p-10 md:p-16 relative z-10"
       >
-        <div className="text-center mb-10">
+        <div className="text-center mb-12">
           <motion.div 
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
-            className="inline-flex items-center justify-center w-14 h-14 bg-[#640D14] rounded-2xl text-white mb-8 shadow-lg shadow-[#640D14]/20"
+            className="inline-flex items-center justify-center w-16 h-16 bg-[#7A0E2E] rounded-[24px] text-white mb-10 shadow-xl shadow-[#7A0E2E]/20"
           >
-            <Sparkles size={24} />
+            <Sparkles size={28} />
           </motion.div>
-          <h2 className="text-4xl font-serif text-[#2C1A0E] tracking-tight leading-none mb-3 font-bold">
-            Create <span style={{fontFamily: "var(--font-script)", fontWeight: 100}} className="text-[#640D14] lowercase text-5xl ml-1">Legacy</span>
+          <h2 className="text-4xl md:text-5xl font-serif text-[#2A2623] tracking-tighter leading-none mb-4 font-bold">
+            The <span className="text-[#7A0E2E] italic font-light">Legacy</span>
           </h2>
-          <p className="text-[#5C3D1E]/40 font-sans text-[10px] tracking-[0.4em] uppercase font-bold">Join the Atelier de Luxe</p>
+          <p className="text-[#7B6D63] font-serif text-lg italic">Join the House of Velouraz</p>
         </div>
 
         {error && (
           <motion.div 
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            className="mb-8 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 text-xs font-bold"
+            className="mb-8 p-5 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 text-red-600 text-xs font-bold"
           >
-            <AlertCircle size={16} />
+            <AlertCircle size={18} />
             {error}
           </motion.div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#5C3D1E]/40 ml-4">Legal Name</label>
+            <label className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#7B6D63] ml-2">Full Name</label>
             <div className="relative group">
-              <User className="absolute left-6 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={18} />
+              <User className="absolute left-6 top-1/2 -translate-y-1/2 text-[#7B6D63]/30 group-focus-within:text-[#7A0E2E] transition-colors" size={18} />
               <input
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Monsieur/Madame Doe"
-                className="w-full pl-14 pr-6 py-4 rounded-[20px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14] outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 text-sm"
+                className="w-full pl-16 pr-8 py-5 rounded-[24px] bg-white/60 border border-[#D8CBBE]/50 focus:border-[#7A0E2E] outline-none transition-all font-sans text-[#2A2623] placeholder:text-[#7B6D63]/30 text-sm font-medium shadow-sm"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#5C3D1E]/40 ml-4">Email Address</label>
+            <label className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#7B6D63] ml-2">Email Address</label>
             <div className="relative group">
-              <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={18} />
+              <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-[#7B6D63]/30 group-focus-within:text-[#7A0E2E] transition-colors" size={18} />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="excellence@velouraz.com"
-                className="w-full pl-14 pr-6 py-4 rounded-[20px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14] outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 text-sm"
+                placeholder="email@velouraz.com"
+                className="w-full pl-16 pr-8 py-5 rounded-[24px] bg-white/60 border border-[#D8CBBE]/50 focus:border-[#7A0E2E] outline-none transition-all font-sans text-[#2A2623] placeholder:text-[#7B6D63]/30 text-sm font-medium shadow-sm"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#5C3D1E]/40 ml-4">Secret Password</label>
+            <label className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#7B6D63] ml-2">Secret Password</label>
             <div className="relative group">
-              <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-[#5C3D1E]/20 group-focus-within:text-[#640D14] transition-colors" size={18} />
+              <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-[#7B6D63]/30 group-focus-within:text-[#7A0E2E] transition-colors" size={18} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-14 pr-6 py-4 rounded-[20px] bg-[#FDFAF5] border border-[#640D14]/10 focus:border-[#640D14] outline-none transition-all font-sans text-[#2C1A0E] placeholder:text-[#5C3D1E]/20 text-sm"
+                className="w-full pl-16 pr-8 py-5 rounded-[24px] bg-white/60 border border-[#D8CBBE]/50 focus:border-[#7A0E2E] outline-none transition-all font-sans text-[#2A2623] placeholder:text-[#7B6D63]/30 text-sm font-medium shadow-sm"
                 required
               />
             </div>
           </div>
 
-          <div className="flex items-start gap-3 px-2 pt-2 pb-4">
-            <ShieldCheck size={16} className="text-[#640D14] flex-shrink-0 mt-0.5" />
-            <p className="text-[9px] text-[#5C3D1E]/40 font-bold leading-relaxed uppercase tracking-widest">
-              By joining, you accept our <span className="text-[#640D14]">Statutes</span> and <span className="text-[#640D14]">Privacy Protocol</span>.
+          <div className="flex items-start gap-4 px-2 pt-4 pb-6">
+            <ShieldCheck size={20} className="text-[#7A0E2E] flex-shrink-0 mt-0.5" />
+            <p className="text-[10px] text-[#7B6D63] font-bold leading-relaxed uppercase tracking-[0.2em]">
+              By joining, you accept our <span className="text-[#7A0E2E]">Statutes</span> and <span className="text-[#7A0E2E]">Privacy Protocol</span>.
             </p>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="group w-full py-4.5 rounded-[20px] bg-[#640D14] text-white font-bold text-[11px] tracking-[0.3em] uppercase hover:bg-[#2C1A0E] transition-all transform active:scale-[0.98] shadow-xl shadow-[#640D14]/10 flex items-center justify-center gap-3"
+            className="group w-full py-5 rounded-[24px] bg-[#2A2623] text-white font-bold text-[11px] tracking-[0.4em] uppercase hover:bg-[#7A0E2E] transition-all transform active:scale-[0.98] shadow-2xl shadow-[#2A2623]/10 flex items-center justify-center gap-4 mt-4"
           >
             {loading ? (
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-6 h-6 border-[3px] border-white/20 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                Create Membership
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                Apply for Membership
+                <ArrowRight size={18} strokeWidth={2} className="group-hover:translate-x-2 transition-transform duration-500" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-10 pt-8 border-t border-[#640D14]/5 text-center">
-          <p className="text-[10px] text-[#5C3D1E]/40 font-bold tracking-widest uppercase">
+        <div className="mt-12 pt-10 border-t border-[#D8CBBE]/30 text-center">
+          <p className="text-[10px] text-[#7B6D63] font-bold tracking-widest uppercase">
             Already part of the legacy?{" "}
-            <Link to="/login" className="text-[#640D14] font-black hover:text-[#2C1A0E] ml-1 transition-colors border-b border-[#640D14]/20 hover:border-[#2C1A0E]">
+            <Link to="/login" className="text-[#7A0E2E] font-black hover:text-[#2A2623] ml-2 transition-colors border-b-2 border-[#7A0E2E]/20 hover:border-[#2A2623] pb-1">
               Secure Entry
             </Link>
           </p>

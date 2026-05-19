@@ -11,10 +11,10 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFAF5] text-[#2C1A0E] font-sans selection:bg-[#640D14] selection:text-white">
+    <div className="min-h-screen bg-[#F8F4EF] text-[#2A2623] font-sans selection:bg-[#7A0E2E] selection:text-white">
       
       {/* HERO SECTION - THE ESSENCE */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 border-b border-[#640D14]/10">
+      <section className="relative pt-20 pb-20 lg:pt-32 lg:pb-32 border-b border-[#D8CBBE]/20">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             initial={{ opacity: 0 }} 
@@ -22,25 +22,25 @@ const About = () => {
             className="space-y-12 text-center"
           >
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.8em] uppercase text-[#640D14] font-bold">The House of Elegance</span>
-              <h1 className="text-6xl sm:text-8xl lg:text-[10rem] font-serif tracking-tighter leading-none text-[#2C1A0E]">
-                About <span className="italic font-light text-[#640D14]">VELOURAZ</span>
+              <span className="text-[10px] tracking-[0.8em] uppercase text-[#7A0E2E] font-bold">The House of Elegance</span>
+              <h1 className="text-6xl sm:text-8xl lg:text-[10rem] font-serif tracking-tighter leading-none text-[#2A2623]">
+                About <span className="italic font-light text-[#7A0E2E]">VELOURAZ</span>
               </h1>
             </div>
 
             <div className="max-w-4xl mx-auto space-y-8">
-              <p className="text-xl sm:text-2xl font-serif italic text-[#5C3D1E]/80 leading-relaxed">
+              <p className="text-xl sm:text-2xl font-serif italic text-[#7B6D63] leading-relaxed">
                 Velouraz, where soft luxury meets global style.
               </p>
-              <div className="grid md:grid-cols-2 gap-12 text-left pt-12 border-t border-[#640D14]/10">
-                <p className="text-sm sm:text-base text-[#5C3D1E]/60 leading-[1.8] font-light">
+              <div className="grid md:grid-cols-2 gap-12 text-left pt-12 border-t border-[#D8CBBE]/20">
+                <p className="text-sm sm:text-base text-[#7B6D63]/80 leading-[1.8] font-light">
                   The name Velouraz comes from a feeling. “Velour” describes softness, richness, and quiet luxury. It’s not loud or overwhelming. It’s deeply comforting and elegant. It represents beauty that doesn’t demand attention but holds it effortlessly. That is what our jewelry stands for.
                 </p>
-                <p className="text-sm sm:text-base text-[#5C3D1E]/60 leading-[1.8] font-light">
+                <p className="text-sm sm:text-base text-[#7B6D63]/80 leading-[1.8] font-light">
                   Velouraz is more than a brand; it is an emotion shaped by journeys around the world. Every place we explored introduced us to new textures, cultures, and design stories. From minimal European elegance to bold contemporary shapes, each inspiration influenced our vision.
                 </p>
               </div>
-              <motion.p {...fader} className="text-[#640D14] font-serif text-2xl sm:text-3xl italic pt-8">
+              <motion.p {...fader} className="text-[#7A0E2E] font-serif text-2xl sm:text-3xl italic pt-8">
                 We created Velouraz to combine those global influences into something personal and wearable.
               </motion.p>
             </div>
@@ -49,34 +49,34 @@ const About = () => {
       </section>
 
       {/* VISION & MISSION - BENTO EDITORIAL */}
-      <section className="py-24 lg:py-40 bg-[#F5EDD8]/30">
+      <section className="py-24 lg:py-40 bg-[#F4EEE8]/30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-px bg-[#640D14]/10 border border-[#640D14]/10">
+          <div className="grid lg:grid-cols-2 gap-px bg-[#D8CBBE]/20 border border-[#D8CBBE]/20">
             
             {/* Our Vision */}
-            <motion.div {...fader} className="bg-[#FDFAF5] p-10 lg:p-20 space-y-8">
-              <div className="flex items-center gap-4 text-[#640D14]">
+            <motion.div {...fader} className="bg-[#F8F4EF] p-10 lg:p-20 space-y-8">
+              <div className="flex items-center gap-4 text-[#7A0E2E]">
                 <Eye size={20} strokeWidth={1} />
                 <span className="text-[10px] tracking-[0.4em] uppercase font-bold">The Future</span>
               </div>
-              <h2 className="text-5xl font-serif text-[#2C1A0E]">Our <span className="italic text-[#640D14]">Vision</span></h2>
-              <div className="space-y-6 text-[#5C3D1E]/70 leading-relaxed">
-                <p className="text-lg italic font-serif text-[#2C1A0E]">At Velouraz, we aim to be a jewelry brand loved worldwide. We blend cultures, stories, and personal expression into every piece.</p>
-                <p className="text-sm font-light text-[#5C3D1E]/60">Our designs turn global inspirations into meaningful, wearable art that celebrates individuality. We believe jewelry should not just adorn but tell a story and create a connection. Our vision is to make international-style jewelry accessible, timeless, and truly personal for everyone.</p>
+              <h2 className="text-5xl font-serif text-[#2A2623]">Our <span className="italic text-[#7A0E2E]">Vision</span></h2>
+              <div className="space-y-6 text-[#7B6D63] leading-relaxed">
+                <p className="text-lg italic font-serif text-[#2A2623]">At Velouraz, we aim to be a jewelry brand loved worldwide. We blend cultures, stories, and personal expression into every piece.</p>
+                <p className="text-sm font-light text-[#7B6D63]/80">Our designs turn global inspirations into meaningful, wearable art that celebrates individuality. We believe jewelry should not just adorn but tell a story and create a connection. Our vision is to make international-style jewelry accessible, timeless, and truly personal for everyone.</p>
               </div>
             </motion.div>
 
             {/* Our Mission */}
-            <motion.div {...fader} className="bg-[#FDFAF5] p-10 lg:p-20 space-y-8">
-              <div className="flex items-center gap-4 text-[#640D14]">
+            <motion.div {...fader} className="bg-[#F8F4EF] p-10 lg:p-20 space-y-8">
+              <div className="flex items-center gap-4 text-[#7A0E2E]">
                 <Target size={20} strokeWidth={1} />
                 <span className="text-[10px] tracking-[0.4em] uppercase font-bold">The Purpose</span>
               </div>
-              <h2 className="text-5xl font-serif text-[#2C1A0E]">Our <span className="italic text-[#640D14]">Mission</span></h2>
-              <div className="space-y-6 text-[#5C3D1E]/70 leading-relaxed">
-                <p className="text-sm font-light uppercase tracking-widest text-[#640D14]/80">At Velouraz, our mission is to create high-quality, globally inspired jewelry that combines cultural richness with modern style.</p>
-                <p className="text-sm font-light text-[#5C3D1E]/60">We bring you iconic jewelry styles from around the world. This includes delicate Miyuki bead jewelry from Japan, genuine gemstones from Thailand, evil eye zirconia pieces from Turkey, and timeless jade jewelry from China. Our inspiration includes thread-work elegance from Paris, bold European textile statement pieces, and popular charm jewelry from the United States, all thoughtfully curated for you. We also feature lustrous pearls and sleek silver jewelry influenced by the contemporary style of South Korea.</p>
-                <p className="text-sm font-light italic text-[#5C3D1E]/80">Our goal is to make luxury affordable while helping you express your unique style with confidence. Every piece transforms everyday jewelry into a simple and meaningful way to share your story.</p>
+              <h2 className="text-5xl font-serif text-[#2A2623]">Our <span className="italic text-[#7A0E2E]">Mission</span></h2>
+              <div className="space-y-6 text-[#7B6D63] leading-relaxed">
+                <p className="text-sm font-light uppercase tracking-widest text-[#7A0E2E]/80">At Velouraz, our mission is to create high-quality, globally inspired jewelry that combines cultural richness with modern style.</p>
+                <p className="text-sm font-light text-[#7B6D63]/80">We bring you iconic jewelry styles from around the world. This includes delicate Miyuki bead jewelry from Japan, genuine gemstones from Thailand, evil eye zirconia pieces from Turkey, and timeless jade jewelry from China. Our inspiration includes thread-work elegance from Paris, bold European textile statement pieces, and popular charm jewelry from the United States, all thoughtfully curated for you. We also feature lustrous pearls and sleek silver jewelry influenced by the contemporary style of South Korea.</p>
+                <p className="text-sm font-light italic text-[#7B6D63]">Our goal is to make luxury affordable while helping you express your unique style with confidence. Every piece transforms everyday jewelry into a simple and meaningful way to share your story.</p>
               </div>
             </motion.div>
 
@@ -89,14 +89,14 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-16 items-center">
             <motion.div {...fader} className="lg:col-span-5 relative group">
-              <div className="aspect-[3/4] overflow-hidden border border-[#640D14]/10 p-2 rounded-2xl bg-white shadow-lg">
+              <div className="aspect-[3/4] overflow-hidden border border-[#D8CBBE]/20 p-2 rounded-2xl bg-white shadow-lg">
                 <img 
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80" 
                   alt="Founders" 
                   className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000"
                 />
               </div>
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#640D14] flex items-center justify-center hidden xl:flex rounded-2xl shadow-xl">
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#7A0E2E] flex items-center justify-center hidden xl:flex rounded-2xl shadow-xl">
                 <Sparkles size={48} className="text-white" />
               </div>
             </motion.div>

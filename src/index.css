@@ -10,16 +10,31 @@
     --font-serif: "Cormorant Garamond", serif;
     --font-sans: "Montserrat", sans-serif;
     --font-script: "Italianno", cursive;
-    --color-accent: #c7a049;
-    --color-bg-dark: #0A0A0A; 
-    --color-bg-paper: #121212; 
-    --color-text-white: #FFFFFF;
-    --color-text-dim: #D1D1D1;
+
+    /* Luxury Palette */
+    --color-primary-burgundy: #7A0E2E;
+    --color-royal-burgundy: #5E0B24;
+    --color-dusty-wine: #A64D68;
+    --color-warm-ivory: #F8F4EF;
+    --color-soft-beige: #EFE6DC;
+    --color-pearl-beige: #F4EEE8;
+    --color-champagne-beige: #D8CBBE;
+    --color-rich-charcoal: #2A2623;
+    --color-warm-taupe: #7B6D63;
+    --color-antique-gold: #C8A46A;
+    --color-champagne-gold: #D4B483;
+    --color-soft-white: #FFFDF9;
+
+    --color-accent: var(--color-antique-gold);
+    --color-bg-dark: var(--color-rich-charcoal);
+    --color-bg-paper: var(--color-warm-ivory);
+    --color-text-white: var(--color-soft-white);
+    --color-text-dim: var(--color-warm-taupe);
   }
 
   body {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-white);
+    background-color: var(--color-warm-ivory);
+    color: var(--color-rich-charcoal);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -32,11 +47,21 @@
   }
 }
 
-/* Register accent color so text-accent / bg-accent / border-accent work in Tailwind v4 */
+/* Register luxury colors in Tailwind v4 */
 @theme {
-  --color-accent: #c7a049;
-  --color-bg-dark: #0A0A0A;
-  --color-bg-paper: #121212;
+  --color-primary-burgundy: #7A0E2E;
+  --color-royal-burgundy: #5E0B24;
+  --color-dusty-wine: #A64D68;
+  --color-warm-ivory: #F8F4EF;
+  --color-soft-beige: #EFE6DC;
+  --color-pearl-beige: #F4EEE8;
+  --color-champagne-beige: #D8CBBE;
+  --color-rich-charcoal: #2A2623;
+  --color-warm-taupe: #7B6D63;
+  --color-antique-gold: #C8A46A;
+  --color-champagne-gold: #D4B483;
+  --color-soft-white: #FFFDF9;
+  --color-accent: #C8A46A;
 }
 
 /* Custom Swiper Pagination Styling */

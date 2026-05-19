@@ -1,31 +1,24 @@
 
 import Hero from './Hero'
 import TestimonialSection from './Testemonials'
-import Newsletter from './News'
-import BestSellers from './Bestsellers'
-import FeaturedCollections from './Featured'
-import WhyChooseUs from './WhyChoose'
-import SocialGallery from './SocialGallery'
-import EditorialBanner from './EditorialBanner'
-import AtelierService from './AtelierService'
+import TheJournal from './News'
+import TheEdit from './Bestsellers'
+import WorldEdit from './Featured'
+import QualitySection from './WhyChoose'
 import CategorySection from './CategorySection'
+import NewsletterBar from './NewsletterBar'
 
 function Home() {
- 
-
   return (
     <>
-    
-     <Hero/>
-     <CategorySection/>
-     <EditorialBanner/>
-     <BestSellers/>
-     <AtelierService/>
-     <WhyChooseUs/>
-     <TestimonialSection/>
-     <SocialGallery/>
-     <FeaturedCollections/>
-     <Newsletter/>
+     <Hero />
+     <WorldEdit />
+     <CategorySection />
+     <TheEdit />
+     <QualitySection />
+     <TestimonialSection />
+     <TheJournal />
+     <NewsletterBar />
     </>
   )
 }
