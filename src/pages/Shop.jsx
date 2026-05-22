@@ -7,6 +7,7 @@ import { useAuth } from '../components/useAuth';
 import { useStore } from '../hooks/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import QuickView from '../components/QuickView';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -91,28 +92,16 @@ const Shop = () => {
       
       {selectedProduct && <QuickView product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
 
-      {/* Hero Breadcrumb Banner with Image */}
-      <div className="relative overflow-hidden bg-[#2A2623]">
-        <img 
-          src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=1600" 
-          alt="" 
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2A2623]/80 via-[#2A2623]/60 to-[#2A2623]/40" />
-        <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8 py-12 md:py-16">
-          <div className="flex items-center gap-2 text-[11px] text-white/60 mb-4">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
-            <ChevronRight size={12} />
-            <span className="text-white font-medium">Shop</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-serif text-white tracking-tight">
-            {selectedCategory === 'All' ? 'All Collections' : selectedCategory}
-          </h1>
-          <p className="text-[14px] text-white/60 mt-2 max-w-lg">
-            Discover our curated selection of handcrafted jewellery, designed for the modern woman.
-          </p>
-        </div>
-      </div>
+      {/* Premium Breadcrumb */}
+      <Breadcrumb 
+        title="Our Collection"
+        subtitle="Discover our curated selection of handcrafted jewellery, inspired by cultures and designed for the modern woman."
+        bgImage="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=1600"
+        links={[
+          { name: 'Home', href: '/' },
+          { name: 'Shop', href: '/shop', active: true }
+        ]}
+      />
 
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 py-8">
         

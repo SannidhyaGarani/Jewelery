@@ -1,28 +1,34 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { ArrowLeft, Gavel, Scale, FileText, Globe, RefreshCcw } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
 
 const TermsAndConditions = () => {
-  return (
-    <div className="min-h-screen bg-[#F8F4EF] text-[#2A2623] pt-20 pb-32 px-6 lg:px-20 font-sans selection:bg-[#7A0E2E] selection:text-white relative overflow-hidden">
-      {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#7A0E2E]/5 rounded-full blur-[140px] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
-      
-      <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Link to="/" className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.4em] text-[#7B6D63] mb-12 hover:text-[#7A0E2E] transition-all group">
-            <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform duration-500" />
-            Back to House
-          </Link>
+  const fader = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
+  };
 
-          <h1 className="text-5xl md:text-8xl font-serif tracking-tighter leading-none mb-20 font-bold">
-            Terms <br />
-            <span className="text-[#7A0E2E] italic font-light text-6xl md:text-9xl block mt-2">& Conditions</span>
-          </h1>
+  const breadcrumbLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Terms', href: '/terms-and-conditions', active: true }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#FDFAF5] text-[#2A2623] font-sans overflow-hidden">
+      
+      {/* Premium Breadcrumb */}
+      <Breadcrumb 
+        title="Terms & Conditions"
+        subtitle="The legal framework governing our relationship with our valued patrons."
+        bgImage="https://images.unsplash.com/photo-1554034483-04fac19c3d71?auto=format&fit=crop&q=80&w=1600"
+        links={breadcrumbLinks}
+      />
+
+      <div className="max-w-4xl mx-auto py-20 px-6 relative z-10">
+        <motion.div {...fader}>
           
           <div className="space-y-20 sm:space-y-24 text-[#7B6D63] leading-relaxed tracking-wide text-base sm:text-lg font-light">
             <section className="space-y-8 group">

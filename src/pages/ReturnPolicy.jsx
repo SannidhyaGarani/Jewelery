@@ -1,37 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, RefreshCcw, Globe, Sparkles, ArrowRight, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ShieldCheck, RefreshCcw, Globe, Sparkles } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
 
 const ReturnPolicy = () => {
   const fader = {
     initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
     transition: { duration: 1, ease: [0.19, 1, 0.22, 1] }
   };
 
-  return (
-    <div className="min-h-screen bg-[#F8F4EF] text-[#2A2623] font-sans selection:bg-[#7A0E2E] selection:text-white pt-20 pb-32">
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-[#7A0E2E]/5 rounded-full blur-[160px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <Link to="/" className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.4em] text-[#7B6D63] mb-12 hover:text-[#7A0E2E] transition-all group">
-          <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform duration-500" />
-          Back to House
-        </Link>
+  const breadcrumbLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Returns', href: '/return-policy', active: true }
+  ];
 
+  return (
+    <div className="min-h-screen bg-[#FDFAF5] text-[#2A2623] font-sans overflow-hidden">
+      
+      {/* Premium Breadcrumb */}
+      <Breadcrumb 
+        title="Return Policy"
+        subtitle="Our commitment to your satisfaction — detailed guidelines for returns and exchanges."
+        bgImage="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=1600"
+        links={breadcrumbLinks}
+      />
+
+      <div className="max-w-5xl mx-auto px-6 py-20 relative z-10">
         <motion.div {...fader} className="space-y-24 sm:space-y-32">
-          <div className="space-y-8 sm:space-y-10">
-            <span className="text-[11px] tracking-[0.8em] uppercase text-[#7A0E2E] font-bold">Client Care</span>
-            <h1 className="text-5xl lg:text-8xl font-serif tracking-tighter leading-none font-bold">
-              Return & <br />
-              <span className="text-[#7A0E2E] italic font-light text-6xl lg:text-9xl block mt-2">Policy</span>
-            </h1>
-            <p className="max-w-3xl text-base sm:text-lg text-[#7B6D63] leading-relaxed font-light italic">
-              At Velouraz, your satisfaction is our top priority. If you are not fully satisfied with your purchase, you can return the item.
-            </p>
-          </div>
 
           <div className="grid gap-20 lg:gap-32">
             {/* Return Process */}

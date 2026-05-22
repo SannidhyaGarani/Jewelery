@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
             <div className="text-white">
               <h3 className="text-xl lg:text-2xl font-serif mb-1">Be the first to know</h3>
-              <p className="text-[11px] tracking-[0.05em] font-light text-white/70">
+              <p className="text-[14px] tracking-[0.05em] font-light text-white/70">
                 Exclusive offers, new arrivals & style updates straight to your inbox.
               </p>
             </div>

@@ -5,7 +5,7 @@ import { Sparkles, Heart } from 'lucide-react';
 
 const TheEdit = () => {
   return (
-    <section className="bg-[#FDFAF5] py-20 lg:py-32">
+    <section className="bg-[#FDFAF5] py-20 lg:py-32 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 lg:px-10">
         
         {/* Section Header */}
