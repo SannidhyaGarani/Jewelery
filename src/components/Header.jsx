@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Search, Menu, X, ShoppingBag, Heart, User, ChevronDown, ArrowRight } from 'lucide-react';
+import { Search, Menu, X, ShoppingBag, Heart, User, ChevronDown, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { useAuth } from './useAuth';
 import { useStore } from '../hooks/useStore';
 
@@ -29,26 +29,32 @@ const LuxuryHeader = () => {
         sections: [
           {
             title: 'JEWELLERY SETS',
+            icon: '𝓥',
             items: ['Kundan Sets', 'Polki Sets', 'American Diamond Sets', 'Temple Jewellery Sets', 'Minimal Sets']
           },
           {
             title: 'EARRINGS',
+            icon: '❂',
             items: ['Stud Earrings', 'Jhumka', 'Hoops', 'Chandbali', 'Drop Earrings']
           },
           {
             title: 'NECKLACES',
+            icon: '◇',
             items: ['Choker Necklaces', 'Short Necklaces', 'Long Necklaces', 'Layered Necklaces', 'Pendant Necklaces']
           },
           {
             title: 'RINGS',
+            icon: '○',
             items: ['Statement Rings', 'Adjustable Rings', 'Cocktail Rings', 'Stacking Rings', 'Band Rings']
           },
           {
             title: 'BANGLES',
+            icon: '◎',
             items: ['Kada Bangles', 'Stone Bangles', 'Lac Bangles', 'Gold Plated Bangles', 'Pearl Bangles']
           },
           {
             title: 'ANKLETS',
+            icon: '✧',
             items: ['Charms Anklets', 'Beaded Anklets', 'Chain Anklets', 'Oxidised Anklets', 'Minimal Anklets']
           }
         ],
@@ -64,26 +70,32 @@ const LuxuryHeader = () => {
         sections: [
           {
             title: 'KOREAN EDIT',
+            icon: '⛩',
             items: ['Pearl Collection', 'Minimal Luxe', 'Crystal Drops', 'Layered Necklaces', 'Statement Earrings']
           },
           {
             title: 'TURKISH EDIT',
+            icon: '🕌',
             items: ['Evil Eye Collection', 'Oxidised Silver', 'Teardrop Earrings', 'Enamel Jewellery', 'Layered Necklaces']
           },
           {
             title: 'INDIAN EDIT',
+            icon: '◈',
             items: ['Kundan Jewellery', 'Polki Sets', 'Temple Jewels', 'Meenakari Collection', 'Jadau Jewellery']
           },
           {
             title: 'ARABIAN EDIT',
+            icon: '☽',
             items: ['Statement Sets', 'Gold Plated', 'Coin Jewellery', 'Chunky Chains', 'Dangle Earrings']
           },
           {
             title: 'EUROPEAN EDIT',
+            icon: '⚜',
             items: ['Minimal Gold', 'Pearl Jewellery', 'Sleek Rings', 'Hoop Earrings', 'Tennis Bracelets']
           },
           {
             title: 'THAI EDIT',
+            icon: '❋',
             items: ['Beaded Jewellery', 'Handcrafted Silver', 'Color Stone Earrings', 'Floral Motifs', 'Boho Necklaces']
           }
         ],
@@ -99,10 +111,12 @@ const LuxuryHeader = () => {
         sections: [
           {
             title: 'TRENDING LUXE',
+            icon: '✧',
             items: ['Statement Pieces', 'Korean Luxe', 'Minimal Gold', 'Pearl Trends', 'Layered Looks']
           },
           {
             title: 'BEST SELLERS',
+            icon: '♡',
             items: ['Top Rated', 'Customer Favorites', 'Most Loved Earrings', 'Most Loved Necklaces', 'Most Loved Sets']
           }
         ],
@@ -212,20 +226,19 @@ const LuxuryHeader = () => {
               >
                 <Link 
                   to={link.href}
-                  className={`px-8 py-5 text-[11px] tracking-[0.2em] font-medium uppercase transition-all duration-300 flex items-center gap-2 ${
+                  className={`px-8 py-5 text-[11px] tracking-[0.2em] font-medium uppercase transition-all duration-300 flex items-center gap-2 relative ${
                     activeMegaMenu === link.name ? 'text-[#7A0E2E]' : 'text-[#7B6D63]'
                   }`}
                 >
                   {link.name}
                   {link.megaMenu && <ChevronDown size={12} className={`transition-transform duration-300 ${activeMegaMenu === link.name ? 'rotate-180' : ''}`} />}
-                  {/* Underline on hover */}
-                  <motion.div 
-                    className="absolute bottom-0 h-[2px] bg-[#7A0E2E]"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: activeMegaMenu === link.name ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    style={{ width: 'auto', left: '0', right: '0' }}
-                  />
+                  {/* Underline */}
+                  {activeMegaMenu === link.name && (
+                    <motion.div 
+                      className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#7A0E2E]"
+                      layoutId="navUnderline"
+                    />
+                  )}
                 </Link>
 
                 {/* Mega Menu Dropdown */}
@@ -235,30 +248,48 @@ const LuxuryHeader = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute top-full left-0 w-full bg-[#F4EEE8] shadow-[0_40px_80px_rgba(0,0,0,0.12)] border-t border-[#D8CBBE]/50 z-[100]"
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute top-full left-0 w-full bg-[#FDFAF5] shadow-[0_30px_60px_rgba(0,0,0,0.1)] border-t border-[#D8CBBE]/40 z-[100]"
                     >
-                      <div className="max-w-[1440px] mx-auto flex h-[500px]">
+                      <div className="max-w-[1440px] mx-auto flex h-[420px]">
                         {/* Links Sections */}
-                        <div className="flex-1 p-12 overflow-y-auto no-scrollbar">
-                          <div className="grid grid-cols-3 gap-x-12 gap-y-16">
+                        <div className="flex-1 py-8 px-10 overflow-y-auto no-scrollbar">
+                          <div className={`grid gap-x-10 gap-y-8 ${
+                            link.megaMenu.sections.length <= 2 ? 'grid-cols-2' :
+                            link.megaMenu.sections.length <= 3 ? 'grid-cols-3' : 'grid-cols-3'
+                          }`}>
                             {link.megaMenu.sections.map((section, idx) => (
-                              <div key={idx} className="space-y-6">
-                                <h4 className="text-[10px] tracking-[0.25em] font-bold text-[#7A0E2E] border-b border-[#7A0E2E]/10 pb-3 uppercase">
-                                  {section.title}
-                                </h4>
-                                <ul className="space-y-3">
+                              <div key={idx} className="space-y-4">
+                                {/* Category Header with Icon */}
+                                <div className="flex items-center gap-3">
+                                  <span className="text-2xl font-light text-[#7A0E2E] opacity-80 leading-none">
+                                    {section.icon || '✦'}
+                                  </span>
+                                  <h4 className="text-[11px] tracking-[0.2em] font-bold text-[#7A0E2E] uppercase">
+                                    {section.title}
+                                  </h4>
+                                </div>
+                                {/* Items */}
+                                <ul className="space-y-2.5 pl-[2.25rem]">
                                   {section.items.map((item, i) => (
                                     <li key={i}>
                                       <Link 
                                         to={`${link.href}?item=${item.toLowerCase().replace(/ /g, '-')}`}
-                                        className="text-[14px] text-[#2A2623]/70 hover:text-[#7A0E2E] transition-all duration-300 font-serif hover:pl-2 flex items-center gap-2 group/item"
+                                        className="text-[15px] text-[#2A2623]/80 hover:text-[#7A0E2E] transition-colors duration-300 font-serif block"
                                       >
-                                        <span className="w-0 h-[1px] bg-[#7A0E2E] group-hover/item:w-4 transition-all duration-300" />
                                         {item}
                                       </Link>
                                     </li>
                                   ))}
+                                  {/* Shop All Link */}
+                                  <li className="pt-1">
+                                    <Link 
+                                      to={`${link.href}?category=${section.title.toLowerCase().replace(/ /g, '-')}`}
+                                      className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#7A0E2E] hover:text-[#5E0B24] transition-colors"
+                                    >
+                                      Shop all <ArrowRight size={13} strokeWidth={2.5} />
+                                    </Link>
+                                  </li>
                                 </ul>
                               </div>
                             ))}
@@ -266,41 +297,41 @@ const LuxuryHeader = () => {
                         </div>
 
                         {/* Image/Promo Section */}
-                        <div className="w-[450px] relative overflow-hidden group border-l border-[#D8CBBE]/30">
+                        <div className="w-[400px] relative overflow-hidden group border-l border-[#D8CBBE]/30 flex-shrink-0">
                           <img 
                             src={link.megaMenu.image} 
                             alt={link.name} 
                             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#2A2623]/80 via-transparent to-transparent flex flex-col justify-end p-12">
-                            <motion.span 
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="text-[10px] tracking-[0.4em] font-bold text-white/90 uppercase mb-3"
-                            >
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816]/70 via-[#1A1816]/10 to-transparent flex flex-col justify-end p-10">
+                            <span className="text-[10px] tracking-[0.4em] font-bold text-white/80 uppercase mb-3">
                               {link.megaMenu.tagline}
-                            </motion.span>
-                            <motion.h3 
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.1 }}
-                              className="text-4xl font-serif text-white mb-8 leading-tight italic"
-                            >
+                            </span>
+                            <h3 className="text-3xl font-serif text-white mb-6 leading-snug italic">
                               {link.megaMenu.heading}
-                            </motion.h3>
-                            <motion.div
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.2 }}
+                            </h3>
+                            <Link 
+                              to={link.href}
+                              className="inline-flex items-center gap-3 bg-[#7A0E2E] text-white px-7 py-3.5 text-[10px] tracking-[0.2em] font-bold uppercase hover:bg-[#5E0B24] transition-all duration-500 w-fit shadow-lg"
                             >
-                              <Link 
-                                to={link.href}
-                                className="inline-flex items-center gap-4 bg-[#7A0E2E] text-white px-8 py-4 text-[10px] tracking-[0.3em] font-bold uppercase hover:bg-[#5E0B24] transition-all duration-500 group/btn shadow-xl"
-                              >
-                                Explore Collection
-                                <ArrowRight size={16} className="group-hover/btn:translate-x-2 transition-transform duration-500" />
-                              </Link>
-                            </motion.div>
+                              Explore Collections
+                            </Link>
+                          </div>
+
+                          {/* Navigation Arrows */}
+                          <button className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-md flex items-center justify-center text-[#2A2623] hover:bg-white transition-colors z-10">
+                            <ChevronLeft size={18} />
+                          </button>
+                          <button className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-md flex items-center justify-center text-[#2A2623] hover:bg-white transition-colors z-10">
+                            <ChevronRight size={18} />
+                          </button>
+
+                          {/* Pagination Dots */}
+                          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+                            <div className="w-2.5 h-2.5 rounded-full bg-white" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-white/40" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-white/40" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-white/40" />
                           </div>
                         </div>
                       </div>

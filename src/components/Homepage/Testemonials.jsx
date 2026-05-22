@@ -33,28 +33,42 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-[#7A0E2E] py-20 lg:py-32 overflow-hidden relative">
+    <section className="bg-[#7A0E2E] py-12 lg:py-20 overflow-hidden relative">
       <div className="max-w-[1440px] mx-auto px-4 lg:px-10">
         
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+        <div className="mb-16 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-[10px] md:text-[12px] tracking-[0.4em] font-bold text-white/70 uppercase block"
+            className="flex items-center gap-3"
           >
-            LOVED BY 1000+ CUSTOMERS
-          </motion.span>
+            <div className="w-8 h-[1px] bg-white/40" />
+            <span className="text-[10px] md:text-[12px] tracking-[0.4em] font-bold text-white/70 uppercase">
+              LOVED BY 1000+ CUSTOMERS
+            </span>
+          </motion.div>
+          
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-serif text-white"
+            className="text-3xl md:text-5xl lg:text-6xl font-serif text-white leading-tight"
           >
             Real Stories. <span className="text-white/70 italic">Real Love.</span>
           </motion.h2>
+
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-white/60 font-serif text-base leading-relaxed max-w-lg"
+          >
+            Hear from our community of jewellery enthusiasts who have found their perfect pieces with us.
+          </motion.p>
         </div>
 
         {/* Testimonials Carousel */}
@@ -84,19 +98,19 @@ const Testimonials = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-[#F8F4EF] p-10 lg:p-12 rounded-3xl h-full flex flex-col justify-between shadow-2xl min-h-[300px]"
+                  className="bg-[#F8F4EF] p-8 lg:p-10 rounded-2xl h-full flex flex-col justify-between shadow-xl min-h-[240px]"
                 >
-                  <p className="text-[#7B6D63] font-serif text-lg lg:text-xl leading-relaxed italic">
+                  <p className="text-[#7B6D63] font-serif text-base lg:text-lg leading-relaxed italic">
                     "{review.quote}"
                   </p>
                   
-                  <div className="mt-8 space-y-3">
+                  <div className="mt-6 space-y-2">
                     <div className="flex gap-1">
                       {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} size={14} className="fill-[#7A0E2E] text-[#7A0E2E]" />
+                        <Star key={i} size={12} className="fill-[#7A0E2E] text-[#7A0E2E]" />
                       ))}
                     </div>
-                    <h4 className="text-sm font-bold text-[#2A2623] uppercase tracking-widest">— {review.name}</h4>
+                    <h4 className="text-[13px] font-bold text-[#2A2623] uppercase tracking-widest">— {review.name}</h4>
                   </div>
                 </motion.div>
               </SwiperSlide>

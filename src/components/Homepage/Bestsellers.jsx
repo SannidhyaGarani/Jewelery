@@ -58,27 +58,43 @@ const BestSellers = () => {
   };
 
   return (
-    <section className="bg-[#F8F4EF] py-16 lg:py-24 relative overflow-hidden border-t border-[#D8CBBE]/20">
+    <section className="bg-[#F8F4EF] py-12 lg:py-20 relative overflow-hidden border-t border-[#D8CBBE]/20">
       <div className="max-w-[1800px] mx-auto px-4 sm:px-8 lg:px-16">
 
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 lg:mb-20 gap-8">
-          <div className="max-w-2xl">
-            <motion.span
+        <div className="flex flex-col lg:flex-row items-end justify-between mb-16 gap-8">
+          <div className="space-y-6 max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3"
+            >
+              <div className="w-8 h-[1px] bg-[#7A0E2E]" />
+              <span className="text-[10px] md:text-[12px] tracking-[0.4em] font-bold text-[#7B6D63] uppercase">
+                CURATED SELECTION
+              </span>
+            </motion.div>
+            
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-[9px] md:text-[10px] tracking-[0.4em] text-[#7A0E2E] uppercase font-bold mb-4 block"
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#2A2623] leading-tight"
             >
-              Curated Selection
-            </motion.span>
-            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-[#2A2623] leading-tight tracking-tight">
-              <span className="text-[#7A0E2E] italic font-light block md:inline mb-2 md:mb-0">Jewels</span> Velouraz Loves
-            </h2>
-          </div>
-          <div className="flex items-center gap-8">
-            <p className="text-[10px] md:text-xs text-[#7B6D63] max-w-[200px] leading-relaxed uppercase font-bold tracking-widest">
-              Discover masterpieces hand-picked by our lead artisans.
-            </p>
+              Jewels <span className="text-[#7A0E2E] italic">Velouraz Loves</span>
+            </motion.h2>
+            
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-[#7B6D63] font-serif text-base leading-relaxed max-w-lg"
+            >
+              Discover masterpieces hand-picked by our lead artisans, featuring our most iconic and beloved designs.
+            </motion.p>
           </div>
         </div>
 
